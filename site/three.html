@@ -14,9 +14,9 @@
     <a class="tb-home" href="index.html" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
     <span class="tb-title">Three.js</span>
     <input id="filter" type="search" placeholder="Filtern, z.B. Licht, Raycaster, Timer …" aria-label="Karten auf dieser Seite filtern">
-    <details class="menu">
-      <summary><span class="sum-label">Themen</span><span aria-hidden="true">☰</span></summary>
-      <div class="menu-panel"><nav aria-label="Abschnitte"><a href="#grundlagen">Grundlagen</a><a href="#objekte">Objekte</a><a href="#licht">Licht und Oberflächen</a><a href="#interaktion">Interaktion</a><a href="#animation">Modelle und Animation</a><a href="#performance">Performance und React</a></nav></div>
+    <details class="menu topics">
+      <summary><span class="sum-label">Inhalt</span><span aria-hidden="true">☰</span></summary>
+      <div class="menu-panel toc-panel"><nav aria-label="Inhalt"><ol class="toc-list"><li class="toc-sec" data-sec="grundlagen"><a href="#grundlagen">Grundlagen</a><ol><li data-for="three-grundlagen-1"><a href="#three-grundlagen-1">Szene, Kamera, Renderer</a></li><li data-for="three-grundlagen-2"><a href="#three-grundlagen-2">Die Render-Schleife mit Timer</a></li><li data-for="three-grundlagen-3"><a href="#three-grundlagen-3">Responsiv: Größe und Pixeldichte</a></li></ol></li><li class="toc-sec" data-sec="objekte"><a href="#objekte">Objekte</a><ol><li data-for="three-objekte-1"><a href="#three-objekte-1">Mesh = Geometrie + Material</a></li><li data-for="three-objekte-2"><a href="#three-objekte-2">Position, Drehung, Größe</a></li><li data-for="three-objekte-3"><a href="#three-objekte-3">Gruppen und Hierarchie</a></li></ol></li><li class="toc-sec" data-sec="licht"><a href="#licht">Licht und Oberflächen</a><ol><li data-for="three-licht-1"><a href="#three-licht-1">Materialien: Basic und Standard</a></li><li data-for="three-licht-2"><a href="#three-licht-2">Lichtarten</a></li><li data-for="three-licht-3"><a href="#three-licht-3">Schatten</a></li><li data-for="three-licht-4"><a href="#three-licht-4">Farben und Texturen: colorSpace</a></li></ol></li><li class="toc-sec" data-sec="interaktion"><a href="#interaktion">Interaktion</a><ol><li data-for="three-interaktion-1"><a href="#three-interaktion-1">Kamera steuern: OrbitControls</a></li><li data-for="three-interaktion-2"><a href="#three-interaktion-2">Objekte anklicken: Raycaster</a></li></ol></li><li class="toc-sec" data-sec="animation"><a href="#animation">Modelle und Animation</a><ol><li data-for="three-animation-1"><a href="#three-animation-1">3D-Modelle laden: GLTF</a></li><li data-for="three-animation-2"><a href="#three-animation-2">Animieren mit GSAP</a></li></ol></li><li class="toc-sec" data-sec="performance"><a href="#performance">Performance und React</a><ol><li data-for="three-performance-1"><a href="#three-performance-1">Aufräumen: dispose()</a></li><li data-for="three-performance-2"><a href="#three-performance-2">Viele Objekte: InstancedMesh</a></li><li data-for="three-performance-3"><a href="#three-performance-3">Three.js in React: React Three Fiber</a></li></ol></li></ol></nav></div>
     </details>
     <details class="menu">
       <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
@@ -30,6 +30,11 @@
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 </header>
 
+<div class="layout">
+<aside class="toc" aria-label="Inhaltsverzeichnis">
+  <div class="toc-head">Inhalt</div>
+  <nav><ol class="toc-list"><li class="toc-sec" data-sec="grundlagen"><a href="#grundlagen">Grundlagen</a><ol><li data-for="three-grundlagen-1"><a href="#three-grundlagen-1">Szene, Kamera, Renderer</a></li><li data-for="three-grundlagen-2"><a href="#three-grundlagen-2">Die Render-Schleife mit Timer</a></li><li data-for="three-grundlagen-3"><a href="#three-grundlagen-3">Responsiv: Größe und Pixeldichte</a></li></ol></li><li class="toc-sec" data-sec="objekte"><a href="#objekte">Objekte</a><ol><li data-for="three-objekte-1"><a href="#three-objekte-1">Mesh = Geometrie + Material</a></li><li data-for="three-objekte-2"><a href="#three-objekte-2">Position, Drehung, Größe</a></li><li data-for="three-objekte-3"><a href="#three-objekte-3">Gruppen und Hierarchie</a></li></ol></li><li class="toc-sec" data-sec="licht"><a href="#licht">Licht und Oberflächen</a><ol><li data-for="three-licht-1"><a href="#three-licht-1">Materialien: Basic und Standard</a></li><li data-for="three-licht-2"><a href="#three-licht-2">Lichtarten</a></li><li data-for="three-licht-3"><a href="#three-licht-3">Schatten</a></li><li data-for="three-licht-4"><a href="#three-licht-4">Farben und Texturen: colorSpace</a></li></ol></li><li class="toc-sec" data-sec="interaktion"><a href="#interaktion">Interaktion</a><ol><li data-for="three-interaktion-1"><a href="#three-interaktion-1">Kamera steuern: OrbitControls</a></li><li data-for="three-interaktion-2"><a href="#three-interaktion-2">Objekte anklicken: Raycaster</a></li></ol></li><li class="toc-sec" data-sec="animation"><a href="#animation">Modelle und Animation</a><ol><li data-for="three-animation-1"><a href="#three-animation-1">3D-Modelle laden: GLTF</a></li><li data-for="three-animation-2"><a href="#three-animation-2">Animieren mit GSAP</a></li></ol></li><li class="toc-sec" data-sec="performance"><a href="#performance">Performance und React</a><ol><li data-for="three-performance-1"><a href="#three-performance-1">Aufräumen: dispose()</a></li><li data-for="three-performance-2"><a href="#three-performance-2">Viele Objekte: InstancedMesh</a></li><li data-for="three-performance-3"><a href="#three-performance-3">Three.js in React: React Three Fiber</a></li></ol></li></ol></nav>
+</aside>
 <main class="wrap">
   <header>
     <div class="eyebrow">Animation &amp; 3D · Three.js</div>
@@ -706,6 +711,7 @@ renderer.setAnimationLoop((t) =&gt; {
 
   <footer>Übungsidee: Baue eine Produktansicht mit einem Objekt, zwei Lichtern, Schatten und OrbitControls. Danach eine Kamerafahrt mit dem <a href="gsap.html">GSAP Spickzettel</a> und ScrollTrigger. Alle Zettel im <a href="index.html">Spickzettel-Hub</a>.<br><br>Weitere Zettel: <a href="html.html">HTML</a> · <a href="css.html">CSS</a> · <a href="js.html">JavaScript</a> · <a href="ts.html">TypeScript</a> · <a href="gsap.html">GSAP</a> · <a href="cro.html">Conversion-Optimierung</a></footer>
 </main>
+</div>
 
 <button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
 <script src="assets/app.js"></script>

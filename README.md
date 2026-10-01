@@ -1,6 +1,6 @@
-# Spickzettel
+# cheatsheet-hub
 
-Nachschlage-Website aus dem Fullstack-Bootcamp: 7 Spickzettel mit 159 Karten zu
+Spickzettel-Hub, eine Nachschlage-Website aus dem Fullstack-Bootcamp: 7 Spickzettel mit 159 Karten zu
 HTML, CSS, JavaScript, TypeScript, GSAP, Three.js und Conversion-Optimierung.
 
 Jede Karte enthält Code-Beispiele (meist zwei Varianten nebeneinander), eine aufklappbare
@@ -12,6 +12,7 @@ GSAP und Three.js haben Live-Demos, die ihre Bibliotheken erst beim ersten Klick
 ```
 site/                 fertige Website (statisch, ohne Build-Schritt lauffähig)
   index.html          Hub mit Volltextsuche (ohne <html>-Gerüst, siehe unten)
+                      Jeder Zettel hat ein Inhaltsverzeichnis aller Karten (Seitenleiste bzw. Menü)
   html.html … cro.html  eine Seite pro Zettel
   assets/app.css      gemeinsame Gestaltung
   assets/app.js       Highlighting, Filter, Menüs, Kopieren, Demos

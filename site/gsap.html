@@ -14,9 +14,9 @@
     <a class="tb-home" href="index.html" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
     <span class="tb-title">GSAP</span>
     <input id="filter" type="search" placeholder="Filtern, z.B. timeline, scrub, stagger …" aria-label="Karten auf dieser Seite filtern">
-    <details class="menu">
-      <summary><span class="sum-label">Themen</span><span aria-hidden="true">☰</span></summary>
-      <div class="menu-panel"><nav aria-label="Abschnitte"><a href="#grundlagen">Grundlagen</a><a href="#timelines">Timelines</a><a href="#scrolltrigger">ScrollTrigger</a><a href="#plugins">Plugins</a><a href="#praxis">Praxis: React, Performance, Barrierefreiheit</a></nav></div>
+    <details class="menu topics">
+      <summary><span class="sum-label">Inhalt</span><span aria-hidden="true">☰</span></summary>
+      <div class="menu-panel toc-panel"><nav aria-label="Inhalt"><ol class="toc-list"><li class="toc-sec" data-sec="grundlagen"><a href="#grundlagen">Grundlagen</a><ol><li data-for="gsap-grundlagen-1"><a href="#gsap-grundlagen-1">Animieren mit gsap.to()</a></li><li data-for="gsap-grundlagen-2"><a href="#gsap-grundlagen-2">from() und fromTo()</a></li><li data-for="gsap-grundlagen-3"><a href="#gsap-grundlagen-3">Easing</a></li><li data-for="gsap-grundlagen-4"><a href="#gsap-grundlagen-4">Versetzt starten: stagger</a></li><li data-for="gsap-grundlagen-5"><a href="#gsap-grundlagen-5">Transforms setzen: gsap.set()</a></li><li data-for="gsap-grundlagen-6"><a href="#gsap-grundlagen-6">Steuern: play, pause, reverse</a></li></ol></li><li class="toc-sec" data-sec="timelines"><a href="#timelines">Timelines</a><ol><li data-for="gsap-timelines-1"><a href="#gsap-timelines-1">Abfolgen mit gsap.timeline()</a></li><li data-for="gsap-timelines-2"><a href="#gsap-timelines-2">Der Positionsparameter</a></li><li data-for="gsap-timelines-3"><a href="#gsap-timelines-3">defaults, repeat und yoyo</a></li></ol></li><li class="toc-sec" data-sec="scrolltrigger"><a href="#scrolltrigger">ScrollTrigger</a><ol><li data-for="gsap-scrolltrigger-1"><a href="#gsap-scrolltrigger-1">Beim Hineinscrollen abspielen</a></li><li data-for="gsap-scrolltrigger-2"><a href="#gsap-scrolltrigger-2">An den Scroll koppeln: scrub</a></li><li data-for="gsap-scrolltrigger-3"><a href="#gsap-scrolltrigger-3">Festhalten: pin</a></li></ol></li><li class="toc-sec" data-sec="plugins"><a href="#plugins">Plugins</a><ol><li data-for="gsap-plugins-1"><a href="#gsap-plugins-1">Layout-Wechsel animieren: Flip</a></li><li data-for="gsap-plugins-2"><a href="#gsap-plugins-2">Text animieren: SplitText</a></li></ol></li><li class="toc-sec" data-sec="praxis"><a href="#praxis">Praxis: React, Performance, Barrierefreiheit</a><ol><li data-for="gsap-praxis-1"><a href="#gsap-praxis-1">GSAP in React: useGSAP</a></li><li data-for="gsap-praxis-2"><a href="#gsap-praxis-2">Flüssig animieren: Transforms statt Layout</a></li><li data-for="gsap-praxis-3"><a href="#gsap-praxis-3">Weniger Bewegung respektieren: matchMedia</a></li></ol></li></ol></nav></div>
     </details>
     <details class="menu">
       <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
@@ -35,6 +35,11 @@
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 </header>
 
+<div class="layout">
+<aside class="toc" aria-label="Inhaltsverzeichnis">
+  <div class="toc-head">Inhalt</div>
+  <nav><ol class="toc-list"><li class="toc-sec" data-sec="grundlagen"><a href="#grundlagen">Grundlagen</a><ol><li data-for="gsap-grundlagen-1"><a href="#gsap-grundlagen-1">Animieren mit gsap.to()</a></li><li data-for="gsap-grundlagen-2"><a href="#gsap-grundlagen-2">from() und fromTo()</a></li><li data-for="gsap-grundlagen-3"><a href="#gsap-grundlagen-3">Easing</a></li><li data-for="gsap-grundlagen-4"><a href="#gsap-grundlagen-4">Versetzt starten: stagger</a></li><li data-for="gsap-grundlagen-5"><a href="#gsap-grundlagen-5">Transforms setzen: gsap.set()</a></li><li data-for="gsap-grundlagen-6"><a href="#gsap-grundlagen-6">Steuern: play, pause, reverse</a></li></ol></li><li class="toc-sec" data-sec="timelines"><a href="#timelines">Timelines</a><ol><li data-for="gsap-timelines-1"><a href="#gsap-timelines-1">Abfolgen mit gsap.timeline()</a></li><li data-for="gsap-timelines-2"><a href="#gsap-timelines-2">Der Positionsparameter</a></li><li data-for="gsap-timelines-3"><a href="#gsap-timelines-3">defaults, repeat und yoyo</a></li></ol></li><li class="toc-sec" data-sec="scrolltrigger"><a href="#scrolltrigger">ScrollTrigger</a><ol><li data-for="gsap-scrolltrigger-1"><a href="#gsap-scrolltrigger-1">Beim Hineinscrollen abspielen</a></li><li data-for="gsap-scrolltrigger-2"><a href="#gsap-scrolltrigger-2">An den Scroll koppeln: scrub</a></li><li data-for="gsap-scrolltrigger-3"><a href="#gsap-scrolltrigger-3">Festhalten: pin</a></li></ol></li><li class="toc-sec" data-sec="plugins"><a href="#plugins">Plugins</a><ol><li data-for="gsap-plugins-1"><a href="#gsap-plugins-1">Layout-Wechsel animieren: Flip</a></li><li data-for="gsap-plugins-2"><a href="#gsap-plugins-2">Text animieren: SplitText</a></li></ol></li><li class="toc-sec" data-sec="praxis"><a href="#praxis">Praxis: React, Performance, Barrierefreiheit</a><ol><li data-for="gsap-praxis-1"><a href="#gsap-praxis-1">GSAP in React: useGSAP</a></li><li data-for="gsap-praxis-2"><a href="#gsap-praxis-2">Flüssig animieren: Transforms statt Layout</a></li><li data-for="gsap-praxis-3"><a href="#gsap-praxis-3">Weniger Bewegung respektieren: matchMedia</a></li></ol></li></ol></nav>
+</aside>
 <main class="wrap">
   <header>
     <div class="eyebrow">Animation &amp; 3D · GSAP</div>
@@ -738,6 +743,7 @@ setup();</pre></div>
 
   <footer>Übungsidee: Nimm die Animationskarten aus dem <a href="css.html#animation">CSS Spickzettel</a> und baue jede einmal mit GSAP nach. Danach eine kleine Landingpage mit einer Timeline beim Laden und zwei ScrollTrigger-Effekten. Alle Zettel im <a href="index.html">Spickzettel-Hub</a>.<br><br>Weitere Zettel: <a href="html.html">HTML</a> · <a href="css.html">CSS</a> · <a href="js.html">JavaScript</a> · <a href="ts.html">TypeScript</a> · <a href="three.html">Three.js</a> · <a href="cro.html">Conversion-Optimierung</a></footer>
 </main>
+</div>
 
 <button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
 <script src="assets/app.js"></script>

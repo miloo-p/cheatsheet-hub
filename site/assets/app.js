@@ -183,6 +183,42 @@
   if (totop) totop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); });
   onScroll();
 
+  /* Inhaltsverzeichnis: aktuelle Karte markieren, gefilterte Karten ausblenden */
+  var tocLinks = {};
+  document.querySelectorAll(".toc-list li[data-for]").forEach(function (li) {
+    (tocLinks[li.dataset.for] = tocLinks[li.dataset.for] || []).push(li);
+  });
+  var sideToc = document.querySelector("aside.toc");
+  var lockUntil = 0;
+  function markActive(id, force) {
+    if (!force && Date.now() < lockUntil) return;
+    document.querySelectorAll('.toc-list a[aria-current="true"]').forEach(function (a) { a.removeAttribute("aria-current"); });
+    (tocLinks[id] || []).forEach(function (li) {
+      var a = li.querySelector("a"); a.setAttribute("aria-current", "true");
+      if (sideToc && sideToc.contains(li) && sideToc.offsetParent !== null) {
+        var r = a.getBoundingClientRect(), t = sideToc.getBoundingClientRect();
+        if (r.top < t.top + 40 || r.bottom > t.bottom - 40) sideToc.scrollTop += r.top - t.top - t.height / 3;
+      }
+    });
+  }
+  if ("IntersectionObserver" in window && cards.length) {
+    var visible = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) visible[e.target.id] = e.target; else delete visible[e.target.id]; });
+      var best = null;
+      Object.keys(visible).forEach(function (id) {
+        var top = visible[id].getBoundingClientRect().top;
+        if (best === null || Math.abs(top - 90) < Math.abs(best.top - 90)) best = { id: id, top: top };
+      });
+      if (best) markActive(best.id);
+    }, { rootMargin: "-70px 0px -55% 0px" });
+    cards.forEach(function (c) { if (c.id) io.observe(c); });
+  }
+  if (input) input.addEventListener("input", function () {
+    cards.forEach(function (c) { (tocLinks[c.id] || []).forEach(function (li) { li.hidden = c.hidden; }); });
+    document.querySelectorAll(".toc-sec[data-sec]").forEach(function (sec) { sec.hidden = !sec.querySelector("li[data-for]:not([hidden])"); });
+  });
+
   /* Sprung zu einer Karte per #id */
   function jump() {
     var id = decodeURIComponent(location.hash.slice(1));
@@ -191,6 +227,7 @@
     if (!el) return;
     if (el.classList.contains("card")) {
       el.scrollIntoView({ block: "start" });
+      lockUntil = Date.now() + 900; markActive(id, true);
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     }
   }

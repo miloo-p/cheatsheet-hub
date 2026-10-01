@@ -68,7 +68,9 @@ PLANNED = [
 OLD2KEY = {s["old"]: s["key"] for s in SHEETS}
 
 def strip_tags(s):
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s))).strip()
+    t = re.sub(r"<(?:code|b|em|strong|i|span)[^>]*>|</(?:code|b|em|strong|i|span)>", "", s)
+    t = re.sub(r"<[^>]+>", " ", t)
+    return re.sub(r"\s+([,.;:!?)])", r"\1", re.sub(r"\s+", " ", html.unescape(t))).strip()
 
 def relink(s):
     """Artifact-Links auf andere Zettel werden zu relativen Links im selben Tab."""
@@ -188,6 +190,27 @@ img { max-width: 100%; }
   .tb-label, .tb-title, .menu .sum-label { display: none; }
   .topbar-row { padding-inline: 16px; gap: 6px; }
   .tb-home, .menu > summary { padding: 8px 10px; }
+}
+
+/* ---------- Inhaltsverzeichnis ---------- */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); }
+.toc { display: none; }
+.toc-list, .toc-list ol { list-style: none; margin: 0; padding: 0; }
+.toc-list { display: grid; gap: 10px; }
+.toc-list a { border: 0; background: transparent; border-radius: 6px; }
+.toc-sec > a { display: block; font-weight: 700; font-size: 13.5px; color: var(--fg); text-decoration: none; padding: 3px 8px; }
+.toc-list ol { display: grid; gap: 1px; margin-top: 2px; }
+.toc-list ol a { display: block; font-size: 13px; line-height: 1.35; color: var(--muted); text-decoration: none; padding: 4px 8px 4px 10px; border-left: 2px solid var(--line); border-radius: 0 6px 6px 0; margin-left: 8px; }
+.toc-list a:hover { color: var(--fg); background: var(--accent-soft); }
+.toc-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.toc-list a[aria-current="true"] { color: var(--fg); font-weight: 600; border-left-color: var(--accent); background: var(--accent-soft); }
+.toc-head { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 8px 8px; }
+.toc-panel { max-height: min(70vh, 560px); overflow-y: auto; width: min(340px, calc(100vw - 32px)); }
+@media (min-width: 1200px) {
+  .layout { max-width: 1480px; margin: 0 auto; grid-template-columns: 250px minmax(0, 1fr); column-gap: 4px; padding-left: 16px; }
+  .toc { display: block; position: sticky; top: 70px; align-self: start; max-height: calc(100vh - 86px); overflow-y: auto; padding-block: 32px 24px; scrollbar-width: thin; }
+  .menu.topics { display: none; }
+  .topbar-row { max-width: 1480px; padding-left: 32px; }
 }
 
 /* ---------- Karten: offene Erklärung über volle Breite ---------- */
@@ -332,6 +355,42 @@ def build_js():
   if (totop) totop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); });
   onScroll();
 
+  /* Inhaltsverzeichnis: aktuelle Karte markieren, gefilterte Karten ausblenden */
+  var tocLinks = {};
+  document.querySelectorAll(".toc-list li[data-for]").forEach(function (li) {
+    (tocLinks[li.dataset.for] = tocLinks[li.dataset.for] || []).push(li);
+  });
+  var sideToc = document.querySelector("aside.toc");
+  var lockUntil = 0;
+  function markActive(id, force) {
+    if (!force && Date.now() < lockUntil) return;
+    document.querySelectorAll('.toc-list a[aria-current="true"]').forEach(function (a) { a.removeAttribute("aria-current"); });
+    (tocLinks[id] || []).forEach(function (li) {
+      var a = li.querySelector("a"); a.setAttribute("aria-current", "true");
+      if (sideToc && sideToc.contains(li) && sideToc.offsetParent !== null) {
+        var r = a.getBoundingClientRect(), t = sideToc.getBoundingClientRect();
+        if (r.top < t.top + 40 || r.bottom > t.bottom - 40) sideToc.scrollTop += r.top - t.top - t.height / 3;
+      }
+    });
+  }
+  if ("IntersectionObserver" in window && cards.length) {
+    var visible = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) visible[e.target.id] = e.target; else delete visible[e.target.id]; });
+      var best = null;
+      Object.keys(visible).forEach(function (id) {
+        var top = visible[id].getBoundingClientRect().top;
+        if (best === null || Math.abs(top - 90) < Math.abs(best.top - 90)) best = { id: id, top: top };
+      });
+      if (best) markActive(best.id);
+    }, { rootMargin: "-70px 0px -55% 0px" });
+    cards.forEach(function (c) { if (c.id) io.observe(c); });
+  }
+  if (input) input.addEventListener("input", function () {
+    cards.forEach(function (c) { (tocLinks[c.id] || []).forEach(function (li) { li.hidden = c.hidden; }); });
+    document.querySelectorAll(".toc-sec[data-sec]").forEach(function (sec) { sec.hidden = !sec.querySelector("li[data-for]:not([hidden])"); });
+  });
+
   /* Sprung zu einer Karte per #id */
   function jump() {
     var id = decodeURIComponent(location.hash.slice(1));
@@ -340,6 +399,7 @@ def build_js():
     if (!el) return;
     if (el.classList.contains("card")) {
       el.scrollIntoView({ block: "start" });
+      lockUntil = Date.now() + 900; markActive(id, true);
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     }
   }
@@ -410,9 +470,16 @@ FONTS = sheetgen.FONTS
 # ---------------------------------------------------------------- Unterseiten
 def build_page(sheet, part):
     k = sheet["key"]
-    nav = "".join(f'<a href="#{sid}">{html.escape(strip_tags(t))}</a>' for sid, t in part["nav"])
+    toc_items = []
+    for sid, t in part["nav"]:
+        sec_html = re.search(rf'<section id="{re.escape(sid)}">(.*?)</section>', part["sections"], re.S).group(1)
+        cards_ = re.findall(r'<article class="card" id="([^"]+)">.*?<h3>(.*?)</h3>', sec_html, re.S)
+        lis = "".join(f'<li data-for="{cid}"><a href="#{cid}">{html.escape(strip_tags(ct))}</a></li>' for cid, ct in cards_)
+        toc_items.append(f'<li class="toc-sec" data-sec="{sid}"><a href="#{sid}">{html.escape(strip_tags(t))}</a><ol>{lis}</ol></li>')
     if part["infobox"]:
-        nav += '<a href="#mehr">Mehr aus Marketing-Sicht</a>'
+        toc_items.append('<li class="toc-sec"><a href="#mehr">Mehr aus Marketing-Sicht</a></li>')
+    toc = '<ol class="toc-list">' + "".join(toc_items) + "</ol>"
+    nav = toc
     seg = ""
     if part["has_long"]:
         seg = f'''<h4>Code-Varianten</h4>
@@ -438,9 +505,9 @@ def build_page(sheet, part):
     <a class="tb-home" href="index.html" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
     <span class="tb-title">{html.escape(sheet["title"])}</span>
     <input id="filter" type="search" placeholder="{html.escape(part["placeholder"])}" aria-label="Karten auf dieser Seite filtern">
-    <details class="menu">
-      <summary><span class="sum-label">Themen</span><span class="sum-short" aria-hidden="true">☰</span></summary>
-      <div class="menu-panel"><nav aria-label="Abschnitte">{nav}</nav></div>
+    <details class="menu topics">
+      <summary><span class="sum-label">Inhalt</span><span class="sum-short" aria-hidden="true">☰</span></summary>
+      <div class="menu-panel toc-panel"><nav aria-label="Inhalt">{nav}</nav></div>
     </details>
     <details class="menu">
       <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
@@ -454,6 +521,11 @@ def build_page(sheet, part):
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 </header>
 
+<div class="layout">
+<aside class="toc" aria-label="Inhaltsverzeichnis">
+  <div class="toc-head">Inhalt</div>
+  <nav>{toc}</nav>
+</aside>
 <main class="wrap">
   <header>
     <div class="eyebrow">{part["eyebrow"]}</div>
@@ -469,6 +541,7 @@ def build_page(sheet, part):
 
   <footer>{part["footer"]}<br><br>Weitere Zettel: {others}</footer>
 </main>
+</div>
 
 <button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
 <script src="assets/app.js"></script>

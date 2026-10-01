@@ -200,6 +200,27 @@ img { max-width: 100%; }
   .tb-home, .menu > summary { padding: 8px 10px; }
 }
 
+/* ---------- Inhaltsverzeichnis ---------- */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); }
+.toc { display: none; }
+.toc-list, .toc-list ol { list-style: none; margin: 0; padding: 0; }
+.toc-list { display: grid; gap: 10px; }
+.toc-list a { border: 0; background: transparent; border-radius: 6px; }
+.toc-sec > a { display: block; font-weight: 700; font-size: 13.5px; color: var(--fg); text-decoration: none; padding: 3px 8px; }
+.toc-list ol { display: grid; gap: 1px; margin-top: 2px; }
+.toc-list ol a { display: block; font-size: 13px; line-height: 1.35; color: var(--muted); text-decoration: none; padding: 4px 8px 4px 10px; border-left: 2px solid var(--line); border-radius: 0 6px 6px 0; margin-left: 8px; }
+.toc-list a:hover { color: var(--fg); background: var(--accent-soft); }
+.toc-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.toc-list a[aria-current="true"] { color: var(--fg); font-weight: 600; border-left-color: var(--accent); background: var(--accent-soft); }
+.toc-head { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 8px 8px; }
+.toc-panel { max-height: min(70vh, 560px); overflow-y: auto; width: min(340px, calc(100vw - 32px)); }
+@media (min-width: 1200px) {
+  .layout { max-width: 1480px; margin: 0 auto; grid-template-columns: 250px minmax(0, 1fr); column-gap: 4px; padding-left: 16px; }
+  .toc { display: block; position: sticky; top: 70px; align-self: start; max-height: calc(100vh - 86px); overflow-y: auto; padding-block: 32px 24px; scrollbar-width: thin; }
+  .menu.topics { display: none; }
+  .topbar-row { max-width: 1480px; padding-left: 32px; }
+}
+
 /* ---------- Karten: offene Erklärung über volle Breite ---------- */
 .grid { align-items: start; grid-auto-flow: dense; }
 .card-main { display: grid; gap: 10px; min-width: 0; align-content: start; }
