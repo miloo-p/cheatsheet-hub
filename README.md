@@ -1,6 +1,6 @@
 # cheatsheet-hub
 
-Spickzettel-Hub, eine Nachschlage-Website aus dem Fullstack-Bootcamp: 7 Spickzettel mit 159 Karten zu
+Cheatsheet Hub, eine Nachschlage-Website aus dem Fullstack-Bootcamp: 7 Spickzettel mit 159 Karten zu
 HTML, CSS, JavaScript, TypeScript, GSAP, Three.js und Conversion-Optimierung.
 
 Jede Karte enthält Code-Beispiele (meist zwei Varianten nebeneinander), eine aufklappbare

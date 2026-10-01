@@ -115,7 +115,7 @@ def extract(sheet):
         n += i
         out.append(m.group(1) + body + m.group(4))
     part["sections"] = relink("\n\n  ".join(out))
-    part["footer"] = relink(part["footer"])
+    part["footer"] = relink(part["footer"]).replace("Spickzettel-Hub", "Cheatsheet Hub")
     part["lede"] = relink(part["lede"])
     part["nav"] = re.findall(r'<section id="([^"]+)">\s*<h2>(.*?) <span', secs, re.S)
     part["count"] = n
@@ -495,7 +495,7 @@ def build_page(sheet, part):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{html.escape(sheet["title"])} · Spickzettel</title>
+<title>{html.escape(sheet["title"])} · Cheatsheet Hub</title>
 {FONTS}
 <link rel="stylesheet" href="assets/app.css">
 </head>
@@ -585,7 +585,7 @@ def build_hub(parts):
             concepts = [dict(id=a, t=strip_tags(h)) for a, h in re.findall(r'<article class="card" id="([^"]+)">.*?<h3>(.*?)</h3>', sec_html, re.S)]
             secs.append(dict(id=sid, title=strip_tags(t), concepts=concepts))
         data.append(dict(cat=sh["cat"], key=sh["key"], title=sh["title"], blurb=sh["blurb"], badge=sh["badge"], level=sh["level"], sections=secs))
-    page = """<title>Spickzettel-Hub</title>
+    page = """<title>Cheatsheet Hub</title>
 """ + FONTS + """
 <link rel="stylesheet" href="assets/app.css">
 <style>""" + hubcss + """
@@ -599,7 +599,7 @@ def build_hub(parts):
 <div class="wrap">
   <header>
     <div class="eyebrow">Fullstack-Bootcamp · Nachschlagen &amp; Üben</div>
-    <h1>Spickzettel-Hub</h1>
+    <h1>Cheatsheet Hub</h1>
     <p class="lede">Alle Spickzettel an einem Ort, nach Themen gruppiert. Jeder Abschnitt und jede Karte ist direkt verlinkt, und die Suche durchsucht auch die Erklärungen aller Zettel. Jede Karte hat Code-Beispiele, eine Erklärung zum Aufklappen, einen Selbsttest und Links zur Doku.</p>
     <div class="stats" id="stats"></div>
   </header>
