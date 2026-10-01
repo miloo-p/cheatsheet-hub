@@ -1,5 +1,7 @@
 # Cheatsheet Hub
 
+**Live: https://miloo-p.github.io/cheatsheet-hub/**
+
 Mein persönliches Glossar aus dem Frontend-Teil meines Fullstack-Bootcamps. Hier sammle ich, was ich gelernt habe, damit es nicht verloren geht, während ich im Backend-Modul stecke.
 
 Das Projekt ist **vibe-gecodet**: Inhalte, Generator und Website sind im Gespräch mit Claude (KI von Anthropic) entstanden. Ich habe Richtung, Themen und Aufbau vorgegeben, Claude hat geschrieben, gebaut und getestet. Mehr dazu unter [Wie das entstanden ist](#wie-das-entstanden-ist).
@@ -55,9 +57,11 @@ cd site
 python3 -m http.server
 ```
 
-Dann `http://localhost:8000/index.html` öffnen. Veröffentlicht ist sie als Claude-Artifact. Grundsätzlich funktioniert auch GitHub Pages mit dem Ordner `site/`.
+Dann `http://localhost:8000/index.html` öffnen.
 
-`site/index.html` hat absichtlich kein eigenes `<html>`-Gerüst, weil die Artifact-Plattform das ergänzt. Browser zeigen die Seite trotzdem korrekt an.
+Veröffentlicht wird automatisch: Jeder Push auf `main` startet den Workflow `.github/workflows/pages.yml`, der `site/` auf GitHub Pages stellt. Zusätzlich gibt es eine Version als Claude-Artifact.
+
+`site/index.html` hat absichtlich kein eigenes `<html>`-Gerüst, weil die Artifact-Plattform das ergänzt. Für GitHub Pages fügt der Workflow es beim Veröffentlichen hinzu.
 
 ## Projektstruktur
 
