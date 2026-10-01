@@ -1,5 +1,11 @@
-import asyncio
+"""Lokaler Test der fertigen Website: python3 check_site.py (Playwright nötig)."""
+import asyncio, functools, http.server, pathlib, threading
 from playwright.async_api import async_playwright
+SITE = pathlib.Path(__file__).resolve().parent.parent / "site"
+class _Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *a): pass
+_srv = http.server.ThreadingHTTPServer(("127.0.0.1", 8765), functools.partial(_Quiet, directory=str(SITE)))
+threading.Thread(target=_srv.serve_forever, daemon=True).start()
 B = "http://localhost:8765/"
 SK = "<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'></head><body style='margin:0'>"
 async def main():
@@ -13,7 +19,7 @@ async def main():
             await pg.route("**/*", lambda r: r.abort() if not r.request.url.startswith(B) else r.continue_())
             return pg, errs
         # Hub: index.html wird beim Veröffentlichen in ein Gerüst gesteckt -> nachbilden
-        hub_html = open("site/index.html").read()
+        hub_html = open(SITE / "index.html").read()
         pg, errs = await page(390)
         await pg.route(B + "hubtest.html", lambda r: r.fulfill(body=SK + hub_html + "</body></html>", content_type="text/html"))
         await pg.goto(B + "hubtest.html")
@@ -24,7 +30,7 @@ async def main():
         await pg.fill("#q", "stale closure")
         await pg.wait_for_timeout(300)
         print("hub fulltext", await pg.evaluate("[...document.querySelectorAll('#results a')].map(a => a.getAttribute('href'))"))
-        await pg.screenshot(path="ux2_hub_mobile.png")
+        await pg.screenshot(path="/tmp/ux2_hub_mobile.png")
         # Weiterleitung per Kürzel
         await pg.goto(B + "hubtest.html#css-grid-2")
         await pg.wait_for_timeout(600)
@@ -46,13 +52,13 @@ async def main():
         await pg.wait_for_timeout(500)
         r = await pg.evaluate("""() => { const c = document.getElementById('css-grundlagen-2'); const g = c.parentElement.getBoundingClientRect(); const r = c.getBoundingClientRect(); return { cardW: Math.round(r.width), gridW: Math.round(g.width), cols: getComputedStyle(c).gridTemplateColumns }; }""")
         print("open card", r)
-        await pg.screenshot(path="ux2_open_desktop.png")
+        await pg.screenshot(path="/tmp/ux2_open_desktop.png")
         # Menü + Filter mobil
         pg, errs = await page(390)
         await pg.goto(B + "gsap.html")
         await pg.click("details.menu >> nth=0")
         await pg.wait_for_timeout(200)
-        await pg.screenshot(path="ux2_menu_mobile.png")
+        await pg.screenshot(path="/tmp/ux2_menu_mobile.png")
         await pg.click("details.menu >> nth=0 >> a >> nth=2")
         await pg.wait_for_timeout(400)
         await pg.mouse.wheel(0, 600)
@@ -65,6 +71,6 @@ async def main():
         await pg.click(".demo .run >> nth=0")
         await pg.wait_for_timeout(800)
         print("demo offline note:", await pg.evaluate("document.querySelector('.demo .stage').textContent.trim().slice(0,60)"), errs[:2])
-        await pg.screenshot(path="ux2_mobile_scrolled.png")
+        await pg.screenshot(path="/tmp/ux2_mobile_scrolled.png")
         await b.close()
 asyncio.run(main())
