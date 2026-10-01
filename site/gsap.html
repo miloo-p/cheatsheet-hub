@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GSAP · Spickzettel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-sheet="gsap" data-lang="js">
+<header class="topbar" id="topbar">
+  <div class="topbar-row">
+    <a class="tb-home" href="index.html" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
+    <span class="tb-title">GSAP</span>
+    <input id="filter" type="search" placeholder="Filtern, z.B. timeline, scrub, stagger …" aria-label="Karten auf dieser Seite filtern">
+    <details class="menu">
+      <summary><span class="sum-label">Themen</span><span aria-hidden="true">☰</span></summary>
+      <div class="menu-panel"><nav aria-label="Abschnitte"><a href="#grundlagen">Grundlagen</a><a href="#timelines">Timelines</a><a href="#scrolltrigger">ScrollTrigger</a><a href="#plugins">Plugins</a><a href="#praxis">Praxis: React, Performance, Barrierefreiheit</a></nav></div>
+    </details>
+    <details class="menu">
+      <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
+      <div class="menu-panel">
+        <h4>Code-Varianten</h4>
+          <div class="seg" role="group" aria-label="Varianten anzeigen">
+            <button type="button" id="show-both" aria-pressed="true">Beide</button>
+            <button type="button" id="show-short" aria-pressed="false">Nur mit GSAP</button>
+            <button type="button" id="show-long" aria-pressed="false">Nur ohne GSAP</button>
+          </div>
+        <h4>Erklärungen</h4>
+        <button type="button" class="ghost" id="toggle-all">Alle Erklärungen aufklappen</button>
+      </div>
+    </details>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+</header>
+
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Animation &amp; 3D · GSAP</div>
+    <h1>GSAP Spickzettel</h1>
+    <p class="lede">17 Konzepte der Animationsbibliothek GSAP (Version 3.15.0). Links steht jeweils der GSAP-Code, rechts derselbe Effekt <b>ohne GSAP</b>, also mit CSS, der Web Animations API oder reinem JavaScript. So siehst du, was die Bibliothek dir abnimmt und wann du sie gar nicht brauchst. Die meisten Karten haben eine <b>Live-Demo</b>: einfach auf „Abspielen“ klicken. Die Doku-Links führen zur offiziellen GSAP-Doku auf Englisch.</p>
+    <div class="legend"><span><b class="lbl" style="color:var(--accent);background:var(--accent-soft)">Mit GSAP</b> der Code mit der Bibliothek</span><span><b class="lbl" style="color:var(--long);background:var(--long-soft)">Ohne GSAP</b> CSS, Web Animations API oder Vanilla-JS</span></div>
+  </header>
+
+  <section id="grundlagen">
+    <h2>Grundlagen <span class="tag">tweens</span></h2>
+    <p class="sub">Ein Tween animiert Eigenschaften von A nach B. Fast alles in GSAP baut darauf auf.</p>
+    <div class="grid">
+      <article class="card" id="gsap-grundlagen-1">
+        <div class="card-main"><h3>Animieren mit <code>gsap.to()</code></h3>
+        <p>Ein Element vom aktuellen Zustand zu neuen Werten animieren.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.to(".box", {
+  x: 220,
+  rotation: 360,
+  duration: 1,
+});</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>document.querySelector(".box").animate(
+  [
+    { transform: "translateX(0) rotate(0deg)" },
+    { transform: "translateX(220px) rotate(360deg)" },
+  ],
+  { duration: 1000, easing: "ease-out", fill: "forwards" }
+);</pre></div>
+        <div class="demo" data-demo="d1">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="box"></div></template>
+          <div class="stage" style="--h:90px"><div class="box"></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/gsap.to()" target="_blank" rel="noopener">gsap.to()</a><a href="https://gsap.com/docs/v3/GSAP/CorePlugins/CSS" target="_blank" rel="noopener">Transforms (CSSPlugin)</a><a href="https://developer.mozilla.org/de/docs/Web/API/Web_Animations_API" target="_blank" rel="noopener">Web Animations API (MDN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Tween ist wie ein Navi-Auftrag: Du sagst nur, wo es hingehen soll und wie lange die Fahrt dauern darf. Den Weg dazwischen berechnet GSAP Bild für Bild.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>gsap.to()</code> nimmt ein Ziel (Selektor, Element oder Array) und ein Objekt mit Zielwerten.</li><li><code>x</code> und <code>rotation</code> sind GSAP-Kurzformen für Transforms. GSAP setzt daraus den <code>transform</code>-String zusammen.</li><li><code>duration</code> ist in Sekunden angegeben, nicht in Millisekunden wie bei CSS oder der Web Animations API.</li><li>Der Standard-Ease ist <code>power1.out</code>: schneller Start, sanftes Ende.</li><li>Die Variante ohne GSAP nutzt die Web Animations API (<code>element.animate</code>). Dort musst du Start- und Endzustand komplett angeben und mit <code>fill: "forwards"</code> festhalten.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Die Dauer in Millisekunden angeben: <code>duration: 1000</code> dauert bei GSAP über 16 Minuten. Und bei <code>element.animate</code> ohne <code>fill: "forwards"</code> springt das Element nach dem Ende zurück an den Start.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>GSAP, sobald mehrere Animationen zusammenspielen, Scrollen beteiligt ist oder du Werte während der Animation ändern willst. Für einen einzelnen Hover-Effekt reicht eine CSS-Transition.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie lange dauert <code>gsap.to(".box", { x: 100 })</code> ohne Angabe von <code>duration</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>0,5 Sekunden. Das ist die Standarddauer in GSAP.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-grundlagen-2">
+        <div class="card-main"><h3><code>from()</code> und <code>fromTo()</code></h3>
+        <p>Vom Ziel aus zurück animieren, ideal für Einblend-Effekte. Oder Start und Ende komplett festlegen.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.from(".card", { y: 40, autoAlpha: 0, duration: 0.6 });
+
+gsap.fromTo(".bar",
+  { scaleX: 0 },
+  { scaleX: 1, duration: 1, transformOrigin: "left center" }
+);</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>document.querySelector(".card").animate(
+  [
+    { transform: "translateY(40px)", opacity: 0, visibility: "hidden" },
+    { transform: "translateY(0)", opacity: 1, visibility: "visible" },
+  ],
+  { duration: 600, easing: "ease-out" }
+);
+
+const bar = document.querySelector(".bar");
+bar.style.transformOrigin = "left center";
+bar.animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+  { duration: 1000, fill: "forwards" });</pre></div>
+        <div class="demo" data-demo="d2">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="chip card">Karte erscheint</div><div class="box bar" style="width:100%;height:10px"></div></div></template>
+          <div class="stage" style="--h:100px"><div class="col"><div class="chip card">Karte erscheint</div><div class="box bar" style="width:100%;height:10px"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/gsap.from()" target="_blank" rel="noopener">gsap.from()</a><a href="https://gsap.com/docs/v3/GSAP/gsap.fromTo()" target="_blank" rel="noopener">gsap.fromTo()</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>from()</code> ist wie ein Film, der rückwärts gedreht und vorwärts abgespielt wird: Das Element steht schon an seinem Platz, GSAP schiebt es kurz weg und lässt es dorthin zurückfliegen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>gsap.from()</code> nimmt die angegebenen Werte als Start und den aktuellen Zustand aus dem CSS als Ziel.</li><li><code>autoAlpha</code> ist eine GSAP-Kurzform: Es animiert <code>opacity</code> und setzt <code>visibility: hidden</code>, sobald der Wert 0 ist. Unsichtbare Elemente sind dann auch nicht mehr klickbar.</li><li><code>fromTo()</code> legt Start und Ziel ausdrücklich fest und ist damit unabhängig vom aktuellen Zustand.</li><li><code>transformOrigin</code> bestimmt den Fixpunkt für <code>scale</code> und <code>rotation</code>. Mit <code>left center</code> wächst der Balken von links.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein <code>from()</code> mehrfach hintereinander auslösen, z.B. bei jedem Klick. Startet die zweite Animation, während die erste noch läuft, liest GSAP den halb animierten Zustand als neues Ziel, und das Element bleibt irgendwo in der Mitte hängen. Für wiederholbare Animationen ist <code>fromTo()</code> sicher.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>from()</code> für Einblendungen beim Laden. <code>fromTo()</code>, wenn eine Animation mehrfach abgespielt wird oder der Ausgangszustand nicht sicher ist.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum flackert ein Element manchmal kurz sichtbar auf, bevor <code>gsap.from(…, { autoAlpha: 0 })</code> startet?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Weil das Element schon gerendert wird, bevor das Skript läuft. Abhilfe: im CSS <code>visibility: hidden</code> setzen und mit <code>autoAlpha</code> einblenden, oder das Skript früher laden.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-grundlagen-3">
+        <div class="card-main"><h3>Easing</h3>
+        <p>Die Kurve bestimmt, wie sich eine Bewegung anfühlt: träge, federnd, mechanisch oder verspielt.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.to(".a", { x: 220, ease: "power3.out" });
+gsap.to(".b", { x: 220, ease: "back.out(1.7)" });
+gsap.to(".c", { x: 220, ease: "elastic.out(1, 0.4)" });</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>.a { transition: transform .5s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.b { transition: transform .5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+/* Elastisch geht nur mit vielen Stützpunkten in linear(): */
+.c { transition: transform .5s linear(0, 0.7 10%, 1.15 20%, 0.95 35%, 1.02 50%, 1); }</pre></div>
+        <div class="demo" data-demo="d3">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="box a"></div><div class="box alt b"></div><div class="box warn c"></div></div></template>
+          <div class="stage" style="--h:180px"><div class="col"><div class="box a"></div><div class="box alt b"></div><div class="box warn c"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/Eases" target="_blank" rel="noopener">Eases und Ease Visualizer</a><a href="https://developer.mozilla.org/de/docs/Web/CSS/easing-function/linear" target="_blank" rel="noopener">linear() (MDN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Easing ist der Fahrstil: Ein Taxi fährt sanft an und bremst sanft (<code>inOut</code>), ein Sportwagen zieht los und rollt aus (<code>out</code>), ein Flummi springt über das Ziel hinaus und federt zurück (<code>elastic</code>).</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>.out</code> heißt: schnell starten, langsam ankommen. Das passt für fast alles, was ins Bild kommt.</li><li><code>.in</code> heißt: langsam starten, schnell enden. Gut für Elemente, die das Bild verlassen.</li><li><code>.inOut</code> ist an beiden Enden weich, typisch für Bewegungen von A nach B innerhalb der Seite.</li><li>Die Zahl bei <code>power1</code> bis <code>power4</code> gibt die Stärke an. <code>back</code> schießt leicht über das Ziel hinaus, <code>elastic</code> schwingt nach.</li><li>In CSS gibt es <code>cubic-bezier()</code> für einfache Kurven. Federn und Abpraller lassen sich nur mit der neueren Funktion <code>linear()</code> und vielen Stützpunkten annähern.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Für alles dasselbe Easing nehmen, meist <code>linear</code> oder den Standardwert. Lineare Bewegungen wirken mechanisch, weil sich in der echten Welt nichts ohne Beschleunigung bewegt. <code>linear</code> passt nur für Endlosschleifen wie Ladekreisel.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>GSAP, wenn du ausdrucksstarke Kurven brauchst oder sie im Ease Visualizer ausprobieren willst. Für einfache Übergänge sind <code>ease-out</code> oder ein <code>cubic-bezier</code> in CSS völlig ausreichend.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welches Easing passt zu einem Modal, das den Bildschirm verlässt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ein <code>.in</code>-Ease wie <code>power2.in</code>. Es beschleunigt zum Ende hin, so wirkt das Wegfliegen natürlich.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-grundlagen-4">
+        <div class="card-main"><h3>Versetzt starten: <code>stagger</code></h3>
+        <p>Viele Elemente nacheinander statt gleichzeitig animieren, mit einer einzigen Zeile.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.from(".item", {
+  y: 20,
+  autoAlpha: 0,
+  stagger: 0.1,
+});</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>document.querySelectorAll(".item").forEach((el, i) =&gt; {
+  el.animate(
+    [
+      { transform: "translateY(20px)", opacity: 0 },
+      { transform: "translateY(0)", opacity: 1 },
+    ],
+    { duration: 500, delay: i * 100, easing: "ease-out", fill: "backwards" }
+  );
+});</pre></div>
+        <div class="demo" data-demo="d4">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="row" style="flex-wrap:wrap"><div class="box item"></div><div class="box item"></div><div class="box item"></div><div class="box item"></div><div class="box item"></div><div class="box item"></div></div></template>
+          <div class="stage" style="--h:90px"><div class="row" style="flex-wrap:wrap"><div class="box item"></div><div class="box item"></div><div class="box item"></div><div class="box item"></div><div class="box item"></div><div class="box item"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/resources/getting-started/Staggers" target="_blank" rel="noopener">Staggers</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>stagger</code> ist eine La-Ola-Welle im Stadion: Jeder macht dieselbe Bewegung, aber einen Augenblick nach dem Nachbarn.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>stagger: 0.1</code> startet jedes Element 0,1 Sekunden nach dem vorherigen.</li><li>Die Gesamtdauer wächst mit der Anzahl: Bei 20 Elementen startet das letzte erst nach 1,9 Sekunden.</li><li>Als Objekt lässt sich mehr steuern: <code>stagger: { each: 0.1, from: "center" }</code> startet in der Mitte und läuft nach außen. <code>amount: 1</code> verteilt alle Starts auf genau eine Sekunde, egal wie viele Elemente es sind.</li><li>Ohne GSAP berechnest du die Verzögerung pro Element selbst aus dem Index.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>each</code> bei langen Listen verwenden. Bei 100 Einträgen dauert die Animation dann über 10 Sekunden, und Nutzer warten auf Inhalte. Für variable Listen ist <code>amount</code> sicherer.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>GSAP, sobald du mit <code>from</code>, <code>amount</code> oder Raster-Staggers arbeiten willst. Für drei feste Elemente geht es auch mit CSS und <code>animation-delay</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie animierst du ein Raster von innen nach außen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>stagger: { each: 0.05, grid: "auto", from: "center" }</code>. GSAP berechnet die Abstände im Raster selbst.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-grundlagen-5">
+        <div class="card-main"><h3>Transforms setzen: <code>gsap.set()</code></h3>
+        <p>Werte sofort setzen, ohne Animation. GSAP verwaltet alle Transforms einzeln, sodass sie sich nicht gegenseitig überschreiben.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.set(".box", { xPercent: -50, rotation: 15 });
+
+// später, nur x ändern – rotation bleibt erhalten
+gsap.to(".box", { x: 120 });</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const box = document.querySelector(".box");
+box.style.transform = "translateX(-50%) rotate(15deg)";
+
+// später: der komplette String muss neu gebaut werden,
+// sonst geht die Drehung verloren
+box.style.transform = "translateX(-50%) translateX(120px) rotate(15deg)";</pre></div>
+        <div class="demo" data-demo="d5">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="box"></div></template>
+          <div class="stage" style="--h:90px"><div class="box"></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/gsap.set()" target="_blank" rel="noopener">gsap.set()</a><a href="https://gsap.com/docs/v3/GSAP/CorePlugins/CSS" target="_blank" rel="noopener">Transforms (CSSPlugin)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>CSS-Transforms sind ein einzelner Satz, den du immer komplett neu schreiben musst. GSAP führt stattdessen eine Liste mit einzelnen Einträgen für Verschiebung, Drehung und Skalierung und baut daraus den Satz.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>gsap.set()</code> ist ein Tween mit Dauer 0, also eine sofortige Zuweisung.</li><li>GSAP speichert <code>x</code>, <code>y</code>, <code>rotation</code>, <code>scale</code> und <code>xPercent</code> getrennt pro Element.</li><li>Animierst du danach nur <code>x</code>, bleiben die anderen Transforms unverändert.</li><li><code>xPercent: -50</code> verschiebt um die Hälfte der eigenen Breite und lässt sich mit <code>x</code> kombinieren. Das ist praktisch für zentrierte Elemente.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Element per CSS <code>transform</code> positionieren und dann mit GSAP animieren. GSAP liest den vorhandenen Transform zwar ein, aber gemischte Quellen führen schnell zu Sprüngen. Am besten setzt du Transforms für animierte Elemente nur noch mit GSAP.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>gsap.set()</code> für Startzustände vor einer Animation. Für statisches Layout ohne Animation bleibt CSS der richtige Ort.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist der Unterschied zwischen <code>x: 100</code> und <code>left: 100</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>x</code> verschiebt per <code>transform</code> und läuft flüssig auf der Grafikkarte. <code>left</code> verändert das Layout und zwingt den Browser bei jedem Bild zum Neuberechnen. Siehe Karte „Flüssig animieren“.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-grundlagen-6">
+        <div class="card-main"><h3>Steuern: <code>play</code>, <code>pause</code>, <code>reverse</code></h3>
+        <p>Jede Animation ist ein Objekt mit Fernbedienung. Seit Version 3.15 gibt es dazu <code>easeReverse</code> für einen natürlichen Rückweg.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>const tween = gsap.to(".menu", {
+  x: 220,
+  ease: "expo.out",
+  easeReverse: true,
+  paused: true,
+});
+
+openBtn.onclick = () =&gt; tween.play();
+closeBtn.onclick = () =&gt; tween.reverse();</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const anim = document.querySelector(".menu").animate(
+  [{ transform: "translateX(0)" }, { transform: "translateX(220px)" }],
+  { duration: 1000, easing: "cubic-bezier(0.19, 1, 0.22, 1)", fill: "both" }
+);
+anim.pause();
+
+openBtn.onclick = () =&gt; { anim.playbackRate = 1; anim.play(); };
+closeBtn.onclick = () =&gt; anim.reverse();</pre></div>
+        <div class="demo" data-demo="d6">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="box menu"></div><div class="row"><button type="button" class="chip open">Öffnen</button><button type="button" class="chip close">Schließen</button></div></div></template>
+          <div class="stage" style="--h:120px"><div class="col"><div class="box menu"></div><div class="row"><button type="button" class="chip open">Öffnen</button><button type="button" class="chip close">Schließen</button></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/Tween" target="_blank" rel="noopener">Tween-Methoden</a><a href="https://gsap.com/blog/3-15/" target="_blank" rel="noopener">GSAP 3.15: easeReverse</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Tween ist eine Videokassette im Rekorder: Du kannst abspielen, anhalten, zurückspulen oder an eine Stelle springen. <code>easeReverse</code> sorgt dafür, dass das Zurückspulen nicht wie ein rückwärts laufender Film aussieht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>paused: true</code> erzeugt die Animation, ohne sie zu starten.</li><li><code>play()</code>, <code>pause()</code>, <code>reverse()</code>, <code>restart()</code> und <code>progress(0.5)</code> steuern sie jederzeit, auch mitten im Lauf.</li><li>Beim normalen <code>reverse()</code> läuft auch das Easing rückwärts. Aus <code>expo.out</code> wird beim Schließen ein träger Start mit hartem Ende.</li><li><code>easeReverse: true</code> (neu in GSAP 3.15) verwendet beim Rückweg dieselbe Kurvenform in der passenden Richtung. Mit einem Ease-Namen wie <code>easeReverse: "sine.in"</code> bekommt der Rückweg ein ganz eigenes Gefühl.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Bei jedem Klick einen neuen Tween erzeugen, statt einen vorhandenen zu steuern. Bei schnellem Klicken laufen dann mehrere Animationen gegeneinander. Ein Tween mit <code>play()</code> und <code>reverse()</code> lässt sich beliebig unterbrechen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>GSAP für Menüs, Drawer und Modals, die man jederzeit umkehren kann. Die Web Animations API hat ebenfalls <code>reverse()</code>, aber kein getrenntes Easing für den Rückweg.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welche Option hat <code>easeReverse</code> ersetzt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>yoyoEase</code>. Es funktioniert weiterhin, wird aber intern in <code>easeReverse</code> umgewandelt und gilt als veraltet.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="timelines">
+    <h2>Timelines <span class="tag">timeline</span></h2>
+    <p class="sub">Mehrere Tweens zu einer Abfolge verbinden, die du als Ganzes steuerst.</p>
+    <div class="grid">
+      <article class="card" id="gsap-timelines-1">
+        <div class="card-main"><h3>Abfolgen mit <code>gsap.timeline()</code></h3>
+        <p>Animationen nacheinander abspielen, ohne Verzögerungen von Hand auszurechnen.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>const tl = gsap.timeline();
+tl.to(".a", { x: 220 })
+  .to(".b", { x: 220 })
+  .to(".c", { x: 220 });</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const opts = { duration: 500, fill: "forwards", easing: "ease-out" };
+const move = [{ transform: "translateX(0)" }, { transform: "translateX(220px)" }];
+
+document.querySelector(".a").animate(move, { ...opts, delay: 0 });
+document.querySelector(".b").animate(move, { ...opts, delay: 500 });
+document.querySelector(".c").animate(move, { ...opts, delay: 1000 });</pre></div>
+        <div class="demo" data-demo="d7">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="box a"></div><div class="box alt b"></div><div class="box warn c"></div></div></template>
+          <div class="stage" style="--h:180px"><div class="col"><div class="box a"></div><div class="box alt b"></div><div class="box warn c"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/Timeline" target="_blank" rel="noopener">Timeline</a><a href="https://gsap.com/docs/v3/GSAP/gsap.timeline()" target="_blank" rel="noopener">gsap.timeline()</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Timeline ist ein Drehbuch: Szene folgt auf Szene. Willst du eine Szene verlängern, rutschen alle folgenden automatisch nach hinten, ohne dass du jede Uhrzeit neu ausrechnest.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>gsap.timeline()</code> erzeugt einen Container für Tweens.</li><li>Jedes <code>.to()</code> auf der Timeline wird standardmäßig ans Ende angehängt.</li><li>Änderst du die Dauer eines Tweens, verschieben sich alle späteren automatisch.</li><li>Die ganze Timeline lässt sich wie ein einzelner Tween steuern: <code>tl.pause()</code>, <code>tl.reverse()</code>, <code>tl.progress(0.5)</code>.</li><li>Ohne Timeline musst du jede Verzögerung selbst ausrechnen und bei jeder Änderung alle nachfolgenden anpassen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Abfolgen mit <code>delay</code> in einzelnen Tweens bauen. Das funktioniert, bis du die erste Dauer änderst und alle Verzögerungen danach falsch sind. Und <code>reverse()</code> geht nur für die ganze Timeline, nicht für lose Tweens.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Eine Timeline, sobald zwei oder mehr Schritte voneinander abhängen. Einzelne <code>delay</code>-Werte nur für wirklich unabhängige Animationen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie lange dauert die Timeline im Beispiel ohne Angabe von <code>duration</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>1,5 Sekunden: drei Tweens mit der Standarddauer von 0,5 Sekunden hintereinander.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-timelines-2">
+        <div class="card-main"><h3>Der Positionsparameter</h3>
+        <p>Das dritte Argument bestimmt, wo ein Tween in der Timeline startet: überlappend, gleichzeitig oder mit Pause.</p>
+        <div class="v short"><span class="lbl">Relativ</span>
+<pre>tl.to(".a", { x: 220, duration: 1 })
+  .to(".b", { x: 220 }, "&lt;")        // gleichzeitig mit dem vorigen
+  .to(".c", { x: 220 }, "-=0.3")    // 0,3 s vor dem Ende
+  .add("ende", "+=0.5")             // Label nach 0,5 s Pause
+  .to(".a", { rotation: 90 }, "ende");</pre></div>
+        <div class="v long"><span class="lbl">Absolut</span>
+<pre>// Startzeiten in Sekunden, von Hand berechnet:
+tl.to(".a", { x: 220, duration: 1 }, 0)
+  .to(".b", { x: 220 }, 0)            // gleichzeitig mit .a
+  .to(".c", { x: 220 }, 0.7)          // Ende bei 1 s, minus 0,3 s
+  .to(".a", { rotation: 90 }, 1.7);   // Ende von .c (1,2 s) + 0,5 s Pause</pre></div>
+        <div class="demo" data-demo="d8">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="box a"></div><div class="box alt b"></div><div class="box warn c"></div></div></template>
+          <div class="stage" style="--h:180px"><div class="col"><div class="box a"></div><div class="box alt b"></div><div class="box warn c"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/resources/position-parameter" target="_blank" rel="noopener">Positionsparameter</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Der Positionsparameter ist wie Regieanweisungen im Drehbuch: „gleichzeitig mit der letzten Szene“, „kurz bevor sie endet“, „nach einer Pause“. Relative Angaben bleiben richtig, auch wenn sich Szenen ändern.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ohne Angabe wird ans Ende der Timeline angehängt.</li><li><code>"&lt;"</code> startet gleichzeitig mit dem Start des vorigen Tweens, <code>"&gt;"</code> an dessen Ende.</li><li><code>"-=0.3"</code> startet 0,3 Sekunden vor dem Ende der Timeline, also überlappend. <code>"+=0.5"</code> lässt eine Pause.</li><li>Eine Zahl wie <code>1.2</code> ist eine absolute Zeit ab Timeline-Beginn.</li><li>Labels wie <code>"ende"</code> sind benannte Sprungmarken. Tweens können dort starten, und <code>tl.play("ende")</code> springt direkt hin.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Absolute Zeiten benutzen wie in der rechten Variante. Ändert sich eine einzige Dauer, stimmen alle Zeiten danach nicht mehr und müssen neu gerechnet werden. Relative Angaben wie <code>"&lt;"</code> und <code>"-=0.3"</code> passen sich automatisch an.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Relative Positionen für fast alles. Absolute Zahlen nur, wenn ein Tween genau zu einem festen Zeitpunkt starten muss, z.B. synchron zu Audio.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was bedeutet <code>"&lt;0.2"</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>0,2 Sekunden nach dem Start des vorigen Tweens. So entsteht ein leichter Versatz, ähnlich wie bei <code>stagger</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-timelines-3">
+        <div class="card-main"><h3><code>defaults</code>, <code>repeat</code> und <code>yoyo</code></h3>
+        <p>Gemeinsame Einstellungen einmal für die ganze Timeline festlegen und Abläufe wiederholen.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>const tl = gsap.timeline({
+  defaults: { duration: 0.6, ease: "power2.inOut" },
+  repeat: -1,
+  yoyo: true,
+  repeatDelay: 0.3,
+});
+tl.to(".a", { x: 220 }).to(".b", { x: 220 });</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const tl = gsap.timeline({ repeat: -1, yoyo: true, repeatDelay: 0.3 });
+tl.to(".a", { x: 220, duration: 0.6, ease: "power2.inOut" })
+  .to(".b", { x: 220, duration: 0.6, ease: "power2.inOut" });</pre></div>
+        <div class="demo" data-demo="d9">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="box a"></div><div class="box alt b"></div></div></template>
+          <div class="stage" style="--h:130px"><div class="col"><div class="box a"></div><div class="box alt b"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/Timeline" target="_blank" rel="noopener">Timeline (defaults, repeat, yoyo)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>defaults</code> ist die Hausordnung der Timeline: Was dort steht, gilt für alle Tweens, solange einer nicht ausdrücklich etwas anderes sagt.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Werte in <code>defaults</code> erben alle Tweens der Timeline, z.B. Dauer und Easing.</li><li>Ein Tween kann einzelne Werte überschreiben, indem er sie selbst angibt.</li><li><code>repeat: -1</code> wiederholt endlos, <code>repeat: 2</code> spielt insgesamt dreimal.</li><li><code>yoyo: true</code> spielt jede zweite Wiederholung rückwärts, die Bewegung pendelt also hin und her.</li><li><code>repeatDelay</code> legt eine Pause zwischen die Wiederholungen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>repeat: 3</code> als „dreimal insgesamt“ verstehen. Es heißt „drei Wiederholungen nach dem ersten Durchlauf“, also viermal insgesamt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>defaults</code> ab dem zweiten Tween mit gleichen Einstellungen. Das hält Timelines kurz und Änderungen an einer Stelle.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Ein Tween in einer Timeline mit <code>defaults: { duration: 1 }</code> hat <code>duration: 0.2</code>. Wie lange dauert er?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>0,2 Sekunden. Eigene Werte des Tweens haben Vorrang vor den Defaults.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="scrolltrigger">
+    <h2>ScrollTrigger <span class="tag">scroll</span></h2>
+    <p class="sub">Animationen an die Scrollposition koppeln. Die Demos scrollen in ihrem eigenen Kasten.</p>
+    <div class="grid">
+      <article class="card" id="gsap-scrolltrigger-1">
+        <div class="card-main"><h3>Beim Hineinscrollen abspielen</h3>
+        <p>Eine Animation starten, sobald ein Element in den sichtbaren Bereich kommt.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.registerPlugin(ScrollTrigger);
+
+gsap.from(".target", {
+  x: -100,
+  autoAlpha: 0,
+  scrollTrigger: {
+    trigger: ".target",
+    start: "top 80%",
+    toggleActions: "play none none reverse",
+  },
+});</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const target = document.querySelector(".target");
+
+const observer = new IntersectionObserver(([entry]) =&gt; {
+  target.classList.toggle("visible", entry.isIntersecting);
+}, { rootMargin: "0px 0px -20% 0px" });
+
+observer.observe(target);
+
+/* CSS */
+.target { opacity: 0; transform: translateX(-100px); transition: .5s; }
+.target.visible { opacity: 1; transform: none; }</pre></div>
+        <div class="demo" data-demo="d10">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="scroller"><div class="spacer">↓ hier scrollen</div><div class="box target"></div><div class="spacer"></div></div></template>
+          <div class="stage" style="--h:200px"><div class="scroller"><div class="spacer">↓ hier scrollen</div><div class="box target"></div><div class="spacer"></div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/Plugins/ScrollTrigger/" target="_blank" rel="noopener">ScrollTrigger</a><a href="https://developer.mozilla.org/de/docs/Web/API/Intersection_Observer_API" target="_blank" rel="noopener">IntersectionObserver (MDN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein ScrollTrigger ist eine Lichtschranke im Flur: Wenn das Element eine bestimmte Linie im Fenster überquert, wird die Animation ausgelöst.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>trigger</code> ist das Element, dessen Position beobachtet wird.</li><li><code>start: "top 80%"</code> heißt: wenn die Oberkante des Elements die Linie bei 80% der Fensterhöhe erreicht.</li><li><code>toggleActions</code> legt vier Aktionen fest: beim Hineinscrollen, beim Verlassen nach unten, beim Zurückkommen von unten und beim Verlassen nach oben. Hier: abspielen, nichts, nichts, rückwärts.</li><li><code>markers: true</code> zeigt die Start- und End-Linien beim Entwickeln an.</li><li>Ohne GSAP übernimmt ein <code>IntersectionObserver</code> die Lichtschranke, und eine CSS-Transition die Animation.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>markers: true</code> im fertigen Projekt vergessen. Und: ScrollTrigger in einem eigenen Scroll-Container benutzen, ohne <code>scroller</code> anzugeben. Dann beobachtet er das Fenster, und nichts passiert.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Für einfache Einblendungen reicht der <code>IntersectionObserver</code> mit CSS völlig. ScrollTrigger lohnt sich, sobald Timelines, <code>scrub</code> oder <code>pin</code> ins Spiel kommen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was bedeutet <code>start: "center center"</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Die Animation startet, wenn die Mitte des Elements die Mitte des Fensters erreicht.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-scrolltrigger-2">
+        <div class="card-main"><h3>An den Scroll koppeln: <code>scrub</code></h3>
+        <p>Die Animation läuft genau so weit, wie gescrollt wurde, vor und zurück.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.to(".progress", {
+  scaleX: 1,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "article",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: true,
+  },
+});</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const bar = document.querySelector(".progress");
+const article = document.querySelector("article");
+
+window.addEventListener("scroll", () =&gt; {
+  const rect = article.getBoundingClientRect();
+  const total = rect.height - window.innerHeight;
+  const progress = Math.min(Math.max(-rect.top / total, 0), 1);
+  bar.style.transform = `scaleX(${progress})`;
+}, { passive: true });</pre></div>
+        <div class="demo" data-demo="d11">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="scroller"><div class="box progress" style="position:sticky;top:0;width:100%;height:8px;transform:scaleX(0);transform-origin:left;z-index:1"></div><div class="spacer">↓ scrollen</div><div class="spacer">weiter …</div><div class="spacer">fast geschafft</div></div></template>
+          <div class="stage" style="--h:200px"><div class="scroller"><div class="box progress" style="position:sticky;top:0;width:100%;height:8px;transform:scaleX(0);transform-origin:left;z-index:1"></div><div class="spacer">↓ scrollen</div><div class="spacer">weiter …</div><div class="spacer">fast geschafft</div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/Plugins/ScrollTrigger/" target="_blank" rel="noopener">ScrollTrigger: scrub</a><a href="https://developer.mozilla.org/de/docs/Web/CSS/CSS_scroll-driven_animations" target="_blank" rel="noopener">Scroll-Driven Animations (MDN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Mit <code>scrub</code> wird die Scrollleiste zum Abspielregler eines Videos. Scrollst du ein Stück nach unten, läuft das Video ein Stück weiter. Scrollst du zurück, spult es zurück.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>scrub: true</code> verbindet den Fortschritt der Animation direkt mit der Scrollposition zwischen <code>start</code> und <code>end</code>.</li><li><code>scrub: 1</code> glättet die Kopplung: Die Animation braucht eine Sekunde, um zur Scrollposition aufzuholen. Das wirkt weicher.</li><li><code>ease: "none"</code> ist hier wichtig, sonst läuft die Animation an manchen Scrollstellen schneller als an anderen.</li><li>Ohne GSAP rechnest du den Fortschritt im Scroll-Event selbst aus. Modernes CSS kann das auch mit <code>animation-timeline: scroll()</code>, das wird aber noch nicht in allen Browsern unterstützt.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Bei <code>scrub</code> ein Easing wie <code>power2.out</code> stehen lassen. Dann passt der Fortschritt nicht mehr gleichmäßig zum Scrollen, und es fühlt sich an, als würde die Seite haken.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>scrub</code> für Fortschrittsbalken, Parallax und Scroll-Geschichten. Für einen einfachen Lesefortschritt lohnt sich ein Blick auf CSS Scroll-Driven Animations.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist der Unterschied zwischen <code>scrub: true</code> und <code>scrub: 0.5</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Bei <code>true</code> folgt die Animation exakt und sofort. Bei <code>0.5</code> braucht sie eine halbe Sekunde zum Aufholen und wirkt dadurch gedämpft.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-scrolltrigger-3">
+        <div class="card-main"><h3>Festhalten: <code>pin</code></h3>
+        <p>Ein Element bleibt stehen, während daneben weitergescrollt wird, und läuft danach normal weiter.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.to(".panel", {
+  rotation: 360,
+  scrollTrigger: {
+    trigger: ".panel",
+    start: "top 20%",
+    end: "+=300",
+    pin: true,
+    scrub: true,
+  },
+});</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP (nur sticky)</span>
+<pre>/* CSS: Festhalten geht ohne GSAP mit sticky */
+.panel-wrap { height: 600px; }       /* Strecke, auf der es klebt */
+.panel { position: sticky; top: 20%; }
+
+/* Die Drehung muss JavaScript im Scroll-Event berechnen,
+   wie in der Karte zu scrub. */</pre></div>
+        <div class="demo" data-demo="d12">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="scroller"><div class="spacer">↓ scrollen</div><div class="box panel" style="margin-inline:auto"></div><div class="spacer"></div><div class="spacer">Ende</div></div></template>
+          <div class="stage" style="--h:220px"><div class="scroller"><div class="spacer">↓ scrollen</div><div class="box panel" style="margin-inline:auto"></div><div class="spacer"></div><div class="spacer">Ende</div></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/Plugins/ScrollTrigger/" target="_blank" rel="noopener">ScrollTrigger: pin</a><a href="https://developer.mozilla.org/de/docs/Web/CSS/position" target="_blank" rel="noopener">position: sticky (MDN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>pin</code> ist ein Magnet an der Scheibe: Das Element bleibt an einer Stelle im Fenster haften, während die Seite für eine festgelegte Strecke darunter weiterläuft. Danach löst sich der Magnet.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>pin: true</code> hält den Trigger zwischen <code>start</code> und <code>end</code> fest.</li><li><code>end: "+=300"</code> heißt: 300 Pixel Scrollstrecke nach dem Start.</li><li>ScrollTrigger fügt dafür automatisch Abstand ein (<code>pinSpacing</code>), damit der folgende Inhalt nicht darunter verschwindet.</li><li>Kombiniert mit <code>scrub</code> entsteht das typische Muster „Element bleibt stehen und animiert, während man scrollt“.</li><li>Das reine Festhalten kann CSS mit <code>position: sticky</code>. Nur die Kopplung an eine Animation braucht JavaScript.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Element pinnen, das selbst animiert wird, und dann das Pin-Element auch per <code>transform</code> bewegen. Das kann sich beißen. Besser einen Wrapper pinnen und das innere Element animieren.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>position: sticky</code>, wenn ein Element nur kleben soll. ScrollTrigger mit <code>pin</code>, wenn während des Klebens etwas passiert, z.B. eine Folge von Bildern oder ein horizontales Scrollen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wofür ist <code>pinSpacing: false</code> gut?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Wenn das nachfolgende Element über das gepinnte Element hinweggleiten soll, z.B. für gestapelte Karten. Ohne Abstand rückt der Inhalt nicht nach unten.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="plugins">
+    <h2>Plugins <span class="tag">plugins</span></h2>
+    <p class="sub">Seit 2025 sind alle GSAP-Plugins kostenlos, auch für kommerzielle Projekte. Zwei der nützlichsten.</p>
+    <div class="grid">
+      <article class="card" id="gsap-plugins-1">
+        <div class="card-main"><h3>Layout-Wechsel animieren: Flip</h3>
+        <p>Elemente springen bei einer Layout-Änderung nicht, sondern gleiten an ihre neue Position.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.registerPlugin(Flip);
+
+const state = Flip.getState(".item");
+container.classList.toggle("grid");   // Layout ändern
+Flip.from(state, { duration: 0.6, ease: "power2.inOut" });</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const items = [...document.querySelectorAll(".item")];
+const first = items.map(el =&gt; el.getBoundingClientRect());   // F: First
+
+container.classList.toggle("grid");                           // Layout ändern
+items.forEach((el, i) =&gt; {
+  const last = el.getBoundingClientRect();                    // L: Last
+  const dx = first[i].left - last.left;                       // I: Invert
+  const dy = first[i].top - last.top;
+  el.animate(                                                 // P: Play
+    [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }],
+    { duration: 600, easing: "ease-in-out" }
+  );
+});</pre></div>
+        <div class="demo" data-demo="d13">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="row flipwrap"><div class="box item"></div><div class="box alt item"></div><div class="box warn item"></div><div class="box item" style="opacity:.5"></div></div><button type="button" class="chip shuffle" style="justify-self:start">Mischen</button></div></template>
+          <div class="stage" style="--h:250px"><div class="col"><div class="row flipwrap"><div class="box item"></div><div class="box alt item"></div><div class="box warn item"></div><div class="box item" style="opacity:.5"></div></div><button type="button" class="chip shuffle" style="justify-self:start">Mischen</button></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/Plugins/Flip/" target="_blank" rel="noopener">Flip</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Flip ist ein Zaubertrick: Das Element springt sofort an seinen neuen Platz, wird aber optisch an den alten zurückversetzt und gleitet dann sichtbar hinüber. Die Zuschauer sehen nur das Gleiten.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>FLIP steht für First, Last, Invert, Play.</li><li>First: <code>Flip.getState()</code> merkt sich Position und Größe aller Elemente.</li><li>Last: Du änderst das Layout ganz normal, per Klasse, Umsortieren oder Verschieben im DOM.</li><li>Invert und Play: <code>Flip.from()</code> versetzt die Elemente per Transform an die alte Position und animiert sie zur neuen.</li><li>Die ausführliche Variante zeigt genau diese vier Schritte von Hand. Flip kümmert sich zusätzlich um Größenänderungen, verschachtelte Elemente und unterbrochene Animationen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Zustand erst nach der Layout-Änderung erfassen. Dann sind First und Last identisch, und es passiert nichts. <code>getState()</code> muss immer vor der Änderung stehen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Flip für Filter, Sortierungen, Raster-Wechsel und Elemente, die den Container wechseln. Für ein einzelnes Element reicht oft die ausführliche Variante.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wofür steht das I in FLIP?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Für Invert: Das Element wird per Transform optisch an seine alte Position zurückgesetzt, bevor es animiert wird.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-plugins-2">
+        <div class="card-main"><h3>Text animieren: SplitText</h3>
+        <p>Text in Zeilen, Wörter oder Buchstaben zerlegen und einzeln animieren, barrierefrei.</p>
+        <div class="v short"><span class="lbl">Mit GSAP</span>
+<pre>gsap.registerPlugin(SplitText);
+
+SplitText.create(".headline", {
+  type: "words, chars",
+  autoSplit: true,
+  onSplit(self) {
+    return gsap.from(self.chars, {
+      y: 20, autoAlpha: 0, stagger: 0.03,
+    });
+  },
+});</pre></div>
+        <div class="v long"><span class="lbl">Ohne GSAP</span>
+<pre>const el = document.querySelector(".headline");
+const text = el.textContent;
+el.setAttribute("aria-label", text);
+el.innerHTML = [...text].map(ch =&gt;
+  `&lt;span aria-hidden="true" style="display:inline-block"&gt;${ch === " " ? "&amp;nbsp;" : ch}&lt;/span&gt;`
+).join("");
+
+el.querySelectorAll("span").forEach((span, i) =&gt; {
+  span.animate(
+    [{ transform: "translateY(20px)", opacity: 0 }, { transform: "none", opacity: 1 }],
+    { duration: 500, delay: i * 30, fill: "backwards" }
+  );
+});</pre></div>
+        <div class="demo" data-demo="d14">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><p class="headline" style="font-family:var(--font-display);font-size:26px;font-weight:800;margin:0">Hallo Bootcamp!</p></template>
+          <div class="stage" style="--h:90px"><p class="headline" style="font-family:var(--font-display);font-size:26px;font-weight:800;margin:0">Hallo Bootcamp!</p></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/Plugins/SplitText/" target="_blank" rel="noopener">SplitText</a><a href="https://gsap.com/licensing/" target="_blank" rel="noopener">GSAP-Lizenz</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>SplitText ist ein Setzkasten: Der Satz wird in einzelne Lettern zerlegt, damit jede für sich tanzen kann. Für Screenreader bleibt trotzdem der ganze Satz lesbar.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>type</code> legt fest, was zerlegt wird: <code>chars</code>, <code>words</code>, <code>lines</code> oder eine Kombination.</li><li>Jedes Teil steckt danach in einem eigenen Element und ist über <code>self.chars</code>, <code>self.words</code> oder <code>self.lines</code> erreichbar.</li><li>SplitText setzt automatisch <code>aria-label</code> auf das Original und blendet die Einzelteile für Screenreader aus.</li><li><code>autoSplit</code> zerlegt neu, wenn Schriften nachladen oder sich die Breite ändert. Dann verschieben sich nämlich Zeilenumbrüche. Die Animation aus <code>onSplit</code> wird dabei mitgeführt.</li><li>Die ausführliche Variante zeigt das Prinzip mit Buchstaben. Zeilen korrekt zu erkennen ist von Hand deutlich schwieriger.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Text nach <code>lines</code> zerlegen, bevor die Webfont geladen ist. Dann stimmen die Zeilen nicht mehr, sobald die Schrift erscheint. <code>autoSplit: true</code> oder <code>document.fonts.ready</code> abwarten löst das.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>SplitText für Überschriften und kurze Texte. Lange Fließtexte Buchstabe für Buchstabe zu animieren ist schwer lesbar und belastet die Leistung.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was macht <code>split.revert()</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Es stellt das ursprüngliche HTML wieder her und entfernt alle erzeugten Elemente. Wichtig beim Aufräumen, z.B. in React.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="praxis">
+    <h2>Praxis: React, Performance, Barrierefreiheit <span class="tag">praxis</span></h2>
+    <p class="sub">Damit Animationen im echten Projekt flüssig laufen, aufräumen und niemanden stören.</p>
+    <div class="grid">
+      <article class="card" id="gsap-praxis-1">
+        <div class="card-main"><h3>GSAP in React: <code>useGSAP</code></h3>
+        <p>Der offizielle Hook räumt Animationen automatisch auf und begrenzt Selektoren auf deine Komponente.</p>
+        <div class="v short"><span class="lbl">Mit useGSAP</span>
+<pre>import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(useGSAP);
+
+function Hero() {
+  const container = useRef(null);
+  useGSAP(() =&gt; {
+    gsap.from(".title", { y: 40, autoAlpha: 0 });
+  }, { scope: container });
+
+  return &lt;section ref={container}&gt;&lt;h1 className="title"&gt;Hallo&lt;/h1&gt;&lt;/section&gt;;
+}</pre></div>
+        <div class="v long"><span class="lbl">Mit useLayoutEffect</span>
+<pre>import { useRef, useLayoutEffect } from "react";
+import gsap from "gsap";
+
+function Hero() {
+  const container = useRef(null);
+  useLayoutEffect(() =&gt; {
+    const ctx = gsap.context(() =&gt; {
+      gsap.from(".title", { y: 40, autoAlpha: 0 });
+    }, container);
+    return () =&gt; ctx.revert();   // Aufräumen beim Unmount
+  }, []);
+
+  return &lt;section ref={container}&gt;&lt;h1 className="title"&gt;Hallo&lt;/h1&gt;&lt;/section&gt;;
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/resources/React/" target="_blank" rel="noopener">GSAP mit React</a><a href="https://gsap.com/docs/v3/GSAP/gsap.context()" target="_blank" rel="noopener">gsap.context()</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>useGSAP</code> ist ein Hausmeister für deine Komponente: Er merkt sich jede Animation, die darin entsteht, und räumt sie weg, sobald die Komponente verschwindet.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>scope: container</code> sorgt dafür, dass <code>".title"</code> nur innerhalb dieser Komponente gesucht wird, nicht auf der ganzen Seite.</li><li>Beim Unmount werden alle Animationen und ScrollTrigger aus dem Hook automatisch zurückgesetzt.</li><li>Im Strict Mode führt React Effekte in der Entwicklung doppelt aus. Ohne Aufräumen laufen dann zwei Animationen gleichzeitig. <code>useGSAP</code> verhindert das.</li><li>Animationen, die später entstehen, z.B. in einem <code>onClick</code>, wickelst du in <code>contextSafe()</code>, damit auch sie aufgeräumt werden.</li><li>Die ausführliche Variante zeigt, was der Hook intern tut: <code>gsap.context()</code> plus <code>revert()</code> im Cleanup.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>GSAP in einem normalen <code>useEffect</code> ohne Aufräumen benutzen. Im Strict Mode verdoppeln sich dann <code>from()</code>-Animationen, und Elemente bleiben unsichtbar, weil die zweite Animation den halb animierten Zustand als Ziel nimmt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>useGSAP</code> in jedem React-Projekt mit GSAP. Die manuelle Variante nur, wenn du das Paket <code>@gsap/react</code> nicht installieren kannst.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Eine Animation soll bei Klick starten. Wie bindest du sie sauber ein?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>const { contextSafe } = useGSAP({ scope: container });</code> und <code>const onClick = contextSafe(() =&gt; gsap.to(...));</code>. So wird auch sie beim Unmount aufgeräumt.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-praxis-2">
+        <div class="card-main"><h3>Flüssig animieren: Transforms statt Layout</h3>
+        <p>Manche Eigenschaften kann der Browser billig animieren, andere zwingen ihn bei jedem Bild zum Neuberechnen der Seite.</p>
+        <div class="v short"><span class="lbl">Flüssig</span>
+<pre>gsap.to(".box", {
+  x: 200,          // transform: translateX
+  scale: 1.2,      // transform: scale
+  autoAlpha: 0.5,  // opacity
+});</pre></div>
+        <div class="v long"><span class="lbl">Ruckelanfällig</span>
+<pre>gsap.to(".box", {
+  left: 200,       // Layout: Position neu berechnen
+  width: 60,       // Layout: Größe neu berechnen
+  marginTop: 20,   // Layout: alles darunter verschiebt sich
+});</pre></div>
+        <div class="demo" data-demo="d16">
+          <div class="demo-bar"><span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button></div>
+          <template><div class="col"><div class="box good"></div><div class="box warn bad" style="position:relative;left:0"></div><span class="note">oben: transform · unten: left/width</span></div></template>
+          <div class="stage" style="--h:150px"><div class="col"><div class="box good"></div><div class="box warn bad" style="position:relative;left:0"></div><span class="note">oben: transform · unten: left/width</span></div></div>
+        </div>
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://web.dev/articles/rendering-performance" target="_blank" rel="noopener">Rendering-Performance (web.dev, EN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Transforms sind wie das Verschieben eines Fotos auf einem Leuchttisch. <code>left</code> und <code>width</code> sind, als würdest du für jedes Einzelbild die ganze Seite neu setzen und drucken.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Jedes Bild durchläuft Layout (Positionen berechnen), Paint (Pixel malen) und Composite (Ebenen zusammensetzen).</li><li><code>transform</code> und <code>opacity</code> brauchen nur den letzten, günstigen Schritt. Die Grafikkarte erledigt das.</li><li><code>left</code>, <code>top</code>, <code>width</code>, <code>height</code> und <code>margin</code> lösen bei jedem Bild ein neues Layout aus, oft für die halbe Seite.</li><li>Bei 60 Bildern pro Sekunde bleiben pro Bild etwa 16 Millisekunden. Layout-Animationen sprengen das schnell, besonders auf Handys.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>width</code> und <code>height</code> animieren, um etwas wachsen zu lassen. <code>scale</code> wirkt meist gleich und bleibt flüssig. Wenn sich die Größe wirklich ändern muss, z.B. weil Text umbrechen soll, ist Flip die bessere Wahl.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer zuerst <code>x</code>, <code>y</code>, <code>scale</code>, <code>rotation</code> und <code>autoAlpha</code>. Layout-Eigenschaften nur, wenn es nicht anders geht, und dann bei kleinen Elementen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie prüfst du, ob eine Animation ruckelt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>In den Chrome-Entwicklertools unter „Performance“ aufzeichnen und nach langen Frames und lila Layout-Balken suchen. Oder unter „Rendering“ die Option „Frame Rendering Stats“ einschalten.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="gsap-praxis-3">
+        <div class="card-main"><h3>Weniger Bewegung respektieren: <code>matchMedia</code></h3>
+        <p>Animationen an Bildschirmgröße und Systemeinstellungen anpassen und beim Wechsel automatisch aufräumen.</p>
+        <div class="v short"><span class="lbl">Mit matchMedia</span>
+<pre>const mm = gsap.matchMedia();
+
+mm.add({
+  isDesktop: "(min-width: 800px)",
+  reduceMotion: "(prefers-reduced-motion: reduce)",
+}, (context) =&gt; {
+  const { isDesktop, reduceMotion } = context.conditions;
+  gsap.from(".hero", {
+    y: reduceMotion ? 0 : (isDesktop ? 80 : 30),
+    autoAlpha: 0,
+    duration: reduceMotion ? 0.2 : 1,
+  });
+});</pre></div>
+        <div class="v long"><span class="lbl">Von Hand</span>
+<pre>const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+const desktop = window.matchMedia("(min-width: 800px)");
+let tween;
+
+function setup() {
+  if (tween) tween.revert();   // alte Animation entfernen
+  tween = gsap.from(".hero", {
+    y: reduce.matches ? 0 : (desktop.matches ? 80 : 30),
+    autoAlpha: 0,
+    duration: reduce.matches ? 0.2 : 1,
+  });
+}
+reduce.addEventListener("change", setup);
+desktop.addEventListener("change", setup);
+setup();</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://gsap.com/docs/v3/GSAP/gsap.matchMedia()" target="_blank" rel="noopener">gsap.matchMedia()</a><a href="https://developer.mozilla.org/de/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noopener">prefers-reduced-motion (MDN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>gsap.matchMedia()</code> ist ein Thermostat mit Fühlern: Es merkt, wenn sich Bildschirmbreite oder Systemeinstellung ändern, baut die alten Animationen ab und die passenden neu auf.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>mm.add()</code> bekommt Bedingungen als Media Queries und eine Funktion mit den Animationen.</li><li>In <code>context.conditions</code> steht für jede Bedingung <code>true</code> oder <code>false</code>.</li><li>Ändert sich eine Bedingung, werden alle Animationen und ScrollTrigger aus der Funktion zurückgesetzt und die Funktion läuft neu.</li><li><code>prefers-reduced-motion</code> ist eine Systemeinstellung für Menschen, denen Bewegung Schwindel oder Übelkeit verursacht. Respektieren heißt nicht unbedingt „gar keine Animation“, sondern: keine großen Bewegungen, eher kurze Überblendungen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Bei reduzierter Bewegung einfach alles abschalten, auch Animationen, die Zustände erklären. Ein kurzes Einblenden ist meist in Ordnung, große Sprünge, Parallax und Zoom-Effekte nicht.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>gsap.matchMedia()</code> immer dann, wenn Animationen je nach Gerät oder Einstellung anders sein sollen. Es erspart dir das komplette Aufräumen von Hand.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie testest du <code>prefers-reduced-motion</code>, ohne die Systemeinstellung zu ändern?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>In den Chrome-Entwicklertools unter „Rendering“ bei „Emulate CSS media feature prefers-reduced-motion“ den Wert <code>reduce</code> wählen.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  
+  <p class="empty" id="empty" hidden>Kein Konzept passt zu diesem Suchbegriff.</p>
+
+  <footer>Übungsidee: Nimm die Animationskarten aus dem <a href="css.html#animation">CSS Spickzettel</a> und baue jede einmal mit GSAP nach. Danach eine kleine Landingpage mit einer Timeline beim Laden und zwei ScrollTrigger-Effekten. Alle Zettel im <a href="index.html">Spickzettel-Hub</a>.<br><br>Weitere Zettel: <a href="html.html">HTML</a> · <a href="css.html">CSS</a> · <a href="js.html">JavaScript</a> · <a href="ts.html">TypeScript</a> · <a href="three.html">Three.js</a> · <a href="cro.html">Conversion-Optimierung</a></footer>
+</main>
+
+<button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
+<script src="assets/app.js"></script>
+<script>
+window.DEMO_LOADER = async function () {
+  await loadScripts(["https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js", "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js", "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/Flip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/SplitText.min.js"]);
+  gsap.registerPlugin(ScrollTrigger, Flip, SplitText);
+  var DEMOS = {};
+DEMOS["d1"] = function (stage) {
+gsap.to(".box", { x: 220, rotation: 360, duration: 1 });
+};
+
+DEMOS["d2"] = function (stage) {
+gsap.from(".card", { y: 40, autoAlpha: 0, duration: 0.6 });
+gsap.fromTo(".bar", { scaleX: 0 }, { scaleX: 1, duration: 1, transformOrigin: "left center" });
+};
+
+DEMOS["d3"] = function (stage) {
+gsap.to(".a", { x: 220, ease: "power3.out", duration: 1 });
+gsap.to(".b", { x: 220, ease: "back.out(1.7)", duration: 1 });
+gsap.to(".c", { x: 220, ease: "elastic.out(1, 0.4)", duration: 1.6 });
+};
+
+DEMOS["d4"] = function (stage) {
+gsap.from(".item", { y: 20, autoAlpha: 0, stagger: 0.1 });
+};
+
+DEMOS["d5"] = function (stage) {
+gsap.set(".box", { rotation: 15 });
+gsap.to(".box", { x: 120, duration: 0.8, delay: 0.4 });
+};
+
+DEMOS["d6"] = function (stage) {
+const tween = gsap.to(".menu", { x: 220, duration: 1, ease: "expo.out", easeReverse: true, paused: true });
+stage.querySelector(".open").onclick = () => tween.play();
+stage.querySelector(".close").onclick = () => tween.reverse();
+};
+
+DEMOS["d7"] = function (stage) {
+const tl = gsap.timeline();
+tl.to(".a", { x: 220 }).to(".b", { x: 220 }).to(".c", { x: 220 });
+};
+
+DEMOS["d8"] = function (stage) {
+const tl = gsap.timeline();
+tl.to(".a", { x: 220, duration: 1 })
+  .to(".b", { x: 220 }, "<")
+  .to(".c", { x: 220 }, "-=0.3")
+  .add("ende", "+=0.5")
+  .to(".a", { rotation: 90 }, "ende");
+};
+
+DEMOS["d9"] = function (stage) {
+const tl = gsap.timeline({ defaults: { duration: 0.6, ease: "power2.inOut" }, repeat: -1, yoyo: true, repeatDelay: 0.3 });
+tl.to(".a", { x: 220 }).to(".b", { x: 220 });
+};
+
+DEMOS["d10"] = function (stage) {
+const scroller = stage.querySelector(".scroller");
+gsap.from(".target", { x: -100, autoAlpha: 0, scrollTrigger: { trigger: ".target", scroller, start: "top 80%", toggleActions: "play none none reverse", markers: true } });
+};
+
+DEMOS["d11"] = function (stage) {
+const scroller = stage.querySelector(".scroller");
+gsap.to(".progress", { scaleX: 1, ease: "none", scrollTrigger: { trigger: scroller.firstElementChild.nextElementSibling, scroller, start: "top top", end: () => "+=" + (scroller.scrollHeight - scroller.clientHeight), scrub: true } });
+};
+
+DEMOS["d12"] = function (stage) {
+const scroller = stage.querySelector(".scroller");
+gsap.to(".panel", { rotation: 360, scrollTrigger: { trigger: ".panel", scroller, start: "top 30%", end: "+=200", pin: true, scrub: true } });
+};
+
+DEMOS["d13"] = function (stage) {
+const wrap = stage.querySelector(".flipwrap");
+const shuffle = () => {
+  const state = Flip.getState(wrap.children);
+  [...wrap.children].sort(() => Math.random() - 0.5).forEach(el => wrap.appendChild(el));
+  wrap.style.flexDirection = wrap.style.flexDirection === "column" ? "row" : "column";
+  Flip.from(state, { duration: 0.6, ease: "power2.inOut" });
+};
+stage.querySelector(".shuffle").onclick = shuffle;
+shuffle();
+};
+
+DEMOS["d14"] = function (stage) {
+SplitText.create(".headline", { type: "words, chars", onSplit(self) { return gsap.from(self.chars, { y: 20, autoAlpha: 0, stagger: 0.03 }); } });
+};
+
+DEMOS["d16"] = function (stage) {
+gsap.to(".good", { x: 200, scale: 1.2, duration: 1, repeat: 1, yoyo: true });
+gsap.to(".bad", { left: 200, width: 60, duration: 1, repeat: 1, yoyo: true });
+};
+  return DEMOS;
+};
+</script>
+</body>
+</html>

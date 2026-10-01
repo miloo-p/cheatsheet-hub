@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TypeScript · Spickzettel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-sheet="ts" data-lang="ts">
+<header class="topbar" id="topbar">
+  <div class="topbar-row">
+    <a class="tb-home" href="index.html" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
+    <span class="tb-title">TypeScript</span>
+    <input id="filter" type="search" placeholder="Filtern, z.B. Partial, unknown, useState …" aria-label="Karten auf dieser Seite filtern">
+    <details class="menu">
+      <summary><span class="sum-label">Themen</span><span aria-hidden="true">☰</span></summary>
+      <div class="menu-panel"><nav aria-label="Abschnitte"><a href="#grundlagen">Grundlagen</a><a href="#funktionen">Funktionen</a><a href="#objekte">Objekte</a><a href="#unions">Unions und Narrowing</a><a href="#generics">Generics</a><a href="#utility">Utility Types</a><a href="#backend">Async, API und Backend</a><a href="#react">React mit TypeScript</a></nav></div>
+    </details>
+    <details class="menu">
+      <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
+      <div class="menu-panel">
+        <h4>Code-Varianten</h4>
+          <div class="seg" role="group" aria-label="Varianten anzeigen">
+            <button type="button" id="show-both" aria-pressed="true">Beide</button>
+            <button type="button" id="show-short" aria-pressed="false">Nur kurz</button>
+            <button type="button" id="show-long" aria-pressed="false">Nur ausführlich</button>
+          </div>
+        <h4>Erklärungen</h4>
+        <button type="button" class="ghost" id="toggle-all">Alle Erklärungen aufklappen</button>
+      </div>
+    </details>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+</header>
+
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Web-Grundlagen · TypeScript</div>
+    <h1>TypeScript Spickzettel</h1>
+    <p class="lede">27 Konzepte, jedes in zwei Schreibweisen. <b>Kurz</b> heißt hier meistens: TypeScript den Typ ableiten lassen oder einen Utility Type benutzen. <b>Ausführlich</b> heißt: jeden Typ ausdrücklich hinschreiben. Beide Varianten sind gleichwertig. Unter jedem Beispiel klappt eine Erklärung auf, mit Bild zum Merken, Ablauf, typischem Fehler und Selbsttest. Die Doku-Links führen zur offiziellen Doku von TypeScript, React und Express. Die gibt es nur auf Englisch.</p>
+    <div class="legend"><span><b class="lbl" style="color:var(--accent);background:var(--accent-soft)">Kurz</b> Inferenz und kompakte Syntax</span><span><b class="lbl" style="color:var(--long);background:var(--long-soft)">Ausführlich</b> alle Typen ausgeschrieben</span></div>
+  </header>
+
+  <section id="grundlagen">
+    <h2>Grundlagen <span class="tag">basics</span></h2>
+    <p class="sub">Wie TypeScript Typen erkennt und wo du nachhelfen musst.</p>
+    <div class="grid">
+      <article class="card" id="ts-grundlagen-1">
+        <div class="card-main"><h3>Typinferenz und Basistypen</h3>
+        <p>TypeScript erkennt den Typ meist selbst aus dem Wert (Inferenz). Annotieren musst du nur dort, wo es nichts abzuleiten gibt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>let name = "Lea";        // string
+let age = 31;            // number
+let isAdmin = false;     // boolean
+const scores = [3, 5];   // number[]</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>let name: string = "Lea";
+let age: number = 31;
+let isAdmin: boolean = false;
+const scores: number[] = [3, 5];
+// gleichwertig: Array&lt;number&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-annotations-on-variables" target="_blank" rel="noopener">Typ-Annotationen</a><a href="https://www.typescriptlang.org/docs/handbook/type-inference.html" target="_blank" rel="noopener">Typinferenz</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays" target="_blank" rel="noopener">Arrays</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>TypeScript ist wie ein aufmerksamer Kollege, der beim Lesen mitdenkt: Steht da <code>= "Lea"</code>, ist klar, dass das Text ist. Das muss niemand extra dazuschreiben.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Beim Zuweisen schaut TypeScript auf den Wert rechts und merkt sich den passenden Typ.</li><li>Ab dann prüft es jede Verwendung: <code>age = "alt"</code> wird rot markiert, weil <code>age</code> eine <code>number</code> ist.</li><li>Bei <code>const</code> wird der Typ sogar genauer: <code>const role = "admin"</code> hat den Typ <code>"admin"</code>, nicht nur <code>string</code>.</li><li>Alle Typen verschwinden beim Kompilieren. Im ausgeführten JavaScript gibt es sie nicht mehr.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein leeres Array ohne Typ anlegen: Bei <code>const ids = []</code> kann TypeScript nichts ableiten, und der Typ wird <code>any[]</code> oder <code>never[]</code>. Hier immer annotieren: <code>const ids: number[] = []</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Bei Variablen mit Startwert die Inferenz arbeiten lassen. Explizit annotieren, wenn es keinen Startwert gibt, der Startwert leer ist oder der Typ breiter sein soll als der erste Wert.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>x</code> bei <code>let x;</code> ohne Wert und ohne Annotation?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>TypeScript behandelt <code>x</code> zunächst als <code>any</code> und kann nichts prüfen. Darum Variablen ohne Startwert immer annotieren, z.B. <code>let x: string;</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-grundlagen-2">
+        <div class="card-main"><h3>Tupel</h3>
+        <p>Ein Array mit fester Länge, bei dem jede Position einen eigenen Typ hat. Kennst du von <code>useState</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const point = [10, 20] as const;
+
+function useToggle() {
+  const [on, setOn] = useState(false);
+  return [on, () =&gt; setOn(!on)] as const;
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const point: readonly [number, number] = [10, 20];
+
+function useToggle(): [boolean, () =&gt; void] {
+  const [on, setOn] = useState(false);
+  const toggle = (): void =&gt; setOn(!on);
+  return [on, toggle];
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types" target="_blank" rel="noopener">Tupel-Typen</a><a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions" target="_blank" rel="noopener">const assertions</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Tupel ist wie ein Formular mit festen Feldern: Feld 1 ist immer der Wert, Feld 2 immer die Funktion. Ein normales Array ist eher ein Stapel, in dem jedes Blatt gleich aussieht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>[10, 20]</code> allein wird als <code>number[]</code> erkannt, also als Liste beliebiger Länge.</li><li><code>as const</code> macht daraus ein unveränderliches Tupel mit genau diesen Positionen.</li><li>Mit dem Rückgabetyp <code>[boolean, () =&gt; void]</code> legst du die Positionen ausdrücklich fest.</li><li>Beim Auspacken mit <code>const [on, toggle] = useToggle()</code> kennt TypeScript dadurch für jede Variable den richtigen Typ.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Paar ohne Tupel-Typ zurückgeben: <code>return [on, toggle]</code> wird zu <code>(boolean | (() =&gt; void))[]</code>. Beim Auspacken ist dann jede Variable „boolean oder Funktion“, und <code>toggle()</code> lässt sich nicht aufrufen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>as const</code> ist schnell und praktisch für eigene Hooks. Der explizite Rückgabetyp dokumentiert die Schnittstelle besser und ist bei exportierten Funktionen die sauberere Wahl.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>const pair = ["a", 1]</code> ohne <code>as const</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>(string | number)[]</code>, also ein Array, in dem jedes Element string oder number sein kann. Die Positionen gehen verloren.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-grundlagen-3">
+        <div class="card-main"><h3><code>unknown</code> statt <code>any</code></h3>
+        <p><code>any</code> schaltet die Prüfung ab. <code>unknown</code> heißt: Typ noch unbekannt, erst prüfen, dann benutzen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const data = JSON.parse(text) as User; // ungeprüft!
+console.log(data.name);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const data: unknown = JSON.parse(text);
+
+if (typeof data === "object" &amp;&amp; data !== null &amp;&amp; "name" in data) {
+  console.log(data.name);
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any" target="_blank" rel="noopener">any</a><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown" target="_blank" rel="noopener">unknown</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions" target="_blank" rel="noopener">Type Assertions (as)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>any</code> ist ein Paket ohne Kontrolle, es geht einfach durch. <code>unknown</code> ist ein Paket, das am Zoll festgehalten wird, bis du nachgesehen hast, was drin ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>JSON.parse</code> gibt <code>any</code> zurück. TypeScript weiß nicht, was im Text stand.</li><li><code>as User</code> ist eine Behauptung: Du sagst dem Compiler „vertrau mir“. Geprüft wird dabei nichts.</li><li>Mit <code>unknown</code> verlangt TypeScript eine Prüfung, bevor du auf Eigenschaften zugreifst.</li><li>Jede Prüfung (<code>typeof</code>, <code>!== null</code>, <code>in</code>) engt den Typ weiter ein, bis der Zugriff sicher ist.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>as</code> benutzen, um rote Unterstreichungen loszuwerden. Der Fehler verschwindet aus dem Editor, aber nicht aus dem Programm: Fehlt <code>name</code> wirklich, stürzt es zur Laufzeit ab.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>as</code> nur, wenn du es wirklich besser weißt als der Compiler. Für Daten von außen (API, JSON, Formulare) <code>unknown</code> plus Prüfung, im Projekt am besten mit einer Bibliothek wie Zod (siehe Karte „Daten von außen prüfen“).</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was passiert zur Laufzeit bei <code>const u = JSON.parse("{}") as User; u.name.toUpperCase()</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ein TypeError, weil <code>u.name</code> <code>undefined</code> ist. <code>as</code> hat nichts geprüft, sondern nur den Compiler beruhigt.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="funktionen">
+    <h2>Funktionen <span class="tag">functions</span></h2>
+    <p class="sub">Parameter brauchen Typen, Rückgaben kann TypeScript oft selbst ableiten.</p>
+    <div class="grid">
+      <article class="card" id="ts-funktionen-1">
+        <div class="card-main"><h3>Funktionen typisieren</h3>
+        <p>Parameter brauchen immer Typen. Den Rückgabetyp leitet TypeScript ab, explizit ist er aber eine gute Dokumentation.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const add = (a: number, b: number) =&gt; a + b;
+
+const formatPrice = (cents: number) =&gt;
+  `${(cents / 100).toFixed(2)} €`;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function add(a: number, b: number): number {
+  return a + b;
+}
+
+type Formatter = (cents: number) =&gt; string;
+
+const formatPrice: Formatter = function (cents) {
+  return (cents / 100).toFixed(2) + " €";
+};</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#functions" target="_blank" rel="noopener">Funktionen</a><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#function-type-expressions" target="_blank" rel="noopener">Funktionstypen</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#anonymous-functions" target="_blank" rel="noopener">Kontextuelle Typisierung</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Funktionssignatur ist wie ein Steckdosenformat: Sie legt fest, welcher Stecker hineinpasst (Parameter) und was herauskommt (Rückgabe).</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Parameter ohne Typ werden zu <code>any</code>. Mit <code>noImplicitAny</code> (Teil von <code>strict</code>) ist das ein Fehler.</li><li>Den Rückgabetyp leitet TypeScript aus den <code>return</code>-Anweisungen ab.</li><li>Ein expliziter Rückgabetyp wird geprüft: Gibst du versehentlich etwas anderes zurück, meldet TypeScript den Fehler direkt in der Funktion statt erst beim Aufrufer.</li><li>Ein Funktionstyp wie <code>Formatter</code> beschreibt die ganze Signatur. Weist du eine Funktion zu, bekommen ihre Parameter die Typen automatisch.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Einen Zweig ohne <code>return</code> vergessen. Ohne Rückgabetyp wird daraus still <code>string | undefined</code>, und der Fehler taucht erst weit entfernt beim Aufrufer auf. Mit <code>: string</code> meldet TypeScript ihn sofort an der richtigen Stelle.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Kurz für kleine, lokale Hilfsfunktionen. Expliziter Rückgabetyp bei exportierten Funktionen, Services im Backend und allem, was andere benutzen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Braucht <code>n</code> in <code>[1, 2].map(n =&gt; n * 2)</code> eine Annotation?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nein. TypeScript weiß aus dem Array, dass <code>n</code> eine <code>number</code> ist (kontextuelle Typisierung). Annotieren musst du nur Parameter von Funktionen, die du selbst deklarierst.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-funktionen-2">
+        <div class="card-main"><h3>Optionale Parameter und Defaults</h3>
+        <p>Ein <code>?</code> macht einen Parameter optional. Ein Default-Wert macht ihn ebenfalls optional und legt gleich den Typ fest.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function greet(name?: string) {
+  return `Hi ${name ?? "Gast"}`;
+}
+
+function paginate(page = 1, size = 20) { ... }</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function greet(name: string | undefined): string {
+  if (name === undefined) {
+    return "Hi Gast";
+  }
+  return "Hi " + name;
+}
+
+function paginate(page: number = 1, size: number = 20): void { ... }</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#optional-parameters" target="_blank" rel="noopener">Optionale Parameter</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein optionaler Parameter ist ein Feld mit dem Vermerk „darf leer bleiben“. Ein Default-Parameter ist ein vorausgefülltes Feld.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>name?: string</code> heißt: Der Parameter darf fehlen, sein Typ ist dann <code>string | undefined</code>.</li><li>Darum musst du vor der Verwendung mit <code>??</code> oder <code>if</code> den <code>undefined</code>-Fall behandeln.</li><li><code>page = 1</code> macht den Parameter optional und leitet den Typ <code>number</code> aus dem Default ab.</li><li>Achtung bei der ausführlichen Variante: <code>name: string | undefined</code> ist nicht optional. Der Aufrufer muss <code>greet(undefined)</code> schreiben, <code>greet()</code> ist dort ein Fehler.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Optionale Parameter vor Pflichtparameter setzen: <code>(a?: string, b: number)</code> ist ein Fehler. Optionale Parameter müssen hinten stehen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>?</code> für Werte, die wirklich fehlen dürfen. Default-Werte, wenn es einen sinnvollen Standard gibt, denn dann musst du im Funktionskörper nichts mehr prüfen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist beim Aufruf der Unterschied zwischen <code>(x?: number)</code> und <code>(x: number | undefined)</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Beim ersten darfst du <code>f()</code> schreiben. Beim zweiten musst du <code>f(undefined)</code> übergeben, weil der Parameter Pflicht ist.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="objekte">
+    <h2>Objekte <span class="tag">objects</span></h2>
+    <p class="sub">Die Form von Daten beschreiben, die durch deine App und über die API fließen.</p>
+    <div class="grid">
+      <article class="card" id="ts-objekte-1">
+        <div class="card-main"><h3>Objekttypen: <code>interface</code> und <code>type</code></h3>
+        <p>Objekttypen kannst du direkt hinschreiben oder einmal benennen und wiederverwenden.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function printUser(user: { name: string; age: number }) {
+  console.log(`${user.name} (${user.age})`);
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface User {
+  name: string;
+  age: number;
+}
+// oder: type User = { name: string; age: number };
+
+function printUser(user: User): void {
+  console.log(user.name + " (" + user.age + ")");
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#object-types" target="_blank" rel="noopener">Objekttypen</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces" target="_blank" rel="noopener">Interfaces</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces" target="_blank" rel="noopener">type vs. interface</a><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#excess-property-checks" target="_blank" rel="noopener">Excess Property Checks</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Interface ist ein Steckbrief: Wer als <code>User</code> durchgehen will, muss mindestens diese Felder mit diesen Typen haben.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ein Inline-Typ gilt nur an dieser einen Stelle.</li><li><code>interface</code> oder <code>type</code> geben der Form einen Namen, den du überall importieren kannst.</li><li>TypeScript vergleicht nach Struktur, nicht nach Namen: Jedes Objekt mit <code>name</code> und <code>age</code> passt, egal wo es herkommt.</li><li>Für Objekte sind <code>interface</code> und <code>type</code> fast austauschbar. <code>type</code> kann zusätzlich Unions benennen, ein <code>interface</code> kann nachträglich erweitert werden.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Objekt-Literal mit Extra-Feldern direkt übergeben: <code>printUser({ name: "Lea", age: 31, admin: true })</code> ist ein Fehler (Excess Property Check). Bei einer Variable mit Extra-Feldern prüft TypeScript das nicht.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Inline für einmalige, kleine Typen. Sobald ein Typ zweimal vorkommt oder Frontend und Backend ihn teilen, benennen. Viele Teams nehmen <code>interface</code> für Objekte und <code>type</code> für alles andere.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Darf man ein Objekt <code>{ name: "Lea", age: 31, city: "Köln" }</code> aus einer Variable an <code>printUser</code> übergeben?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ja. Es hat alle geforderten Felder, und Extra-Felder sind bei Variablen erlaubt. Nur direkt hingeschriebene Objekt-Literale werden auf Extra-Felder geprüft.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-objekte-2">
+        <div class="card-main"><h3>Optionale und <code>readonly</code> Felder</h3>
+        <p><code>?</code> markiert Felder, die fehlen dürfen. <code>readonly</code> verbietet das Überschreiben nach dem Erstellen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>interface Todo {
+  readonly id: number;
+  title: string;
+  dueDate?: string;
+}
+
+const label = todo.dueDate?.slice(0, 10) ?? "kein Datum";</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface Todo {
+  readonly id: number;
+  title: string;
+  dueDate?: string;
+}
+
+let label: string;
+if (todo.dueDate !== undefined) {
+  label = todo.dueDate.slice(0, 10);
+} else {
+  label = "kein Datum";
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#optional-properties" target="_blank" rel="noopener">Optionale Felder</a><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties" target="_blank" rel="noopener">readonly</a><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" target="_blank" rel="noopener">Narrowing</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>readonly</code> ist ein Feld mit dem Stempel „nicht ändern“, wie eine Kundennummer. <code>?</code> ist ein Feld, das auf dem Formular leer bleiben darf.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>dueDate?: string</code> heißt: Das Feld kann fehlen, beim Lesen ist es <code>string | undefined</code>.</li><li>Vor der Benutzung erzwingt TypeScript eine Prüfung. Nach <code>!== undefined</code> weiß es, dass ein <code>string</code> vorliegt (Narrowing).</li><li><code>readonly id</code> erlaubt das Setzen beim Erstellen, aber <code>todo.id = 5</code> danach ist ein Fehler.</li><li><code>readonly</code> gilt nur beim Kompilieren. Im laufenden JavaScript ließe sich der Wert trotzdem ändern.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Annehmen, <code>readonly</code> mache das Objekt komplett unveränderlich. Es schützt nur die Eigenschaft selbst: Bei <code>readonly tags: string[]</code> ist <code>todo.tags.push("x")</code> weiterhin erlaubt. Dafür bräuchte es <code>readonly string[]</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Optional Chaining für schnelles Lesen. Die if-Variante, wenn im vorhandenen Fall mehr passieren soll als ein einzelner Ausdruck.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Ist <code>todo.dueDate.length</code> ohne Prüfung erlaubt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nein. <code>dueDate</code> könnte <code>undefined</code> sein, darum meldet TypeScript „possibly undefined“. Erst prüfen oder <code>?.</code> benutzen.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-objekte-3">
+        <div class="card-main"><h3>Typen erweitern: <code>extends</code> und <code>&amp;</code></h3>
+        <p>Bestehende Typen um Felder ergänzen, statt alles doppelt zu schreiben.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>type Admin = User &amp; { permissions: string[] };</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface Admin extends User {
+  permissions: string[];
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types" target="_blank" rel="noopener">Typen erweitern</a><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types" target="_blank" rel="noopener">Intersection Types</a><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#interface-extension-vs-intersection" target="_blank" rel="noopener">extends vs. Intersection</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Wie eine Weiterbildung, die auf einer Ausbildung aufbaut: Ein Admin kann alles, was ein User kann, plus Rechte vergeben.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>interface Admin extends User</code> übernimmt alle Felder von <code>User</code> und fügt neue hinzu.</li><li><code>User &amp; { ... }</code> (Intersection) bildet einen Typ, der beide Teile gleichzeitig erfüllen muss. Das Ergebnis ist hier dasselbe.</li><li>Überall, wo ein <code>User</code> erwartet wird, darf ein <code>Admin</code> übergeben werden, weil er alle User-Felder hat.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Bei Konflikten verhalten sich beide unterschiedlich. Haben beide Teile ein Feld <code>id</code> mit verschiedenen Typen, meldet <code>extends</code> sofort einen Fehler, während <code>&amp;</code> still den unmöglichen Typ <code>never</code> für <code>id</code> erzeugt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>extends</code> bei Interfaces, weil die Fehlermeldungen klarer sind. <code>&amp;</code> mit <code>type</code>, z.B. um schnell ein Feld an einen vorhandenen Typ zu hängen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Darf man einen <code>Admin</code> an eine Funktion übergeben, die einen <code>User</code> erwartet? Und umgekehrt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Admin an User: ja, er hat alle nötigen Felder. User an Admin: nein, ihm fehlt <code>permissions</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-objekte-4">
+        <div class="card-main"><h3>Nachschlage-Objekte: <code>Record</code></h3>
+        <p>Für Objekte, die wie Tabellen benutzt werden: beliebig viele Keys mit gleichem Werttyp.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const stock: Record&lt;string, number&gt; = { apple: 5, pear: 0 };
+
+type Lang = "de" | "en";
+const labels: Record&lt;Lang, string&gt; = { de: "Speichern", en: "Save" };</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const stock: { [product: string]: number } = { apple: 5, pear: 0 };
+
+const labels: { de: string; en: string } = {
+  de: "Speichern",
+  en: "Save",
+};</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type" target="_blank" rel="noopener">Record</a><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#index-signatures" target="_blank" rel="noopener">Index-Signaturen</a><a href="https://www.typescriptlang.org/tsconfig/#noUncheckedIndexedAccess" target="_blank" rel="noopener">noUncheckedIndexedAccess</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein <code>Record</code> ist ein Wörterbuch: Links steht ein Stichwort, rechts immer dieselbe Art von Eintrag.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>Record&lt;string, number&gt;</code> heißt: Jeder String-Key hat einen Zahlenwert.</li><li>Die Index-Signatur <code>{ [product: string]: number }</code> beschreibt dasselbe. Der Name <code>product</code> ist nur Dokumentation.</li><li>Mit einer Union als Key-Typ wie <code>Record&lt;Lang, string&gt;</code> müssen alle Keys vorhanden sein. Fehlt <code>en</code>, meldet TypeScript einen Fehler.</li><li>So vergisst du bei einer neuen Sprache oder einem neuen Status keine Übersetzung.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Annehmen, jeder Key existiere: <code>stock["banana"]</code> hat laut TypeScript den Typ <code>number</code>, ist zur Laufzeit aber <code>undefined</code>. Die Option <code>noUncheckedIndexedAccess</code> macht daraus <code>number | undefined</code> und erzwingt eine Prüfung.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>Record</code> ist kürzer und gängiger. Die Index-Signatur brauchst du, wenn das Objekt zusätzlich feste Felder haben soll.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was passiert, wenn du in <code>labels</code> ein Feld <code>fr</code> ergänzt, ohne <code>Lang</code> zu ändern?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ein Fehler: <code>fr</code> ist kein erlaubter Key, weil <code>Lang</code> nur <code>"de"</code> und <code>"en"</code> enthält.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="unions">
+    <h2>Unions und Narrowing <span class="tag">unions</span></h2>
+    <p class="sub">Das Herzstück von TypeScript: Ein Wert kann mehreres sein, und Prüfungen engen es ein.</p>
+    <div class="grid">
+      <article class="card" id="ts-unions-1">
+        <div class="card-main"><h3>Union Types</h3>
+        <p>Ein Wert kann einer von mehreren Typen sein. Vor der Verwendung engst du ihn per Prüfung ein (Narrowing).</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function formatId(id: string | number) {
+  return typeof id === "number" ? id.toFixed(0) : id.toUpperCase();
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>type Id = string | number;
+
+function formatId(id: Id): string {
+  if (typeof id === "number") {
+    return id.toFixed(0);     // hier: number
+  }
+  return id.toUpperCase();    // hier: string
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types" target="_blank" rel="noopener">Union Types</a><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#typeof-type-guards" target="_blank" rel="noopener">typeof Type Guards</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases" target="_blank" rel="noopener">Type Aliases</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Union ist ein Paket mit dem Aufkleber „Buch ODER DVD“. Bevor du es benutzt, schaust du hinein. Danach weißt du genau, was du in der Hand hast.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Auf <code>string | number</code> darfst du nur benutzen, was beide Typen können, z.B. <code>toString()</code>.</li><li><code>typeof id === "number"</code> ist eine Prüfung, die TypeScript versteht.</li><li>Im <code>if</code>-Zweig ist <code>id</code> daher eine <code>number</code>, und <code>toFixed</code> ist erlaubt.</li><li>Nach dem <code>return</code> weiß TypeScript: Im Rest der Funktion kann <code>id</code> nur noch ein <code>string</code> sein.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Direkt <code>id.toUpperCase()</code> aufrufen. TypeScript meldet, dass es <code>toUpperCase</code> auf <code>number</code> nicht gibt. Die Lösung ist eine Prüfung, kein <code>as string</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Ternär bei zwei kurzen Fällen. <code>if</code> mit frühem <code>return</code>, sobald pro Fall mehr passiert. Einen Alias wie <code>Id</code>, wenn die Union mehrfach vorkommt.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>id</code> im <code>else</code>-Zweig von <code>if (typeof id === "string")</code> bei <code>string | number | boolean</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>number | boolean</code>. TypeScript zieht nur den geprüften Typ ab.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-unions-2">
+        <div class="card-main"><h3>Literal Types statt <code>enum</code></h3>
+        <p>Statt beliebiger Strings nur eine feste Auswahl erlauben. Tippfehler fallen sofort auf.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>type Status = "idle" | "loading" | "success" | "error";
+
+let status: Status = "idle";</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>enum Status {
+  Idle = "idle",
+  Loading = "loading",
+  Success = "success",
+  Error = "error",
+}
+
+let status: Status = Status.Idle;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types" target="_blank" rel="noopener">Literal Types</a><a href="https://www.typescriptlang.org/docs/handbook/enums.html" target="_blank" rel="noopener">Enums</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Literal-Typ ist ein Dropdown statt eines Freitextfelds: Es gibt nur die vorgegebenen Einträge.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>"idle" | "loading" | ...</code> ist eine Union aus konkreten String-Werten.</li><li><code>status = "laoding"</code> (Tippfehler) wird sofort rot markiert.</li><li>Der Editor schlägt beim Tippen die erlaubten Werte vor.</li><li>Ein <code>enum</code> erzeugt zusätzlich echten JavaScript-Code, ein Objekt <code>Status</code>, das zur Laufzeit existiert. Literal-Typen verschwinden beim Kompilieren komplett.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Eine Variable mit <code>let</code> ohne Annotation anlegen: <code>let s = "idle"</code> hat den Typ <code>string</code>, nicht <code>Status</code>, und passt nicht in eine Funktion, die <code>Status</code> erwartet. Mit <code>const</code> oder <code>let s: Status</code> klappt es.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Literal-Unions sind heute der übliche Weg, weil sie einfach sind und direkt zu JSON-Daten aus der API passen. Enums siehst du in älteren Projekten und manchen Backend-Frameworks.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Darf man einer Funktion mit Parameter <code>Status</code> direkt den String <code>"success"</code> übergeben, wenn <code>Status</code> ein String-Enum ist?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nein. Ein String-Enum erwartet <code>Status.Success</code>, ein normaler String wird abgelehnt. Bei der Literal-Union geht <code>"success"</code> direkt. Das ist ein Grund, warum viele Teams Unions bevorzugen.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-unions-3">
+        <div class="card-main"><h3>Discriminated Unions</h3>
+        <p>Jede Variante hat ein gemeinsames Feld mit festem Wert. Daran erkennt TypeScript, welche Variante vorliegt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>type State =
+  | { status: "loading" }
+  | { status: "error"; message: string }
+  | { status: "success"; data: Todo[] };
+
+function render(state: State): string {
+  switch (state.status) {
+    case "loading": return "Lädt …";
+    case "error":   return state.message;
+    case "success": return `${state.data.length} Todos`;
+  }
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface LoadingState { status: "loading"; }
+interface ErrorState   { status: "error"; message: string; }
+interface SuccessState { status: "success"; data: Todo[]; }
+
+type State = LoadingState | ErrorState | SuccessState;
+
+function render(state: State): string {
+  if (state.status === "loading") {
+    return "Lädt …";
+  }
+  if (state.status === "error") {
+    return state.message;
+  }
+  return state.data.length + " Todos";
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions" target="_blank" rel="noopener">Discriminated Unions</a><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking" target="_blank" rel="noopener">Exhaustiveness Checking</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Wie Pakete mit farbigem Etikett: Rot heißt Fehler, und nur rote Pakete enthalten eine Fehlermeldung. Wer das Etikett liest, weiß genau, was drin ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Jede Variante hat das Feld <code>status</code> mit einem anderen festen Wert. Das ist der Diskriminator.</li><li>Prüfst du <code>state.status === "error"</code>, schließt TypeScript alle anderen Varianten aus.</li><li>Im Error-Zweig ist <code>state.message</code> deshalb erlaubt, im Loading-Zweig nicht.</li><li>Widersprüchliche Zustände wie „lädt, hat aber schon Daten“ lassen sich gar nicht erst bauen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Zustand als ein Objekt mit lauter optionalen Feldern modellieren: <code>{ loading: boolean; error?: string; data?: Todo[] }</code>. Dann sind widersprüchliche Kombinationen möglich, und du musst überall <code>?.</code> schreiben.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Die Kurzform für überschaubare Varianten. Einzelne Interfaces, wenn die Varianten groß sind oder einzeln wiederverwendet werden.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was passiert, wenn du im <code>switch</code> den Fall <code>"success"</code> vergisst und die Funktion den Rückgabetyp <code>string</code> hat?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>TypeScript meldet, dass die Funktion nicht in allen Fällen einen <code>string</code> zurückgibt. So findest du vergessene Varianten automatisch.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-unions-4">
+        <div class="card-main"><h3>Eigene Type Guards</h3>
+        <p>Eigene Prüffunktionen, die TypeScript als Narrowing versteht. Praktisch, wenn dieselbe Prüfung mehrfach vorkommt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>if ("permissions" in user) {
+  showAdminPanel(user.permissions);
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function isAdmin(user: User | Admin): user is Admin {
+  return "permissions" in user;
+}
+
+if (isAdmin(user)) {
+  showAdminPanel(user.permissions);
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-in-operator-narrowing" target="_blank" rel="noopener">in-Operator</a><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates" target="_blank" rel="noopener">Type Predicates</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Type Guard ist ein Ausweis-Scanner: Er prüft einmal, und danach behandelt jeder die Person entsprechend ihrem Ausweis.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Der <code>in</code>-Operator prüft, ob ein Feld existiert, und TypeScript engt den Typ daraufhin ein.</li><li>Lagerst du die Prüfung in eine Funktion mit Rückgabe <code>boolean</code> aus, geht dieses Wissen verloren.</li><li>Der Rückgabetyp <code>user is Admin</code> (Type Predicate) sagt TypeScript: Liefert die Funktion <code>true</code>, ist <code>user</code> ein <code>Admin</code>.</li><li>Im <code>if</code> danach ist <code>user.permissions</code> deshalb erlaubt.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Eine falsche Prüfung schreiben. TypeScript glaubt dem Type Predicate blind: Prüft <code>isAdmin</code> das falsche Feld, ist der Typ trotzdem <code>Admin</code>, und der Fehler zeigt sich erst zur Laufzeit.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>in</code> oder <code>typeof</code> direkt für einmalige Prüfungen. Ein eigener Type Guard, wenn die Prüfung mehrfach gebraucht wird oder komplexer ist, z.B. für <code>unknown</code>-Daten.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ändert sich, wenn <code>isAdmin</code> nur <code>: boolean</code> statt <code>: user is Admin</code> zurückgibt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Die Funktion läuft gleich, aber TypeScript engt den Typ im <code>if</code> nicht mehr ein. <code>user.permissions</code> wäre dann ein Fehler.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-unions-5">
+        <div class="card-main"><h3><code>null</code> und <code>undefined</code></h3>
+        <p>Mit <code>strict</code> zwingt TypeScript dich, <code>null</code> und <code>undefined</code> zu behandeln. Das <code>!</code> schaltet diese Prüfung an einer Stelle ab.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const input = document.querySelector&lt;HTMLInputElement&gt;("#email")!;
+input.value = "";
+
+const name = user?.name ?? "Gast";</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const input = document.querySelector&lt;HTMLInputElement&gt;("#email");
+if (input === null) {
+  throw new Error("#email fehlt im HTML");
+}
+input.value = "";
+
+let name: string;
+if (user !== undefined &amp;&amp; user.name !== undefined) {
+  name = user.name;
+} else {
+  name = "Gast";
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#null-and-undefined" target="_blank" rel="noopener">null und undefined</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-" target="_blank" rel="noopener">Non-null Assertion (!)</a><a href="https://www.typescriptlang.org/tsconfig/#strictNullChecks" target="_blank" rel="noopener">strictNullChecks</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>!</code> ist ein Versprechen an den Compiler: „Da ist ganz sicher etwas.“ Hältst du es nicht, stürzt das Programm zur Laufzeit trotzdem ab.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>querySelector</code> gibt <code>HTMLInputElement | null</code> zurück, weil das Element fehlen könnte.</li><li>Das <code>!</code> am Ende (Non-null Assertion) entfernt <code>null</code> aus dem Typ, ohne etwas zu prüfen.</li><li>Die ausführliche Variante prüft wirklich und wirft einen Fehler mit klarer Meldung.</li><li>Nach der Prüfung weiß TypeScript, dass <code>input</code> nicht <code>null</code> ist.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>!</code> überall verteilen, um Fehlermeldungen loszuwerden. Dann hast du im Grunde wieder JavaScript ohne Prüfung, und „Cannot read properties of null“ kommt zurück.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>?.</code> und <code>??</code> für Werte, die legitim fehlen dürfen. <code>!</code> nur, wenn du es wirklich garantieren kannst. Eine echte Prüfung, wenn ein Fehlen ein Fehler im Programm wäre.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist der Unterschied zwischen <code>user?.name</code> und <code>user!.name</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>user?.name</code> prüft zur Laufzeit und ergibt <code>undefined</code>, wenn <code>user</code> fehlt. <code>user!.name</code> prüft nichts und stürzt ab, wenn <code>user</code> fehlt. Es beruhigt nur den Compiler.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="generics">
+    <h2>Generics <span class="tag">generics</span></h2>
+    <p class="sub">Platzhalter für Typen. Klingt abstrakt, du benutzt sie aber ständig: Array&lt;T&gt;, Promise&lt;T&gt;, useState&lt;T&gt;.</p>
+    <div class="grid">
+      <article class="card" id="ts-generics-1">
+        <div class="card-main"><h3>Generische Funktionen</h3>
+        <p>Ein Typ-Parameter <code>&lt;T&gt;</code> ist ein Platzhalter, den TypeScript bei jedem Aufruf mit dem passenden Typ füllt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function first&lt;T&gt;(items: T[]) {
+  return items[0];
+}
+
+const n = first([1, 2, 3]);    // number
+const s = first(["a", "b"]);   // string</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function first&lt;T&gt;(items: T[]): T | undefined {
+  return items[0];
+}
+
+const n = first&lt;number&gt;([1, 2, 3]);
+const s = first&lt;string&gt;(["a", "b"]);</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" target="_blank" rel="noopener">Generics</a><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables" target="_blank" rel="noopener">Typ-Variablen</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Generics sind wie eine Ausstechform: Die Form bleibt gleich, aber welchen Teig du hineindrückst, entscheidet der Aufrufer. Heraus kommt immer das Material, das hineinging.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;T&gt;</code> deklariert einen Typ-Platzhalter, wie ein Parameter, nur für Typen.</li><li><code>items: T[]</code> heißt: ein Array von irgendwas, aber alle Elemente vom selben Typ.</li><li>Beim Aufruf mit <code>[1, 2, 3]</code> erkennt TypeScript <code>T = number</code> und setzt es überall ein.</li><li>Dadurch ist der Rückgabetyp <code>number</code> statt <code>any</code>. Die Information geht nicht verloren.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>any</code> statt Generics benutzen: <code>function first(items: any[]): any</code>. Das funktioniert, aber das Ergebnis ist ungeprüft, und <code>first([1, 2]).toUpperCase()</code> fällt nicht mehr auf.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Den Typ meist ableiten lassen. Explizit <code>&lt;number&gt;</code> angeben, wenn TypeScript nichts ableiten kann, z.B. bei <code>useState&lt;User | null&gt;(null)</code> oder einem leeren Array.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum ist <code>T | undefined</code> als Rückgabetyp in der ausführlichen Variante ehrlicher?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Weil <code>items[0]</code> bei einem leeren Array <code>undefined</code> ist. Ohne <code>| undefined</code> behauptet der Typ, es komme immer ein <code>T</code> zurück.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-generics-2">
+        <div class="card-main"><h3>Generic Constraints</h3>
+        <p>Mit <code>extends</code> legst du fest, was ein Typ-Parameter mindestens können muss.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function findById&lt;T extends { id: number }&gt;(items: T[], id: number) {
+  return items.find(item =&gt; item.id === id);
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface HasId {
+  id: number;
+}
+
+function findById&lt;T extends HasId&gt;(items: T[], id: number): T | undefined {
+  return items.find(function (item: T): boolean {
+    return item.id === id;
+  });
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints" target="_blank" rel="noopener">Generic Constraints</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Einschränkung ist wie eine Stellenausschreibung: Bewerben darf sich jeder, aber eine ID ist Pflicht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ohne Einschränkung weiß TypeScript nichts über <code>T</code>. <code>item.id</code> wäre ein Fehler.</li><li><code>T extends HasId</code> heißt: <code>T</code> darf jeder Typ sein, der mindestens <code>id: number</code> hat.</li><li>Darum ist <code>item.id</code> in der Funktion erlaubt.</li><li>Der Rückgabetyp bleibt trotzdem der genaue Typ: Übergibst du <code>Todo[]</code>, kommt <code>Todo | undefined</code> zurück und nicht nur <code>HasId</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Parameter direkt als <code>HasId[]</code> typisieren statt generisch. Dann kommt <code>HasId | undefined</code> zurück, und <code>result.title</code> ist ein Fehler, obwohl es ein Todo war.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Constraints immer dann, wenn deine generische Funktion auf bestimmte Felder zugreift. Typisch für Hilfsfunktionen in Repositories und Services.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Darf man <code>findById(["a", "b"], 1)</code> aufrufen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nein. Strings haben kein Feld <code>id: number</code>, also erfüllen sie die Einschränkung nicht.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-generics-3">
+        <div class="card-main"><h3>Generische Typen</h3>
+        <p>Auch Typen können Platzhalter haben. So beschreibst du eine Hülle einmal und füllst sie mit wechselndem Inhalt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>type ApiResponse&lt;T&gt; = { data: T; error: string | null };
+
+const res: ApiResponse&lt;User[]&gt; = await getUsers();</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface ApiResponse&lt;T&gt; {
+  data: T;
+  error: string | null;
+}
+
+type UsersResponse = ApiResponse&lt;User[]&gt;;
+
+const res: UsersResponse = await getUsers();</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types" target="_blank" rel="noopener">Generische Typen</a><a href="https://www.typescriptlang.org/docs/handbook/2/objects.html#generic-object-types" target="_blank" rel="noopener">Generische Objekttypen</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>ApiResponse&lt;T&gt;</code> ist ein Versandkarton mit Standardaufdruck (Daten, Fehlerfeld). Was drinliegt, steht auf dem Etikett: <code>&lt;User[]&gt;</code> oder <code>&lt;Todo&gt;</code>.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>ApiResponse&lt;T&gt;</code> definiert die Hülle mit einem Platzhalter <code>T</code> für den Inhalt.</li><li><code>ApiResponse&lt;User[]&gt;</code> setzt <code>T = User[]</code> ein. <code>data</code> hat jetzt den Typ <code>User[]</code>.</li><li>Dieselbe Hülle funktioniert für jeden Endpunkt: <code>ApiResponse&lt;Todo&gt;</code>, <code>ApiResponse&lt;number&gt;</code> und so weiter.</li><li>Du kennst das Muster schon: <code>Promise&lt;User&gt;</code> und <code>Array&lt;string&gt;</code> sind ebenfalls generische Typen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Für jeden Endpunkt ein eigenes, fast gleiches Interface anlegen (<code>UsersResponse</code>, <code>TodosResponse</code> …). Ändert sich das Antwortformat, musst du alle einzeln anpassen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Ein Alias wie <code>UsersResponse</code> lohnt sich, wenn der zusammengesetzte Typ oft vorkommt. Sonst <code>ApiResponse&lt;User[]&gt;</code> direkt schreiben.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>res.data[0].name</code>, wenn <code>res</code> vom Typ <code>ApiResponse&lt;User[]&gt;</code> ist?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>string</code>, also der Typ von <code>User.name</code>. TypeScript reicht den Typ durch alle Ebenen durch.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="utility">
+    <h2>Utility Types <span class="tag">utility</span></h2>
+    <p class="sub">Neue Typen aus bestehenden ableiten, statt sie doppelt zu pflegen.</p>
+    <div class="grid">
+      <article class="card" id="ts-utility-1">
+        <div class="card-main"><h3><code>Partial</code> und <code>Required</code></h3>
+        <p><code>Partial&lt;T&gt;</code> macht alle Felder optional. Ideal für PATCH-Requests, bei denen nur ein Teil geändert wird.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function updateUser(id: number, changes: Partial&lt;User&gt;) { ... }
+
+updateUser(1, { age: 32 });</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface UserUpdate {
+  name?: string;
+  age?: number;
+  email?: string;
+}
+
+function updateUser(id: number, changes: UserUpdate): void { ... }
+
+updateUser(1, { age: 32 });</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype" target="_blank" rel="noopener">Partial</a><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html#requiredtype" target="_blank" rel="noopener">Required</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>Partial</code> ist ein Änderungsformular, auf dem du nur die Felder ausfüllst, die sich ändern sollen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>Partial&lt;User&gt;</code> erzeugt einen neuen Typ, in dem jedes Feld von <code>User</code> ein <code>?</code> bekommt.</li><li>Das Original-Interface bleibt unverändert.</li><li>Kommt in <code>User</code> ein neues Feld dazu, ist es automatisch auch in <code>Partial&lt;User&gt;</code> enthalten.</li><li>Das Gegenstück <code>Required&lt;T&gt;</code> entfernt alle <code>?</code> und macht jedes Feld zur Pflicht.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das von Hand geschriebene <code>UserUpdate</code> nicht pflegen. Bekommt <code>User</code> ein neues Feld <code>city</code>, fehlt es in <code>UserUpdate</code>, und niemand merkt es. Mit <code>Partial&lt;User&gt;</code> kann das nicht passieren.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Fast immer die Utility-Type-Variante. Ein eigenes Interface nur, wenn bewusst nicht alle Felder änderbar sein sollen. Dann aber besser <code>Partial&lt;Omit&lt;User, "id"&gt;&gt;</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Ist <code>{}</code> ein gültiger Wert für <code>Partial&lt;User&gt;</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ja, weil alle Felder optional sind. Wenn ein leerer Update-Request nicht erlaubt sein soll, musst du das zusätzlich zur Laufzeit prüfen.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-utility-2">
+        <div class="card-main"><h3><code>Pick</code> und <code>Omit</code></h3>
+        <p>Aus einem bestehenden Typ Felder herausnehmen (<code>Omit</code>) oder nur bestimmte behalten (<code>Pick</code>).</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>type PublicUser = Omit&lt;User, "password"&gt;;
+type UserPreview = Pick&lt;User, "id" | "name"&gt;;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface PublicUser {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface UserPreview {
+  id: number;
+  name: string;
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys" target="_blank" rel="noopener">Pick</a><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys" target="_blank" rel="noopener">Omit</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>Pick</code> ist eine Schere, die nur die markierten Felder ausschneidet. <code>Omit</code> ist ein Rotstift, der einzelne Felder durchstreicht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Die Feldnamen gibst du als Literal-Union an: <code>"id" | "name"</code>.</li><li><code>Pick&lt;User, "id" | "name"&gt;</code> baut einen Typ nur aus diesen Feldern.</li><li><code>Omit&lt;User, "password"&gt;</code> baut einen Typ aus allen Feldern außer <code>password</code>.</li><li>Beide bleiben mit <code>User</code> verbunden. Ändert sich ein Feldtyp in <code>User</code>, ändert er sich überall.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Annehmen, <code>Omit</code> entferne das Feld auch zur Laufzeit. Typen verschwinden beim Kompilieren: Gibst du im Backend ein komplettes User-Objekt mit Passwort zurück, wird es trotzdem verschickt. Das Feld musst du selbst entfernen, z.B. per Destructuring.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>Omit</code> für „alles außer sensiblen oder generierten Feldern“, <code>Pick</code> für kleine Vorschau-Typen. Ausgeschriebene Interfaces nur, wenn der Typ wirklich eigenständig ist.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welche Felder hat <code>Omit&lt;User, "id" | "password"&gt;</code>, wenn <code>User</code> die Felder <code>id</code>, <code>name</code>, <code>email</code> und <code>password</code> hat?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>name</code> und <code>email</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-utility-3">
+        <div class="card-main"><h3><code>keyof</code> und <code>typeof</code></h3>
+        <p>Typen aus vorhandenen Werten ableiten, statt sie doppelt zu pflegen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const ROLES = { admin: "Administrator", user: "Benutzer" } as const;
+
+type Role = keyof typeof ROLES;   // "admin" | "user"</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>type Role = "admin" | "user";
+
+const ROLES: Record&lt;Role, string&gt; = {
+  admin: "Administrator",
+  user: "Benutzer",
+};</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/keyof-types.html" target="_blank" rel="noopener">keyof</a><a href="https://www.typescriptlang.org/docs/handbook/2/typeof-types.html" target="_blank" rel="noopener">typeof</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>typeof</code> macht vom Objekt eine Blaupause, <code>keyof</code> liest daraus die Liste der Feldnamen ab.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>typeof ROLES</code> liefert im Typ-Kontext den Typ des Objekts mit all seinen Feldern.</li><li><code>keyof</code> davor macht daraus die Union der Keys: <code>"admin" | "user"</code>.</li><li>Kommt im Objekt eine Rolle dazu, ist sie automatisch im Typ enthalten.</li><li>Die ausführliche Variante geht den umgekehrten Weg: erst der Typ, dann das Objekt, das ihn erfüllen muss.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>typeof</code> in TypeScript mit <code>typeof</code> in JavaScript verwechseln. In einer Bedingung wie <code>typeof x === "string"</code> ist es der JavaScript-Operator zur Laufzeit. Nach <code>type X =</code> ist es der TypeScript-Operator, der einen Typ liefert.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Wert zuerst, wenn das Objekt die Quelle der Wahrheit ist, z.B. bei Konfigurationen. Typ zuerst, wenn der Typ von außen vorgegeben ist, z.B. durch die API oder die Datenbank.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>keyof User</code>, wenn <code>User</code> die Felder <code>id</code> und <code>name</code> hat?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>"id" | "name"</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="backend">
+    <h2>Async, API und Backend <span class="tag">api</span></h2>
+    <p class="sub">Wo Frontend und Backend sich treffen und Typen am meisten helfen, aber auch am leichtesten lügen.</p>
+    <div class="grid">
+      <article class="card" id="ts-backend-1">
+        <div class="card-main"><h3><code>Promise&lt;T&gt;</code> als Rückgabetyp</h3>
+        <p>Eine <code>async</code>-Funktion gibt immer ein Promise zurück. Der Typ beschreibt, was beim <code>await</code> herauskommt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>async function getUser(id: number) {
+  const res = await fetch(`/api/users/${id}`);
+  return (await res.json()) as User;
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>async function getUser(id: number): Promise&lt;User&gt; {
+  const res: Response = await fetch("/api/users/" + id);
+  if (!res.ok) {
+    throw new Error("HTTP " + res.status);
+  }
+  const user: User = await res.json();
+  return user;
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#functions-which-return-promises" target="_blank" rel="noopener">Funktionen, die Promises zurückgeben</a><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#return-type-annotations" target="_blank" rel="noopener">Rückgabetypen</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>Promise&lt;User&gt;</code> ist ein Abholschein mit Aufdruck: „Hier bekommst du später einen User.“</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>async</code> macht aus jedem Rückgabewert automatisch ein Promise. Aus <code>User</code> wird <code>Promise&lt;User&gt;</code>.</li><li><code>res.json()</code> liefert <code>Promise&lt;any&gt;</code>. TypeScript weiß nicht, was der Server schickt.</li><li>Mit <code>as User</code> oder der Annotation <code>const user: User</code> legst du den Typ fest. Beides ist eine Behauptung, keine Prüfung.</li><li>Wer <code>await getUser(1)</code> schreibt, bekommt ab dann einen typisierten <code>User</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Rückgabetyp als <code>User</code> statt <code>Promise&lt;User&gt;</code> angeben. TypeScript meldet einen Fehler, weil eine <code>async</code>-Funktion immer ein Promise zurückgibt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Expliziter Rückgabetyp <code>Promise&lt;User&gt;</code> bei allen API-Funktionen. Er dokumentiert, was der Aufrufer bekommt, und die ausführliche Variante prüft zusätzlich <code>res.ok</code>, was die kurze vergisst.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>const u = getUser(1)</code> ohne <code>await</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>Promise&lt;User&gt;</code>. Erst mit <code>await</code> bekommst du den <code>User</code> selbst.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-backend-2">
+        <div class="card-main"><h3>Daten von außen prüfen</h3>
+        <p>Typen existieren nur beim Programmieren. Daten von außen müssen zur Laufzeit geprüft werden, sonst lügt der Typ.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>import { z } from "zod";
+
+const UserSchema = z.object({ id: z.number(), name: z.string() });
+type User = z.infer&lt;typeof UserSchema&gt;;
+
+const user = UserSchema.parse(await res.json());</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface User { id: number; name: string; }
+
+function isUser(value: unknown): value is User {
+  return (
+    typeof value === "object" &amp;&amp; value !== null &amp;&amp;
+    "id" in value &amp;&amp; typeof value.id === "number" &amp;&amp;
+    "name" in value &amp;&amp; typeof value.name === "string"
+  );
+}
+
+const data: unknown = await res.json();
+if (!isUser(data)) {
+  throw new Error("Ungültige Antwort");
+}
+const user = data; // ab hier: User</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates" target="_blank" rel="noopener">Type Predicates</a><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown" target="_blank" rel="noopener">unknown</a><a href="https://zod.dev" target="_blank" rel="noopener">Zod</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>TypeScript ist die Gästeliste, die Laufzeitprüfung ist der Türsteher. Eine Liste allein hält niemanden auf, erst der Türsteher kontrolliert wirklich.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Was vom Server, aus einem Formular oder aus <code>localStorage</code> kommt, ist für TypeScript unbekannt.</li><li>Die ausführliche Variante prüft jedes Feld von Hand und meldet das Ergebnis per Type Guard.</li><li>Zod beschreibt die Form einmal als Schema. <code>parse</code> prüft zur Laufzeit und wirft einen Fehler, wenn etwas nicht passt.</li><li><code>z.infer</code> leitet den TypeScript-Typ aus dem Schema ab. So gibt es nur eine Quelle der Wahrheit.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Im Backend <code>req.body as CreateUserDto</code> schreiben und glauben, die Eingabe sei damit geprüft. Jeder kann beliebiges JSON schicken. Gerade im Backend ist Validierung Pflicht.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Für eine einzelne kleine Prüfung reicht ein Type Guard. Sobald es mehrere Endpunkte gibt, lohnt sich eine Bibliothek wie Zod, im Frontend wie im Backend.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum reicht <code>const user: User = await res.json()</code> nicht als Prüfung?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Weil <code>res.json()</code> <code>any</code> liefert und <code>any</code> zu jedem Typ passt. TypeScript prüft hier nichts, der Typ ist nur eine Behauptung.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-backend-3">
+        <div class="card-main"><h3>Typen teilen: DTOs</h3>
+        <p>Frontend und Backend nutzen dieselben Typen. Ändert sich das API-Format, zeigen beide Seiten sofort Fehler.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>// shared/types.ts
+export interface User { id: number; name: string; email: string; }
+export type CreateUserDto = Omit&lt;User, "id"&gt;;
+
+// im Frontend und im Backend
+import type { User, CreateUserDto } from "../shared/types";</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>// shared/types.ts
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface CreateUserDto {
+  name: string;
+  email: string;
+}
+
+// im Frontend und im Backend
+import { type User, type CreateUserDto } from "../shared/types";</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://www.typescriptlang.org/docs/handbook/2/modules.html#typescript-specific-es-module-syntax" target="_blank" rel="noopener">Typ-Importe (import type)</a><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys" target="_blank" rel="noopener">Omit</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein gemeinsamer Typ ist ein Vertrag, den beide Seiten unterschreiben. Ändert eine Seite den Vertrag, sieht die andere es sofort.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Die Typen liegen in einem Ordner, auf den beide Projekte zugreifen, z.B. in einem Monorepo.</li><li>Ein DTO (Data Transfer Object) beschreibt, was über die Leitung geht. Beim Anlegen gibt es noch keine <code>id</code>, die vergibt die Datenbank.</li><li><code>Omit&lt;User, "id"&gt;</code> leitet das DTO vom User ab, statt die Felder doppelt zu schreiben.</li><li><code>import type</code> importiert nur Typen. Der Import verschwindet beim Kompilieren komplett, es landet kein Code im Bundle.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Typen im Frontend einfach abtippen. Benennt das Backend ein Feld um, z.B. <code>name</code> in <code>fullName</code>, kompiliert das Frontend weiter, zeigt aber <code>undefined</code> an.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>Omit</code> hält das DTO automatisch synchron. Ein ausgeschriebenes DTO ist sinnvoll, wenn sich Eingabe und gespeichertes Objekt bewusst unterscheiden, z.B. Klartext-Passwort beim Registrieren und Hash in der Datenbank.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum hat <code>CreateUserDto</code> keine <code>id</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Weil der Client beim Anlegen noch keine ID kennt. Die vergibt der Server oder die Datenbank.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-backend-4">
+        <div class="card-main"><h3>Express-Routen typisieren</h3>
+        <p>Bei Inline-Handlern leitet TypeScript vieles selbst ab. In ausgelagerten Controllern gibst du die Typen an.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>app.get("/users/:id", (req, res) =&gt; {
+  const user = findUser(Number(req.params.id));
+  if (!user) {
+    res.status(404).json({ error: "Nicht gefunden" });
+    return;
+  }
+  res.json(user);
+});</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>import { Request, Response } from "express";
+
+type Params = { id: string };
+type Body = User | { error: string };
+
+function getUserHandler(req: Request&lt;Params&gt;, res: Response&lt;Body&gt;): void {
+  const user = findUser(Number(req.params.id));
+  if (!user) {
+    res.status(404).json({ error: "Nicht gefunden" });
+    return;
+  }
+  res.json(user);
+}
+
+app.get("/users/:id", getUserHandler);</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://expressjs.com/en/guide/routing.html#route-parameters" target="_blank" rel="noopener">Route-Parameter (Express)</a><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" target="_blank" rel="noopener">Generics</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Die Platzhalter von <code>Request</code> und <code>Response</code> sind wie beschriftete Ein- und Ausgänge einer Maschine: Was darf hinein (Parameter, Body), was kommt heraus (Antwort).</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Bei einem Inline-Handler leitet TypeScript <code>req.params.id</code> aus dem Pfad <code>"/users/:id"</code> ab. Der Typ ist immer <code>string</code>.</li><li>Darum <code>Number(...)</code> vor der Suche: URL-Parameter sind Text, auch wenn sie wie Zahlen aussehen.</li><li>In einem ausgelagerten Handler fehlt der Bezug zur Route. <code>Request&lt;Params&gt;</code> gibt die Parameter deshalb ausdrücklich an.</li><li><code>Request&lt;Params, ResBody, ReqBody&gt;</code> hat auch Platzhalter für Antwort und Body. Für einen POST-Body schreibst du z.B. <code>Request&lt;{}, unknown, CreateUserDto&gt;</code>.</li><li><code>Response&lt;Body&gt;</code> sorgt dafür, dass <code>res.json(...)</code> nur passende Daten akzeptiert.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Glauben, <code>Request&lt;{}, unknown, CreateUserDto&gt;</code> prüfe den Body. Auch hier ist der Typ nur eine Behauptung, der Body muss trotzdem validiert werden (siehe Karte „Daten von außen prüfen“).</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Inline reicht für einfache Routen. Explizite Typen, sobald Handler in eigene Dateien (Controller) wandern. Tipp: <code>res.status(...).json(...)</code> und danach ein separates <code>return;</code> vermeidet Typfehler bei neueren Express-Typen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>req.params.id</code> bei der Route <code>/users/:id</code>, auch wenn die ID eine Zahl ist?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>string</code>. Alles aus der URL ist Text. Umwandeln musst du selbst und dabei auf <code>NaN</code> prüfen.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="react">
+    <h2>React mit TypeScript <span class="tag">react</span></h2>
+    <p class="sub">Die drei Stellen, an denen du in React-Komponenten am häufigsten Typen schreibst.</p>
+    <div class="grid">
+      <article class="card" id="ts-react-1">
+        <div class="card-main"><h3>Props typisieren</h3>
+        <p>Props sind ein Objekt, also typisierst du sie wie jedes andere Objekt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function Button({ label, onClick, variant = "primary" }: {
+  label: string;
+  onClick: () =&gt; void;
+  variant?: "primary" | "secondary";
+}) {
+  return &lt;button className={variant} onClick={onClick}&gt;{label}&lt;/button&gt;;
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>interface ButtonProps {
+  label: string;
+  onClick: () =&gt; void;
+  variant?: "primary" | "secondary";
+}
+
+function Button(props: ButtonProps) {
+  const variant = props.variant ?? "primary";
+  return (
+    &lt;button className={variant} onClick={props.onClick}&gt;
+      {props.label}
+    &lt;/button&gt;
+  );
+}</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://react.dev/learn/typescript#typescript-with-react-components" target="_blank" rel="noopener">React mit TypeScript (EN)</a><a href="https://react.dev/learn/typescript#typing-children" target="_blank" rel="noopener">children typisieren (EN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Das Props-Interface ist die Bedienungsanleitung der Komponente: Darin steht, was man einstecken muss und was optional ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Eine Komponente bekommt genau einen Parameter: das Props-Objekt.</li><li>Die Typ-Annotation steht hinter dem ganzen Destructuring-Muster, nicht hinter einzelnen Props.</li><li>Optionale Props bekommen ein <code>?</code>. Ein Default im Destructuring liefert den Standardwert.</li><li>Wer <code>&lt;Button /&gt;</code> ohne <code>label</code> benutzt, bekommt sofort einen Fehler im Editor.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Typen direkt ins Destructuring schreiben: <code>({ label: string })</code>. Das ist JavaScript-Syntax fürs Umbenennen und erzeugt eine Variable namens <code>string</code>. Der Typ gehört hinter die Klammer: <code>({ label }: { label: string })</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Inline bei sehr kleinen Komponenten. Ein benanntes Interface wie <code>ButtonProps</code>, sobald es mehr als zwei, drei Props sind oder andere Komponenten die Props weiterreichen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie typisierst du die Prop <code>children</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>children: React.ReactNode</code>. Das erlaubt Text, Elemente, Listen und <code>null</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-react-2">
+        <div class="card-main"><h3><code>useState</code> typisieren</h3>
+        <p>Bei eindeutigen Startwerten leitet React den Typ ab. Startet der State leer, musst du ihn angeben.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const [count, setCount] = useState(0);              // number
+const [user, setUser] = useState&lt;User | null&gt;(null);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const [count, setCount] = useState&lt;number&gt;(0);
+
+type MaybeUser = User | null;
+const [user, setUser] = useState&lt;MaybeUser&gt;(null);</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://react.dev/learn/typescript#typing-usestate" target="_blank" rel="noopener">useState typisieren (EN)</a><a href="https://react.dev/reference/react/useState" target="_blank" rel="noopener">useState-Referenz (EN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Der Startwert ist das erste Teil in einer Kiste. Liegt eine Zahl drin, weiß jeder: Hier kommen Zahlen rein. Ist die Kiste leer, musst du draufschreiben, was hineingehört.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>useState(0)</code> erkennt <code>number</code> aus dem Startwert. <code>setCount("a")</code> wäre ein Fehler.</li><li><code>useState(null)</code> würde nur den Typ <code>null</code> ableiten, und <code>setUser(user)</code> wäre später verboten.</li><li>Mit <code>useState&lt;User | null&gt;(null)</code> sagst du: Startet als <code>null</code>, darf später ein <code>User</code> sein.</li><li>Vor der Benutzung musst du darum <code>null</code> ausschließen, z.B. mit <code>if (!user) return ...</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>useState([])</code> für eine Liste. Das leere Array wird als <code>never[]</code> erkannt, und <code>setTodos([todo])</code> schlägt fehl. Richtig ist <code>useState&lt;Todo[]&gt;([])</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Typ ableiten lassen, wenn der Startwert ihn eindeutig zeigt. Explizit bei <code>null</code>, leeren Arrays und Unions wie <code>useState&lt;Status&gt;("idle")</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Typ hat <code>status</code> bei <code>const [status, setStatus] = useState("idle")</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>string</code>, nicht <code>"idle"</code>. Willst du nur bestimmte Werte erlauben, brauchst du <code>useState&lt;Status&gt;("idle")</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="ts-react-3">
+        <div class="card-main"><h3>Events typisieren</h3>
+        <p>Inline-Handler bekommen ihren Typ automatisch. Lagerst du den Handler aus, musst du den Event-Typ angeben.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;input onChange={e =&gt; setName(e.target.value)} /&gt;
+
+&lt;form onSubmit={e =&gt; { e.preventDefault(); save(); }}&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function handleChange(event: React.ChangeEvent&lt;HTMLInputElement&gt;): void {
+  setName(event.target.value);
+}
+
+function handleSubmit(event: React.FormEvent&lt;HTMLFormElement&gt;): void {
+  event.preventDefault();
+  save();
+}
+
+&lt;input onChange={handleChange} /&gt;
+&lt;form onSubmit={handleSubmit}&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://react.dev/learn/typescript#typing-dom-events" target="_blank" rel="noopener">DOM-Events typisieren (EN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Inline-Handler steht direkt am Gerät und weiß, woher das Signal kommt. Ein ausgelagerter Handler sitzt in einem anderen Raum und braucht einen Zettel, von welchem Gerät die Nachricht stammt.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Im JSX weiß TypeScript, dass <code>onChange</code> an einem <code>&lt;input&gt;</code> hängt, und gibt <code>e</code> den passenden Typ.</li><li>In einer eigenen Funktion fehlt dieser Zusammenhang. Ohne Annotation wäre <code>event</code> <code>any</code>.</li><li><code>React.ChangeEvent&lt;HTMLInputElement&gt;</code> heißt: ein Change-Event von einem Input-Element.</li><li>Darum kennt <code>event.target</code> die Eigenschaft <code>value</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den nativen DOM-Typ <code>Event</code> statt des React-Typs benutzen. React übergibt eigene Event-Objekte, und <code>event.target.value</code> ist bei <code>Event</code> nicht bekannt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Inline für Einzeiler, ausgelagert, sobald der Handler mehr tut. Tipp: Fahr im Editor mit der Maus über <code>e</code> im Inline-Handler. Dort steht der exakte Typ, den du kopieren kannst.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welchen Event-Typ braucht ein <code>onChange</code> an einem <code>&lt;select&gt;</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>React.ChangeEvent&lt;HTMLSelectElement&gt;</code>. In den spitzen Klammern steht immer das Element, an dem der Handler hängt.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  
+  <p class="empty" id="empty" hidden>Kein Konzept passt zu diesem Suchbegriff.</p>
+
+  <footer>Übungsidee: Nimm ein kleines JavaScript-Projekt aus deinem Kurs, benenne eine Datei in <code>.ts</code> um und arbeite die roten Unterstreichungen ab. Jede davon passt zu einer Karte auf dieser Seite. Grundlagen auffrischen im <a href="js.html">JavaScript Spickzettel</a>, alle Zettel im <a href="index.html">Spickzettel-Hub</a>.<br><br>Weitere Zettel: <a href="html.html">HTML</a> · <a href="css.html">CSS</a> · <a href="js.html">JavaScript</a> · <a href="gsap.html">GSAP</a> · <a href="three.html">Three.js</a> · <a href="cro.html">Conversion-Optimierung</a></footer>
+</main>
+
+<button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
+<script src="assets/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<title>JavaScript Spickzettel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: Kopf mit Filter + Themen-Sprungleiste, darunter Abschnitte als Raster aus Konzept-Karten; jede Karte zeigt Kurz- und Ausführlich-Variante */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --fg: #1b2230;
+  --muted: #5b6577;
+  --line: #dde1e8;
+  --accent: #9a6f00;
+  --accent-soft: #fbf1d3;
+  --long: #2f6f8f;
+  --long-soft: #e1eef5;
+  --warn: #b03a2e;
+  --warn-soft: #fbe9e6;
+  --code-bg: #1e2433;
+  --code-fg: #e4e8f0;
+  --code-com: #8a93a8;
+  --code-kw: #f0c35a;
+  --code-str: #9fd39a;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161f; --surface: #1a202c; --fg: #e6e9ef; --muted: #9aa3b5; --line: #2b3342;
+    --accent: #f0c35a; --accent-soft: #2e2a1c; --long: #8cc7e6; --long-soft: #1b2b38; --warn: #f19a8e; --warn-soft: #34201e;
+    --code-bg: #0c1018; --code-fg: #e4e8f0; --code-com: #7c859a; --code-kw: #f0c35a; --code-str: #9fd39a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161f; --surface: #1a202c; --fg: #e6e9ef; --muted: #9aa3b5; --line: #2b3342;
+  --accent: #f0c35a; --accent-soft: #2e2a1c; --long: #8cc7e6; --long-soft: #1b2b38; --warn: #f19a8e; --warn-soft: #34201e;
+  --code-bg: #0c1018; --code-fg: #e4e8f0; --code-com: #7c859a; --code-kw: #f0c35a; --code-str: #9fd39a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; }
+header { display: grid; gap: 14px; margin-bottom: 8px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 64ch; margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13.5px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.tools { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 12px; border-bottom: 1px solid var(--line); display: grid; gap: 10px; margin-bottom: 28px; }
+.toolrow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+#filter { flex: 1 1 240px; max-width: 420px; font: inherit; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--fg); padding: 8px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+#filter:focus-visible, a:focus-visible, .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+nav { display: flex; flex-wrap: wrap; gap: 6px; }
+nav a { font-size: 13px; text-decoration: none; color: var(--fg); padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+nav a:hover { border-color: var(--accent); }
+section { margin-bottom: 40px; scroll-margin-top: 150px; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 24px; margin: 0 0 4px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+h2 .tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 4px; }
+.sub { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card h3 { margin: 0; font-size: 15.5px; font-weight: 600; }
+.card h3 code { font-family: var(--font-mono); font-size: 14px; color: var(--accent); }
+.card p { margin: 0; font-size: 14px; color: var(--muted); }
+.card p code { font-family: var(--font-mono); font-size: 13px; }
+.v { display: grid; gap: 4px; min-width: 0; }
+.lbl { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; justify-self: start; padding: 1px 7px; border-radius: 4px; }
+.short .lbl { color: var(--accent); background: var(--accent-soft); }
+.long .lbl { color: var(--long); background: var(--long-soft); }
+pre { margin: 0; background: var(--code-bg); color: var(--code-fg); border-radius: 7px; padding: 12px 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 12.8px; line-height: 1.6; }
+.short pre { border-left: 3px solid var(--code-kw); }
+.long pre { border-left: 3px solid var(--long); }
+.c { color: var(--code-com); } .k { color: var(--code-kw); } .s { color: var(--code-str); }
+body.only-short .long, body.only-long .short { display: none; }
+.docs { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; font-size: 13px; }
+.docs-l { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+.docs a { color: var(--long); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--long) 40%, transparent); padding-bottom: 1px; }
+.docs a:not(:last-child)::after { content: " ·"; color: var(--muted); }
+.docs a:hover { border-bottom-color: var(--long); }
+.docs a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.explain { border-top: 1px dashed var(--line); padding-top: 8px; }
+.explain > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; color: var(--fg); padding: 5px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); user-select: none; }
+.explain > summary::-webkit-details-marker, .answer > summary::-webkit-details-marker { display: none; }
+.explain > summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+.explain[open] > summary::before { transform: rotate(45deg); }
+.explain > summary:hover { border-color: var(--accent); }
+.explain > summary:focus-visible, .answer > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ex { display: grid; gap: 12px; padding-top: 12px; }
+.ex-b { display: grid; gap: 4px; min-width: 0; }
+.ex h4 { margin: 0; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.ex p, .ex li { font-size: 14px; color: var(--fg); margin: 0; max-width: 65ch; }
+.ex ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.ex code { font-family: var(--font-mono); font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; overflow-wrap: anywhere; }
+.ex-b.warn { background: var(--warn-soft); border-radius: 7px; padding: 10px 12px; }
+.ex-b.warn h4 { color: var(--warn); }
+.ex-b.quiz { background: var(--long-soft); border-radius: 7px; padding: 10px 12px; }
+.ex-b.quiz h4 { color: var(--long); }
+.answer > summary { cursor: pointer; list-style: none; font-size: 13px; font-weight: 600; color: var(--long); margin-top: 4px; }
+.answer > summary::before { content: "▸ "; }
+.answer[open] > summary::before { content: "▾ "; }
+.answer p { margin-top: 4px; }
+.ghost { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+.ghost:hover { border-color: var(--accent); }
+.ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow a.hub { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
+.eyebrow a.hub:hover { opacity: .75; }
+footer a { color: var(--fg); }
+.empty { color: var(--muted); }
+footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+
+<div class="wrap">
+  <div class="moved" role="note" style="background:var(--fg);color:var(--bg);border-radius:10px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin-bottom:20px;font-size:14px"><span><b>Umgezogen:</b> Alle Spickzettel sind jetzt eine gemeinsame Website mit Volltextsuche, kompakter Leiste und Kopieren-Buttons. Diese Seite wird nicht mehr aktualisiert.</span><a href="https://claude.ai/artifact/9FgD6LcjB68gU8wbNGA4L7#js" target="_blank" rel="noopener" style="color:var(--bg);font-weight:700;white-space:nowrap">Zur neuen Version →</a></div>
+  <header>
+    <div class="eyebrow"><a class="hub" href="https://claude.ai/artifact/8MMr1HXJMFnYe4ubTYDY4x" target="_blank" rel="noopener">← Spickzettel-Hub</a> · Web-Grundlagen · JavaScript</div>
+    <h1>JavaScript Spickzettel</h1>
+    <p class="lede">Die gängigsten Konzepte und Muster, jedes in zwei Schreibweisen. Beide Varianten machen exakt dasselbe. Die kurze siehst du in modernem Code und in React ständig, die ausführliche zeigt Schritt für Schritt, was dabei passiert. Unter jedem Beispiel klappt eine Erklärung auf: ein Bild zum Merken, der Ablauf, der typische Fehler und eine Selbsttest-Frage. Die Doku-Links führen zu MDN auf Deutsch, mit (EN) markierte Links zur englischen React-Doku.</p>
+    <div class="legend"><span><b class="lbl" style="color:var(--accent);background:var(--accent-soft)">Kurz</b> moderne Kurzschreibweise</span><span><b class="lbl" style="color:var(--long);background:var(--long-soft)">Ausführlich</b> alles ausgeschrieben</span></div>
+  </header>
+
+  <div class="tools">
+    <div class="toolrow">
+      <input id="filter" type="search" placeholder="Filtern, z.B. map, async, closure …" aria-label="Konzepte filtern">
+      <div class="seg" role="group" aria-label="Varianten anzeigen">
+        <button type="button" id="show-both" aria-pressed="true">Beide</button>
+        <button type="button" id="show-short" aria-pressed="false">Nur kurz</button>
+        <button type="button" id="show-long" aria-pressed="false">Nur ausführlich</button>
+      </div>
+      <button type="button" class="ghost" id="toggle-all">Alle Erklärungen aufklappen</button>
+    </div>
+    <nav>
+      <a href="#grundlagen">Grundlagen</a><a href="#funktionen">Funktionen</a><a href="#arrays">Arrays</a><a href="#objekte">Objekte</a><a href="#async">Asynchronität</a><a href="#module">Module &amp; Klassen</a><a href="#muster">Muster</a>
+    </nav>
+  </div>
+
+  <!-- ================= GRUNDLAGEN ================= -->
+  <section id="grundlagen">
+    <h2>Grundlagen <span class="tag">basics</span></h2>
+    <p class="sub">Was in jeder Zeile Code steckt.</p>
+    <div class="grid">
+
+      <article class="card"><h3><code>const</code> vs <code>let</code></h3>
+        <p>Standard ist <code>const</code>. <code>let</code> brauchst du nur, wenn die Variable später einen neuen Wert bekommt, wie in der ausführlichen Variante.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const label = count > 0 ? "voll" : "leer";</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>let label;
+if (count > 0) {
+  label = "voll";
+} else {
+  label = "leer";
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/const" target="_blank" rel="noopener">const</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/let" target="_blank" rel="noopener">let</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Conditional_operator" target="_blank" rel="noopener">Bedingter Operator ? :</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Stell dir eine Variable wie ein Etikett vor, das an einem Wert klebt. <code>const</code> heißt: Das Etikett wird nie umgeklebt. <code>let</code> heißt: Es darf später an einen anderen Wert wandern.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Die Kurzform nutzt den ternären Operator <code>bedingung ? wennJa : wennNein</code>. Er ist ein Ausdruck und liefert also direkt einen Wert.</li><li>Weil der Wert sofort feststeht, kann <code>label</code> eine <code>const</code> sein.</li><li>In der ausführlichen Form ist <code>if/else</code> eine Anweisung, kein Ausdruck. Deshalb wird <code>label</code> erst leer angelegt und später befüllt. Dafür braucht es <code>let</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>const</code> macht Arrays und Objekte nicht unveränderlich: <code>const list = []; list.push(1)</code> ist erlaubt, nur <code>list = [...]</code> nicht. Und <code>var</code> ignoriert Blöcke, deshalb nicht mehr verwenden.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Ternär für einfache Entweder-oder-Werte. Sobald es mehr als zwei Fälle oder mehrere Anweisungen pro Fall gibt, ist <code>if/else</code> lesbarer. Verschachtelte Ternäre vermeiden.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum funktioniert <code>const label; if (x) label = "a";</code> nicht?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>const</code> muss bei der Deklaration sofort einen Wert bekommen und kann danach nicht neu zugewiesen werden. Hier brauchst du <code>let</code> oder einen Ternär.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Truthy / Falsy und <code>===</code></h3>
+        <p>Falsy sind nur <code>false, 0, "", null, undefined, NaN</code> (plus Exoten wie <code>-0</code> und <code>0n</code>). Die Kurzform nutzt das aus, die ausführliche prüft explizit. Immer <code>===</code> statt <code>==</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>if (items.length) { render(items); }
+if (!name) { showError("Name fehlt"); }</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>if (items.length > 0) {
+  render(items);
+}
+if (name === "" || name === null || name === undefined) {
+  showError("Name fehlt");
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Glossary/Truthy" target="_blank" rel="noopener">Truthy</a><a href="https://developer.mozilla.org/de/docs/Glossary/Falsy" target="_blank" rel="noopener">Falsy</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Strict_equality" target="_blank" rel="noopener">Strikte Gleichheit ===</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness" target="_blank" rel="noopener">Gleichheitsvergleiche</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>In jedem <code>if</code> fragt JavaScript insgeheim: Fühlt sich dieser Wert wie Ja oder wie Nein an? Nur eine Handvoll Werte fühlt sich wie Nein an, alles andere zählt als Ja.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>items.length</code> ist eine Zahl. <code>0</code> ist falsy, jede andere Zahl truthy. <code>if (items.length)</code> bedeutet also dasselbe wie <code>items.length &gt; 0</code>.</li><li><code>!name</code> dreht den Wahrheitswert um: wahr, wenn <code>name</code> falsy ist, also leer, <code>null</code> oder <code>undefined</code>.</li><li><code>==</code> wandelt vor dem Vergleich Typen um (<code>0 == ""</code> ist <code>true</code>). <code>===</code> vergleicht Wert und Typ ohne Überraschungen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Leere Arrays und Objekte sind truthy, <code>if ([])</code> ist immer wahr. Bei Arrays deshalb <code>.length</code> prüfen. Umgekehrt schlägt <code>if (!count)</code> auch bei <code>count = 0</code> an, obwohl 0 ein gültiger Wert sein kann.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Kurzform für die Frage, ob überhaupt etwas da ist. Ausführlich, wenn <code>0</code> oder <code>""</code> gültige Werte sind und nicht als fehlend gelten dürfen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Ist <code>if ({})</code> wahr oder falsch? Und <code>if ("0")</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Beide sind wahr. Ein leeres Objekt ist trotzdem ein Objekt, und <code>"0"</code> ist ein nicht-leerer String.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Template Literals</h3>
+        <p>Backticks mit <code>${}</code> statt Strings mit <code>+</code> zusammenzukleben.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const msg = `Hallo ${name}, du hast ${cart.length} Artikel.`;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const msg = "Hallo " + name + ", du hast " + cart.length + " Artikel.";</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Template_literals" target="_blank" rel="noopener">Template Literals</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Template Literal ist ein Lückentext. Der Text steht fest, und in die <code>${}</code>-Lücken setzt JavaScript zur Laufzeit die Werte ein.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Backticks statt Anführungszeichen markieren den Lückentext.</li><li>In <code>${}</code> steht ein beliebiger Ausdruck: Variable, Rechnung, Funktionsaufruf oder Ternär.</li><li>Das Ergebnis wird automatisch in Text umgewandelt und eingesetzt.</li><li>Zeilenumbrüche im Template bleiben erhalten, ohne <code>\n</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Normale Anführungszeichen benutzen: <code>"Hallo ${name}"</code> gibt wörtlich das Dollarzeichen aus. Und beim Verketten mit <code>+</code>: <code>"Summe: " + 1 + 2</code> ergibt <code>"Summe: 12"</code>, weil von links nach rechts zu Text verkettet wird.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Template Literals, sobald eine Variable im Text vorkommt. Die <code>+</code>-Variante solltest du lesen können, weil sie in älterem Code überall steht.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ergibt <code>"Summe: " + 1 + 2</code> und was ein Template mit <code>Summe: ${1 + 2}</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Das erste ergibt <code>Summe: 12</code>, das Template rechnet zuerst und ergibt <code>Summe: 3</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Optional Chaining <code>?.</code> und <code>??</code></h3>
+        <p><code>?.</code> bricht bei <code>null/undefined</code> ab statt zu crashen. <code>??</code> setzt einen Standardwert nur bei <code>null/undefined</code>, nicht bei <code>0</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const city = user?.address?.city;
+const qty = input ?? 1;
+user.onSave?.();</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>let city = undefined;
+if (user && user.address) {
+  city = user.address.city;
+}
+
+let qty;
+if (input === null || input === undefined) {
+  qty = 1;
+} else {
+  qty = input;
+}
+
+if (typeof user.onSave === "function") {
+  user.onSave();
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Optional_chaining" target="_blank" rel="noopener">Optional Chaining ?.</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing" target="_blank" rel="noopener">Nullish Coalescing ??</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>?.</code> ist ein vorsichtiger Schritt im Dunkeln: Bevor du weitergehst, prüfst du, ob da Boden ist. Fehlt er, bleibst du stehen und bekommst <code>undefined</code> statt eines Absturzes.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ohne <code>?.</code> wirft <code>user.address.city</code> einen TypeError (Cannot read properties of undefined), wenn <code>address</code> fehlt.</li><li><code>user?.address?.city</code> prüft vor jedem Punkt, ob links davon <code>null</code> oder <code>undefined</code> steht. Wenn ja, ist der ganze Ausdruck sofort <code>undefined</code>.</li><li><code>a ?? b</code> liefert <code>a</code>, außer <code>a</code> ist <code>null</code> oder <code>undefined</code>. Dann kommt <code>b</code>.</li><li><code>fn?.()</code> ruft die Funktion nur auf, wenn es sie gibt. Praktisch für optionale Callback-Props.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>??</code> mit <code>||</code> verwechseln. <code>input || 1</code> ersetzt auch <code>0</code> und <code>""</code> durch 1, weil <code>||</code> auf falsy prüft. Bei Mengen, Preisen und Indizes fast immer <code>??</code> nehmen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>?.</code> bei Daten, die unvollständig sein können, z.B. aus APIs. Nicht überall verstreuen: Wenn ein Wert immer da sein muss, soll ein Fehler ruhig sichtbar werden.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ergibt <code>0 ?? 5</code>, und was ergibt <code>0 || 5</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>0 ?? 5</code> ergibt 0, weil 0 weder null noch undefined ist. <code>0 || 5</code> ergibt 5, weil 0 falsy ist.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= FUNKTIONEN ================= -->
+  <section id="funktionen">
+    <h2>Funktionen <span class="tag">functions</span></h2>
+    <p class="sub">Funktionen sind Werte: man kann sie speichern, übergeben und zurückgeben.</p>
+    <div class="grid">
+
+      <article class="card"><h3>Arrow Functions</h3>
+        <p>Ohne <code>{}</code> wird der Ausdruck automatisch zurückgegeben (implizites return). Ein Objekt muss dann in <code>()</code>. Arrow Functions haben kein eigenes <code>this</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const add = (a, b) => a + b;
+const square = n => n * n;
+const makeUser = name => ({ name });</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function add(a, b) {
+  return a + b;
+}
+function square(n) {
+  return n * n;
+}
+function makeUser(name) {
+  return { name: name };
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank" rel="noopener">Pfeilfunktionen</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Guide/Functions" target="_blank" rel="noopener">Funktionen (Leitfaden)</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Arrow Function ist eine Funktion in Kurzschrift: links vom Pfeil die Eingabe, rechts das Ergebnis. Lies <code>(a, b) =&gt; a + b</code> als: a und b werden zu a + b.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ohne geschweifte Klammern nach dem Pfeil wird der Ausdruck automatisch zurückgegeben (implizites return).</li><li>Mit geschweiften Klammern ist es ein normaler Funktionskörper. Dann musst du <code>return</code> wieder selbst schreiben.</li><li>Bei genau einem Parameter dürfen die runden Klammern weg: <code>n =&gt; n * n</code>.</li><li>Soll direkt ein Objekt zurückkommen, braucht es runde Klammern drumherum. Sonst hält JavaScript <code>{}</code> für den Funktionskörper.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>x =&gt; { x * 2 }</code> gibt <code>undefined</code> zurück, weil mit den geschweiften Klammern das implizite return wegfällt. Außerdem: Als Methode in einem Objekt zeigt <code>this</code> in einer Arrow Function nicht auf das Objekt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Arrow Functions für kurze Callbacks und React-Komponenten. <code>function</code> für Methoden, die <code>this</code> brauchen, und für Funktionen, die schon vor ihrer Definition aufgerufen werden (Hoisting).</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was gibt <code>const f = () =&gt; { name: "Lea" }; f()</code> zurück?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>undefined</code>. Die geschweiften Klammern sind ein Funktionskörper ohne <code>return</code>. Richtig wäre <code>() =&gt; ({ name: "Lea" })</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Default- und Rest-Parameter</h3>
+        <p>Standardwerte direkt in der Signatur, beliebig viele Argumente mit <code>...</code> als Array einsammeln.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const greet = (name = "Gast") => `Hi ${name}`;
+
+const sum = (...nums) => nums.reduce((a, b) => a + b, 0);
+sum(1, 2, 3); // 6</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function greet(name) {
+  if (name === undefined) {
+    name = "Gast";
+  }
+  return "Hi " + name;
+}
+
+function sum(...nums) {
+  let total = 0;
+  for (const n of nums) {
+    total = total + n;
+  }
+  return total;
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Functions/Default_parameters" target="_blank" rel="noopener">Default-Parameter</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Functions/rest_parameters" target="_blank" rel="noopener">Rest-Parameter</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Default-Parameter ist ein Ersatz für den Fall, dass der Aufrufer nichts mitbringt. Ein Rest-Parameter ist ein Sammelkorb, der alle übrigen Argumente in ein Array packt.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>name = "Gast"</code> greift nur, wenn das Argument <code>undefined</code> ist, also weggelassen wurde.</li><li><code>...nums</code> sammelt alle übergebenen Argumente in ein echtes Array namens <code>nums</code>.</li><li>Darauf funktionieren alle Array-Werkzeuge, z.B. <code>reduce</code> oder <code>for...of</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Der Default greift nicht bei <code>null</code>: <code>greet(null)</code> ergibt <code>Hi null</code>. Und der Rest-Parameter muss immer der letzte sein, <code>(...a, b)</code> ist ein Syntaxfehler.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Defaults gehören in die Signatur, dann sieht man beim Lesen sofort, was optional ist. Die Prüfung im Funktionskörper brauchst du nur für kompliziertere Regeln.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ergibt <code>greet("")</code>, wenn der Default <code>"Gast"</code> ist?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>Hi </code> mit leerem Namen. Ein leerer String ist nicht <code>undefined</code>, also greift der Default nicht.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Closures</h3>
+        <p>Die innere Funktion merkt sich <code>count</code> aus der äußeren Funktion, auch nachdem diese längst fertig ist.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const createCounter = () => {
+  let count = 0;
+  return () => ++count;
+};
+const next = createCounter();
+next(); // 1
+next(); // 2</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function createCounter() {
+  let count = 0;
+
+  function increment() {
+    count = count + 1;
+    return count;
+  }
+
+  return increment;
+}
+const next = createCounter();
+next(); // 1
+next(); // 2</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Guide/Closures" target="_blank" rel="noopener">Closures</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Closure ist ein Rucksack: Wenn eine Funktion entsteht, packt sie die Variablen ihrer Umgebung ein und trägt sie überallhin mit, auch wenn die Umgebung längst verschwunden ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>createCounter()</code> legt <code>count = 0</code> an und gibt die innere Funktion zurück.</li><li>Normalerweise wäre <code>count</code> nach dem Ende von <code>createCounter</code> weg.</li><li>Weil die innere Funktion <code>count</code> benutzt, bleibt die Variable in ihrem Rucksack erhalten.</li><li>Jeder Aufruf von <code>next()</code> greift auf genau dieses <code>count</code> zu und erhöht es.</li><li>Ein zweites <code>createCounter()</code> erzeugt einen neuen, unabhängigen Rucksack mit eigenem <code>count</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Zu glauben, <code>count</code> sei global oder geteilt. Zwei Counter zählen unabhängig. In React begegnet dir die Kehrseite als Stale Closure: Ein Callback in <code>useEffect</code> hat sich einen alten State-Wert gemerkt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Beide Varianten sind gleichwertig. Die ausführliche mit benannter innerer Funktion zeigt beim Lernen deutlicher, dass hier eine Funktion zurückgegeben wird.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was geben <code>a()</code>, <code>a()</code>, <code>b()</code> aus, wenn <code>a = createCounter()</code> und <code>b = createCounter()</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>1, 2, 1. <code>b</code> hat seinen eigenen Rucksack mit eigenem <code>count</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Higher-Order Functions</h3>
+        <p>Funktionen, die eine Funktion zurückgeben oder annehmen. Doppelte Pfeile <code>f => n =></code> bedeuten: Funktion gibt Funktion zurück.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const multiplier = factor => n => n * factor;
+const double = multiplier(2);
+double(5); // 10</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function multiplier(factor) {
+  function multiply(n) {
+    return n * factor;
+  }
+  return multiply;
+}
+const double = multiplier(2);
+double(5); // 10</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Glossary/Callback_function" target="_blank" rel="noopener">Callback-Funktion</a><a href="https://developer.mozilla.org/de/docs/Glossary/First-class_Function" target="_blank" rel="noopener">First-Class Functions</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Higher-Order Function ist eine Funktionsfabrik: Du gibst eine Einstellung hinein, z.B. Faktor 2, und bekommst eine fertig konfigurierte Funktion heraus.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>multiplier(2)</code> wird aufgerufen, <code>factor</code> ist 2.</li><li>Zurück kommt keine Zahl, sondern eine neue Funktion, die <code>factor</code> per Closure kennt.</li><li><code>double(5)</code> ruft diese neue Funktion auf: 5 mal 2 ergibt 10.</li><li>In der Kurzform steht jeder Pfeil für eine Funktion. <code>factor =&gt; n =&gt; ...</code> heißt: Nimm factor und gib eine Funktion zurück, die n nimmt.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>multiplier(2, 5)</code> aufrufen und 10 erwarten. Das zweite Argument wird ignoriert, und das Ergebnis ist eine Funktion. Richtig ist <code>multiplier(2)(5)</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Doppelte Pfeile siehst du oft in Event-Handlern (<code>id =&gt; () =&gt; remove(id)</code>) und in Express-Middleware. Wenn es dich verwirrt, schreib es zuerst ausführlich hin.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welche Higher-Order Functions benutzt du schon ständig, ohne sie so zu nennen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>map</code>, <code>filter</code>, <code>find</code>, <code>reduce</code>, <code>some</code>, <code>every</code>, <code>forEach</code> und <code>sort</code> nehmen alle eine Funktion als Argument. Ebenso <code>addEventListener</code> und <code>setTimeout</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= ARRAYS ================= -->
+  <section id="arrays">
+    <h2>Arrays <span class="tag">frontend-kritisch</span></h2>
+    <p class="sub">Fast jede Liste im UI läuft über diese Methoden. Die ausführliche Variante zeigt, dass dahinter nur eine Schleife steckt.</p>
+    <div class="grid">
+
+      <article class="card"><h3><code>map</code>: transformieren</h3>
+        <p>Neues Array mit gleicher Länge, jedes Element umgewandelt. In React: Daten zu JSX.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const names = users.map(u => u.name);
+
+// React
+users.map(u => &lt;li key={u.id}&gt;{u.name}&lt;/li&gt;)</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const names = [];
+for (let i = 0; i < users.length; i++) {
+  names.push(users[i].name);
+}
+
+// oder mit map, aber ausgeschrieben
+const names2 = users.map(function (user) {
+  return user.name;
+});</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank" rel="noopener">Array.prototype.map()</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>map</code> ist ein Fließband: Jedes Element läuft einmal durch dieselbe Maschine, deine Funktion. Am Ende liegt ein neues Band mit genauso vielen umgewandelten Teilen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>map</code> legt intern ein neues, leeres Array an.</li><li>Für jedes Element ruft es deine Funktion auf, mit dem Element und dessen Index.</li><li>Was deine Funktion zurückgibt, landet an derselben Position im neuen Array.</li><li>Das Original bleibt unverändert.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>In <code>map</code> nichts zurückgeben, z.B. durch geschweifte Klammern ohne <code>return</code>. Dann ist das neue Array voller <code>undefined</code>. Außerdem <code>map</code> nur für Nebenwirkungen wie Loggen zu benutzen. Dafür gibt es <code>forEach</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>map</code> immer, wenn aus N Elementen N neue werden. Die Schleife brauchst du nur, wenn du unterwegs abbrechen willst.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie viele Elemente hat das Ergebnis von <code>[1, 2, 3, 4].map(n =&gt; n &gt; 2)</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Vier: <code>[false, false, true, true]</code>. <code>map</code> sortiert nie aus, die Länge bleibt immer gleich. Zum Aussortieren nimmst du <code>filter</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3><code>filter</code> und <code>find</code></h3>
+        <p><code>filter</code> gibt alle Treffer als Array, <code>find</code> den ersten Treffer oder <code>undefined</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const open = todos.filter(t => !t.done);
+const todo = todos.find(t => t.id === id);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const open = [];
+for (const todo of todos) {
+  if (todo.done === false) {
+    open.push(todo);
+  }
+}
+
+let found = undefined;
+for (const todo of todos) {
+  if (todo.id === id) {
+    found = todo;
+    break;
+  }
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank" rel="noopener">filter()</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/find" target="_blank" rel="noopener">find()</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex" target="_blank" rel="noopener">findIndex()</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>filter</code> ist ein Sieb: Alles, was die Prüfung besteht, fällt in das neue Array. <code>find</code> ist ein Suchtrupp, der beim ersten Treffer aufhört und genau dieses eine Element meldet.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Deine Funktion bekommt jedes Element und gibt <code>true</code> oder <code>false</code> zurück (oder truthy/falsy).</li><li><code>filter</code> sammelt alle Elemente mit <code>true</code> in einem neuen Array. Das kann auch leer sein.</li><li><code>find</code> gibt das erste Element mit <code>true</code> zurück und hört sofort auf. Findet es nichts, kommt <code>undefined</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das Ergebnis von <code>find</code> ungeprüft benutzen: <code>todos.find(...).title</code> stürzt ab, wenn nichts gefunden wurde. Und <code>filter(...)[0]</code> statt <code>find</code> schreiben, was unnötig das ganze Array durchläuft.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Die Methoden sind fast immer besser lesbar. Die Schleife zeigt, warum <code>find</code> schneller sein kann: wegen des <code>break</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was gibt <code>filter</code> zurück, wenn nichts passt? Und was gibt <code>find</code> zurück?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>filter</code> gibt ein leeres Array <code>[]</code> zurück, <code>find</code> gibt <code>undefined</code> zurück.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3><code>some</code> und <code>every</code></h3>
+        <p>Geben einen Boolean zurück: Trifft es auf mindestens eins zu, oder auf alle?</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const anyOpen = todos.some(t => !t.done);
+const allDone = todos.every(t => t.done);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>let anyOpen = false;
+for (const todo of todos) {
+  if (todo.done === false) {
+    anyOpen = true;
+    break;
+  }
+}
+
+let allDone = true;
+for (const todo of todos) {
+  if (todo.done === false) {
+    allDone = false;
+    break;
+  }
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/some" target="_blank" rel="noopener">some()</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/every" target="_blank" rel="noopener">every()</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>some</code> fragt: Gibt es mindestens einen? <code>every</code> fragt: Sind es wirklich alle? Beide antworten nur mit Ja oder Nein.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>some</code> geht die Elemente durch und stoppt beim ersten <code>true</code>. Das Ergebnis ist dann <code>true</code>.</li><li><code>every</code> stoppt beim ersten <code>false</code>. Das Ergebnis ist dann <code>false</code>.</li><li>Läuft die Schleife ohne Abbruch durch, ist <code>some</code> <code>false</code> und <code>every</code> <code>true</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Leere Arrays: <code>[].every(...)</code> ist <code>true</code>, <code>[].some(...)</code> ist <code>false</code>. Das überrascht, ist aber logisch: Bei null Elementen gibt es keins, das die Bedingung verletzt.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Ideal für UI-Zustände wie <code>disabled={!items.some(i =&gt; i.selected)}</code>. Viel klarer als <code>filter(...).length &gt; 0</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie drückst du mit <code>some</code> aus, dass kein Todo erledigt ist?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>!todos.some(t =&gt; t.done)</code>. Gleichwertig ist <code>todos.every(t =&gt; !t.done)</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3><code>reduce</code>: zusammenfassen</h3>
+        <p>Macht aus einem Array einen einzelnen Wert. <code>acc</code> ist das Zwischenergebnis, der zweite Parameter der Startwert.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+const byCat = products.reduce((acc, p) => {
+  (acc[p.category] ??= []).push(p);
+  return acc;
+}, {});</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>let total = 0;
+for (const item of cart) {
+  total = total + item.price * item.qty;
+}
+
+const byCat = {};
+for (const product of products) {
+  const key = product.category;
+  if (byCat[key] === undefined) {
+    byCat[key] = [];
+  }
+  byCat[key].push(product);
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce" target="_blank" rel="noopener">reduce()</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_assignment" target="_blank" rel="noopener">Nullish-Zuweisung ??=</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>reduce</code> ist ein Schneeball, der einen Hang hinunterrollt. Er startet klein mit dem Startwert und nimmt bei jedem Element etwas auf, bis am Ende ein einziger Ball übrig ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Der Startwert (hier <code>0</code> oder <code>{}</code>) wird zum ersten <code>acc</code>, dem Akkumulator.</li><li>Für jedes Element wird deine Funktion mit <code>(acc, element)</code> aufgerufen.</li><li>Was du zurückgibst, ist das <code>acc</code> für das nächste Element.</li><li>Nach dem letzten Element ist <code>acc</code> das Ergebnis.</li><li><code>??=</code> in der Kurzform heißt: Nur zuweisen, wenn links <code>null</code> oder <code>undefined</code> steht. So wird pro Kategorie genau einmal ein leeres Array angelegt.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Startwert vergessen. Dann wird das erste Element zum Startwert, was bei Objekten (z.B. Warenkorb-Items) falsche Ergebnisse liefert. Oder <code>return acc</code> vergessen, dann ist <code>acc</code> im nächsten Schritt <code>undefined</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Für Summen ist <code>reduce</code> kurz und klar. Für Gruppierungen ist die Schleife oft lesbarer, und das ist völlig in Ordnung. <code>reduce</code> ist kein Pflichtprogramm.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ergibt <code>[1, 2, 3].reduce((acc, n) =&gt; acc + n, 10)</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>16. Start bei 10, dann 11, 13, 16.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Immutable Updates (React State)</h3>
+        <p>State nie direkt ändern, sondern immer ein neues Array erzeugen. Sonst merkt React die Änderung nicht.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>// hinzufügen
+setTodos([...todos, newTodo]);
+
+// ein Element ändern
+setTodos(todos.map(t =>
+  t.id === id ? { ...t, done: !t.done } : t
+));</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>// hinzufügen
+const withNew = todos.slice(); // Kopie
+withNew.push(newTodo);
+setTodos(withNew);
+
+// ein Element ändern
+const updated = todos.map(function (todo) {
+  if (todo.id === id) {
+    const copy = Object.assign({}, todo);
+    copy.done = !todo.done;
+    return copy;
+  }
+  return todo;
+});
+setTodos(updated);</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_syntax" target="_blank" rel="noopener">Spread-Syntax</a><a href="https://react.dev/learn/updating-arrays-in-state" target="_blank" rel="noopener">Arrays im State aktualisieren (EN)</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>React prüft State wie ein Postbote, der nur auf die Hausnummer schaut und nicht in die Wohnung. Stellst du nur die Möbel um (Mutation), merkt er nichts. Erst eine neue Adresse, also ein neues Array oder Objekt, löst ein Re-Render aus.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>[...todos, newTodo]</code> erzeugt ein neues Array mit allen alten Elementen plus dem neuen.</li><li><code>map</code> erzeugt ebenfalls ein neues Array. Nur das betroffene Element wird durch eine Kopie ersetzt, die anderen werden unverändert übernommen.</li><li><code>{ ...t, done: !t.done }</code> kopiert das Todo und überschreibt ein Feld.</li><li>React vergleicht alte und neue Referenz, sieht den Unterschied und rendert neu.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>todos.push(newTodo); setTodos(todos);</code> Das Array ist dasselbe Objekt, also passiert im UI nichts. Genauso bei <code>todo.done = true</code> direkt am State. Vorsicht auch bei <code>sort()</code> und <code>reverse()</code>, die das Original verändern.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Spread ist in React der Standard. Die ausführliche Form zeigt, was dabei eigentlich passiert: erst kopieren, dann die Kopie ändern.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum funktioniert <code>const copy = todos; copy.push(x); setTodos(copy);</code> nicht?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>copy = todos</code> kopiert nicht das Array, sondern nur den Verweis. Beide Namen zeigen auf dasselbe Array, also sieht React keine neue Referenz.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= OBJEKTE ================= -->
+  <section id="objekte">
+    <h2>Objekte <span class="tag">objects</span></h2>
+    <p class="sub">Daten aus APIs sind fast immer Objekte, also lohnt sich Sicherheit hier besonders.</p>
+    <div class="grid">
+
+      <article class="card"><h3>Destructuring</h3>
+        <p>Werte direkt in Variablen auspacken. Funktioniert bei Objekten <code>{}</code>, Arrays <code>[]</code> und in Funktionsparametern (React-Props).</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const { name, age = 18 } = user;
+const { id: userId } = user;
+const [value, setValue] = useState(0);
+
+function Card({ title, children }) { ... }</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const name = user.name;
+const age = user.age !== undefined ? user.age : 18;
+const userId = user.id;
+
+const state = useState(0);
+const value = state[0];
+const setValue = state[1];
+
+function Card(props) {
+  const title = props.title;
+  const children = props.children;
+  ...
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Destructuring" target="_blank" rel="noopener">Destructuring</a><a href="https://react.dev/learn/passing-props-to-a-component" target="_blank" rel="noopener">Props an Komponenten übergeben (EN)</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Destructuring ist Auspacken nach Etikett: Du sagst, welche Fächer du aus dem Paket willst, und bekommst den Inhalt direkt in gleichnamige Variablen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>{ name, age = 18 } = user</code> liest <code>user.name</code> und <code>user.age</code>. Ist <code>age</code> <code>undefined</code>, gilt 18.</li><li><code>{ id: userId }</code> heißt: Nimm das Feld <code>id</code>, aber nenne die Variable <code>userId</code>.</li><li>Bei Arrays zählt die Position, nicht der Name. Deshalb kannst du bei <code>useState</code> die Namen frei wählen.</li><li>In Parametern wie <code>({ title })</code> wird das übergebene Objekt, in React die Props, direkt beim Aufruf ausgepackt.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Destructuring von <code>undefined</code> stürzt ab: <code>const { name } = undefined</code> wirft einen TypeError, z.B. wenn API-Daten noch nicht geladen sind. Und Objekt- mit Array-Destructuring verwechseln: <code>const { a, b } = [1, 2]</code> ergibt zweimal <code>undefined</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>In React fast immer Destructuring, weil man die Props sofort sieht. Die ausführliche Form hilft, wenn du nachvollziehen willst, woher ein Wert kommt.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welche Variable existiert nach <code>const { id: userId } = user</code>: <code>id</code> oder <code>userId</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nur <code>userId</code>. Links vom Doppelpunkt steht der Feldname im Objekt, rechts der neue Variablenname.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Spread: Objekte kopieren</h3>
+        <p>Kopie erstellen und gezielt Felder überschreiben oder entfernen. Nur eine flache Kopie.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const updated = { ...user, age: 30 };
+
+const { password, ...safeUser } = user;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const updated = Object.assign({}, user);
+updated.age = 30;
+
+const safeUser = Object.assign({}, user);
+delete safeUser.password;</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Spread_syntax" target="_blank" rel="noopener">Spread-Syntax</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign()</a><a href="https://react.dev/learn/updating-objects-in-state" target="_blank" rel="noopener">Objekte im State aktualisieren (EN)</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Spread schüttet den Inhalt eines Objekts in ein neues Objekt. Was danach kommt, überschreibt gleichnamige Felder, wie eine neue Schicht Farbe.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>{ ...user }</code> legt ein neues Objekt an und kopiert alle Felder von <code>user</code> hinein.</li><li><code>age: 30</code> dahinter überschreibt das kopierte <code>age</code>. Die Reihenfolge entscheidet.</li><li><code>{ password, ...safeUser } = user</code> zieht <code>password</code> heraus und packt den Rest in <code>safeUser</code>.</li><li><code>Object.assign({}, user)</code> macht dasselbe wie Spread, ist nur älter und länger.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Spread kopiert nur flach. Verschachtelte Objekte wie <code>user.address</code> werden nicht kopiert, sondern geteilt. Änderst du <code>copy.address.city</code>, änderst du auch das Original.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Spread ist der Standard. <code>delete</code> wie in der ausführlichen Form nur an einer Kopie benutzen, nie am Original oder am State.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist <code>x.age</code> bei <code>const x = { age: 30, ...user }</code>, wenn <code>user.age</code> 25 ist?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>25. Der Spread steht hinter <code>age: 30</code> und überschreibt den Wert.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Über Objekte iterieren</h3>
+        <p><code>Object.entries</code> macht aus einem Objekt ein Array aus <code>[key, value]</code>-Paaren.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const scores = { anna: 3, ben: 5 };
+const lines = Object.entries(scores)
+  .map(([name, s]) => `${name}: ${s}`);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const scores = { anna: 3, ben: 5 };
+const lines = [];
+for (const name in scores) {
+  const score = scores[name];
+  lines.push(name + ": " + score);
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="noopener">Object.entries()</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/for...in" target="_blank" rel="noopener">for...in</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">for...of</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Objekte sind keine Listen, darum kannst du nicht direkt <code>map</code> darauf aufrufen. <code>Object.entries</code> legt das Objekt wie eine Tabelle aus: jede Zeile ein Paar aus Schlüssel und Wert.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>Object.entries(scores)</code> ergibt <code>[["anna", 3], ["ben", 5]]</code>.</li><li>Auf diesem Array funktioniert <code>map</code> wie gewohnt.</li><li><code>([name, s]) =&gt; ...</code> packt jedes Paar per Array-Destructuring in zwei Variablen aus.</li><li><code>for...in</code> läuft direkt über die Schlüssel eines Objekts. Den Wert holst du dir mit <code>scores[name]</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>for...in</code> und <code>for...of</code> verwechseln. <code>for...in</code> liefert Schlüssel (bei Arrays die Indizes als Strings), <code>for...of</code> liefert Werte und funktioniert nicht auf normalen Objekten.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>Object.entries</code> plus <code>map</code>, wenn ein neues Array entstehen soll, z.B. JSX. <code>for...in</code> für einfache Durchläufe ohne Ergebnis-Array.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was passiert bei <code>for (const x of { a: 1 })</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ein TypeError, weil ein normales Objekt nicht iterierbar ist. Du brauchst <code>Object.entries</code>, <code>Object.keys</code> oder <code>for...in</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Shorthand und dynamische Keys</h3>
+        <p>Heißen Variable und Key gleich, reicht der Name einmal. <code>[ ]</code> im Objekt berechnet den Key. Klassiker im Formular-Handler.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const user = { name, age };
+
+const handleChange = e =>
+  setForm({ ...form, [e.target.name]: e.target.value });</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const user = { name: name, age: age };
+
+function handleChange(event) {
+  const field = event.target.name;
+  const value = event.target.value;
+  const newForm = Object.assign({}, form);
+  newForm[field] = value;
+  setForm(newForm);
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/Object_initializer" target="_blank" rel="noopener">Objekt-Initialisierer (Shorthand, berechnete Keys)</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Shorthand spart eine Wiederholung: Heißen Feld und Variable gleich, reicht der Name einmal. Eckige Klammern sind ein Platzhalter für einen Feldnamen, der erst zur Laufzeit feststeht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>{ name, age }</code> wird intern zu <code>{ name: name, age: age }</code>.</li><li>Im Formular hat jedes Input ein <code>name</code>-Attribut, z.B. <code>email</code>.</li><li><code>[e.target.name]</code> setzt den Wert dieses Attributs als Schlüssel ein. So reicht ein einziger Handler für alle Felder.</li><li>Der Spread davor übernimmt alle anderen Formularfelder unverändert.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Die eckigen Klammern vergessen: <code>{ field: value }</code> legt wörtlich ein Feld namens <code>field</code> an, statt den Inhalt der Variable zu nehmen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Ein generischer <code>handleChange</code> mit dynamischem Key spart bei großen Formularen viel doppelten Code.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist der Unterschied zwischen <code>{ [key]: "Berlin" }</code> und <code>{ key: "Berlin" }</code>, wenn <code>key = "city"</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Das erste ergibt <code>{ city: "Berlin" }</code>, das zweite <code>{ key: "Berlin" }</code>. Nur die eckigen Klammern werten die Variable aus.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= ASYNC ================= -->
+  <section id="async">
+    <h2>Asynchronität <span class="tag">async</span></h2>
+    <p class="sub">Die Brücke zu deinem Backend. Hier passieren die meisten Fehler.</p>
+    <div class="grid">
+
+      <article class="card"><h3>Promises mit <code>.then</code></h3>
+        <p>Ein Platzhalter für einen Wert, der später kommt. Jedes <code>.then</code> bekommt das Ergebnis des vorherigen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>fetch("/api/users")
+  .then(res => res.json())
+  .then(setUsers)
+  .catch(console.error);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>fetch("/api/users")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    setUsers(data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Guide/Using_promises" target="_blank" rel="noopener">Promises verwenden</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">Promise</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Promise ist ein Abholschein: <code>fetch</code> gibt dir sofort den Schein, die Ware kommt später. <code>.then</code> heißt: Wenn die Ware da ist, mach Folgendes damit.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>fetch</code> startet den Request und gibt sofort ein Promise zurück. Der restliche Code läuft weiter, ohne zu warten.</li><li>Kommt die Antwort, ruft JavaScript die Funktion im ersten <code>.then</code> mit dem Response-Objekt auf.</li><li><code>response.json()</code> liest den Body und gibt wieder ein Promise zurück. Das nächste <code>.then</code> wartet darauf.</li><li>Tritt irgendwo ein Fehler auf, springt die Kette direkt zum <code>.catch</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das <code>return</code> in einem <code>.then</code> vergessen. Dann bekommt das nächste <code>.then</code> <code>undefined</code> statt der Daten. Und: Code unterhalb der Kette läuft vor den Callbacks, nicht danach.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>.then(setUsers)</code> funktioniert in der Kurzform, weil <code>setUsers</code> selbst eine Funktion ist, die die Daten als Argument nimmt. Man übergibt sie direkt, statt sie in eine weitere Funktion zu verpacken.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>In welcher Reihenfolge erscheinen die Logs: <code>console.log("A"); fetch(url).then(() =&gt; console.log("B")); console.log("C");</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>A, C, B. Der Callback in <code>.then</code> läuft erst, wenn die Antwort da ist, und das ist immer nach dem restlichen synchronen Code.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3><code>async</code> / <code>await</code></h3>
+        <p>Hier ist <code>await</code> die kurze Form: Es macht dasselbe wie die <code>.then</code>-Kette, liest sich aber wie normaler Code.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const loadUser = async id => {
+  try {
+    const res = await fetch(`/api/users/${id}`);
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function loadUser(id) {
+  return fetch("/api/users/" + id)
+    .then(function (response) {
+      return response.json();
+    })
+    .catch(function (error) {
+      console.error(error);
+      return null;
+    });
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/async_function" target="_blank" rel="noopener">async function</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Operators/await" target="_blank" rel="noopener">await</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/try...catch" target="_blank" rel="noopener">try...catch</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>await</code> heißt: Ich warte hier, bis der Abholschein eingelöst ist. Das gilt aber nur innerhalb dieser einen Funktion, der Rest der App läuft weiter.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>async</code> vor einer Funktion bedeutet: Sie gibt immer ein Promise zurück.</li><li><code>await</code> pausiert nur diese Funktion, bis das Promise erfüllt ist, und liefert dann den Wert.</li><li>Wird das Promise abgelehnt, wirft <code>await</code> einen Fehler, den <code>try/catch</code> auffängt.</li><li>Wer <code>loadUser</code> aufruft, braucht selbst wieder <code>await</code> oder <code>.then</code>, um an den Wert zu kommen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>await</code> vergessen: <code>const data = res.json()</code> ist dann ein Promise und keine Daten. Oder <code>await</code> außerhalb einer <code>async</code>-Funktion benutzen. Das geht nur auf oberster Ebene in ES-Modulen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>async/await</code> ist heute Standard, weil es sich wie normaler Code von oben nach unten liest. Die <code>.then</code>-Version musst du trotzdem lesen können.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was bekommst du zurück, wenn du <code>loadUser(1)</code> ohne <code>await</code> aufrufst?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ein Promise. Eine <code>async</code>-Funktion gibt immer ein Promise zurück, auch wenn darin <code>return null</code> steht.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3><code>fetch</code> mit POST und Fehlerprüfung</h3>
+        <p><code>fetch</code> wirft bei 404 oder 500 keinen Fehler. <code>res.ok</code> musst du selbst prüfen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const res = await fetch("/api/todos", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ title }),
+});
+if (!res.ok) throw new Error(`HTTP ${res.status}`);
+const todo = await res.json();</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const options = {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ title: title }),
+};
+const response = await fetch("/api/todos", options);
+
+if (response.ok === false) {
+  throw new Error("HTTP " + response.status);
+}
+
+const todo = await response.json();</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noopener">Verwenden der Fetch API</a><a href="https://developer.mozilla.org/de/docs/Web/API/Response/ok" target="_blank" rel="noopener">Response.ok</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank" rel="noopener">JSON.stringify()</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein POST-Request ist ein Brief: <code>method</code> ist die Versandart, <code>headers</code> steht auf dem Umschlag (z.B. „Inhalt ist JSON“), und <code>body</code> ist der Brief selbst, der als Text verschickt wird.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>JSON.stringify</code> wandelt das Objekt in einen JSON-String um, weil HTTP nur Text überträgt.</li><li>Der <code>Content-Type</code>-Header sagt deinem Backend, z.B. <code>express.json()</code>, wie es den Body lesen soll.</li><li><code>fetch</code> gilt als erfolgreich, sobald überhaupt eine Antwort kommt, egal mit welchem Status.</li><li>Darum <code>res.ok</code> prüfen. Es ist nur bei Status 200 bis 299 <code>true</code>.</li><li>Erst danach den Body mit <code>res.json()</code> lesen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das Objekt ohne <code>JSON.stringify</code> als <code>body</code> übergeben, dann kommt beim Server <code>[object Object]</code> an. Oder den Header vergessen, dann ist <code>req.body</code> im Backend leer. Diesen Fehler kannst du jetzt von beiden Seiten aus debuggen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Ein separates <code>options</code>-Objekt hilft, wenn du Optionen wiederverwenden oder loggen willst. In echten Projekten lohnt sich eine kleine Helferfunktion wie <code>api(url, data)</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Dein Backend antwortet mit Status 404. Landet <code>fetch</code> im <code>catch</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nein. <code>fetch</code> wirft nur bei Netzwerkfehlern, z.B. wenn der Server nicht erreichbar ist oder CORS blockt. Ein 404 ist eine gültige Antwort, deshalb die Prüfung von <code>res.ok</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3><code>Promise.all</code>: parallel laden</h3>
+        <p>Mehrere Requests gleichzeitig starten und auf alle warten. Scheitert einer, scheitert alles.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const [users, posts] = await Promise.all([
+  fetch("/api/users").then(r => r.json()),
+  fetch("/api/posts").then(r => r.json()),
+]);</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>const usersPromise = fetch("/api/users").then(function (r) {
+  return r.json();
+});
+const postsPromise = fetch("/api/posts").then(function (r) {
+  return r.json();
+});
+
+const results = await Promise.all([usersPromise, postsPromise]);
+const users = results[0];
+const posts = results[1];</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise/all" target="_blank" rel="noopener">Promise.all()</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled" target="_blank" rel="noopener">Promise.allSettled()</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Statt erst zum Bäcker und dann zum Metzger zu gehen, schickst du zwei Leute gleichzeitig los und wartest, bis beide zurück sind.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Beide <code>fetch</code>-Aufrufe starten sofort, noch bevor <code>await</code> wartet.</li><li><code>Promise.all</code> bekommt ein Array von Promises und gibt ein einziges Promise zurück.</li><li>Es ist erfüllt, wenn alle fertig sind. Die Ergebnisse stehen in derselben Reihenfolge wie die Eingabe, egal wer zuerst fertig war.</li><li>Schlägt eines fehl, schlägt sofort das ganze <code>Promise.all</code> fehl.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Versehentlich nacheinander laden: <code>const a = await fetch(...); const b = await fetch(...);</code> dauert doppelt so lange, obwohl die Requests unabhängig sind. Ist ein Teilergebnis optional, ist <code>Promise.allSettled</code> die bessere Wahl.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Die Kurzform mit Array-Destructuring ist Standard. Die ausführliche Form zeigt, dass das Ergebnis einfach ein Array ist.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Request A dauert 2 Sekunden, B dauert 3. Wie lange dauert es mit zwei <code>await</code> nacheinander, und wie lange mit <code>Promise.all</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nacheinander 5 Sekunden. Mit <code>Promise.all</code> etwa 3 Sekunden, also so lange wie der langsamste Request.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= MODULE ================= -->
+  <section id="module">
+    <h2>Module &amp; Klassen <span class="tag">structure</span></h2>
+    <p class="sub">Wie Code auf Dateien verteilt und organisiert wird.</p>
+    <div class="grid">
+
+      <article class="card"><h3>Named vs. Default Export</h3>
+        <p>Named Exports gibt es beliebig viele, Import mit gleichem Namen in <code>{}</code>. Default nur einen pro Datei, Name beim Import frei wählbar.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>// utils.js
+export const formatPrice = p => `${p.toFixed(2)} €`;
+export default function api() { ... }
+
+// app.js
+import api, { formatPrice } from "./utils.js";</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>// utils.js
+function formatPrice(price) {
+  return price.toFixed(2) + " €";
+}
+function api() { ... }
+
+export { formatPrice };
+export default api;
+
+// app.js
+import api from "./utils.js";
+import { formatPrice } from "./utils.js";</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noopener">JavaScript-Module</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/export" target="_blank" rel="noopener">export</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/import" target="_blank" rel="noopener">import</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Datei ist ein Laden. Named Exports sind die Artikel im Regal, jeder mit festem Namen. Der Default Export ist das Hauptprodukt im Schaufenster, das du beim Mitnehmen beliebig nennen darfst.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>export</code> vor einer Deklaration exportiert sie direkt unter ihrem Namen.</li><li>Alternativ definierst du erst alles und exportierst am Ende gesammelt mit <code>export { ... }</code>.</li><li>Named Imports in <code>{}</code> müssen exakt so heißen wie der Export, oder du benennst sie mit <code>as</code> um.</li><li>Der Default Import steht ohne Klammern, und der Name ist frei wählbar.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Die Klammern verwechseln: <code>import { api } from ...</code> findet keinen Default Export, und <code>import formatPrice from ...</code> bekommt den Default statt der benannten Funktion. In Node mit ES-Modulen muss außerdem die Endung <code>.js</code> im Pfad stehen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Viele Teams bevorzugen Named Exports, weil die Namen beim Umbenennen und in der Autovervollständigung stabil bleiben. React-Komponenten werden oft per Default exportiert. Wichtig ist, im Projekt einheitlich zu bleiben.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie viele Default Exports darf eine Datei haben?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Genau einen. Named Exports beliebig viele.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Klassen</h3>
+        <p>Im React-Frontend selten, im Backend (Services, eigene Fehler) häufig. Felder können direkt in der Klasse stehen statt im <code>constructor</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>class User {
+  role = "user";
+  constructor(name) { this.name = name; }
+  get isAdmin() { return this.role === "admin"; }
+}
+const u = new User("Lea");
+u.isAdmin; // false</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>class User {
+  constructor(name) {
+    this.name = name;
+    this.role = "user";
+  }
+
+  isAdmin() {
+    if (this.role === "admin") {
+      return true;
+    }
+    return false;
+  }
+}
+const u = new User("Lea");
+u.isAdmin(); // false</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">Klassen</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Classes/constructor" target="_blank" rel="noopener">constructor</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Functions/get" target="_blank" rel="noopener">Getter (get)</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Klasse ist ein Bauplan, und <code>new</code> baut nach diesem Plan ein konkretes Objekt, eine Instanz. Jede Instanz hat eigene Daten, teilt sich aber die Methoden des Bauplans.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>new User("Lea")</code> legt ein leeres Objekt an und ruft den <code>constructor</code> auf.</li><li><code>this</code> zeigt im Constructor auf genau dieses neue Objekt. <code>this.name = name</code> speichert den Wert darin.</li><li>Klassenfelder wie <code>role = "user"</code> sind eine Kurzform für eine Zuweisung im Constructor.</li><li><code>get isAdmin()</code> ist ein Getter: Er wird wie eine Eigenschaft ohne Klammern gelesen, führt aber Code aus.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>new</code> vergessen: <code>User("Lea")</code> wirft einen Fehler. Oder eine Methode als Callback weitergeben, z.B. <code>button.onclick = u.isAdmin</code>. Dabei geht <code>this</code> verloren.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Getter sind elegant für berechnete Werte. Eine normale Methode <code>isAdmin()</code> ist expliziter und für Einsteiger leichter zu lesen. Im Backend begegnen dir Klassen bei Services, Models und eigenen Error-Typen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie rufst du <code>isAdmin</code> in den beiden Varianten auf?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Beim Getter ohne Klammern (<code>u.isAdmin</code>), bei der Methode mit Klammern (<code>u.isAdmin()</code>). Lässt du bei der Methode die Klammern weg, bekommst du die Funktion selbst statt des Ergebnisses.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= MUSTER ================= -->
+  <section id="muster">
+    <h2>Typische Muster <span class="tag">patterns</span></h2>
+    <p class="sub">Kombinationen der Konzepte oben, wie sie im Alltag auftauchen.</p>
+    <div class="grid">
+
+      <article class="card"><h3>Event Delegation</h3>
+        <p>Ein Listener auf dem Eltern-Element statt einer pro Button. Welcher geklickt wurde, verrät <code>event.target</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>list.addEventListener("click", e => {
+  const btn = e.target.closest("button[data-id]");
+  if (btn) deleteTodo(btn.dataset.id);
+});</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function handleListClick(event) {
+  const button = event.target.closest("button[data-id]");
+  if (button === null) {
+    return;
+  }
+  const id = button.getAttribute("data-id");
+  deleteTodo(id);
+}
+
+list.addEventListener("click", handleListClick);</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Learn_web_development/Core/Scripting/Event_bubbling" target="_blank" rel="noopener">Event Bubbling</a><a href="https://developer.mozilla.org/de/docs/Web/API/Element/closest" target="_blank" rel="noopener">Element.closest()</a><a href="https://developer.mozilla.org/de/docs/Web/API/HTMLElement/dataset" target="_blank" rel="noopener">dataset</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Statt jedem Tisch im Restaurant einen eigenen Kellner zu geben, steht ein Kellner im Raum und schaut, von welchem Tisch gerufen wurde.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ein Klick auf einen Button steigt durch alle Eltern-Elemente nach oben bis zum Dokument (Event Bubbling).</li><li>Darum bekommt der Listener auf der Liste auch Klicks auf ihre Kinder mit.</li><li><code>event.target</code> ist das Element, das tatsächlich geklickt wurde, eventuell nur ein Icon im Button.</li><li><code>closest("button[data-id]")</code> sucht von dort aus nach oben den passenden Button oder gibt <code>null</code> zurück.</li><li><code>dataset.id</code> liest das Attribut <code>data-id</code> aus.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>event.target</code> direkt benutzen, ohne <code>closest</code>. Klickt jemand auf ein <code>&lt;span&gt;</code> im Button, ist das Ziel der Span und <code>dataset.id</code> ist <code>undefined</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Delegation lohnt sich bei Listen, die sich ändern: Neue Elemente funktionieren automatisch, ohne neue Listener. In React übernimmt das Framework das intern für dich.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Warum funktioniert Delegation auch für Listenelemente, die erst später hinzukommen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Weil der Listener am Eltern-Element hängt, das schon existiert. Neue Kinder schicken ihre Klicks per Bubbling automatisch dorthin.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Debounce</h3>
+        <p>Funktion erst ausführen, wenn eine Weile Ruhe ist, z.B. bei einem Suchfeld. Nutzt eine Closure für <code>timer</code>.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>const debounce = (fn, delay = 300) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+};</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function debounce(fn, delay) {
+  if (delay === undefined) {
+    delay = 300;
+  }
+  let timer = null;
+
+  function debounced(value) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn(value);
+    }, delay);
+  }
+
+  return debounced;
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Glossary/Debounce" target="_blank" rel="noopener">Debounce</a><a href="https://developer.mozilla.org/de/docs/Glossary/Throttle" target="_blank" rel="noopener">Throttle</a><a href="https://developer.mozilla.org/de/docs/Web/API/Window/setTimeout" target="_blank" rel="noopener">setTimeout()</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Wie ein Aufzug, der wartet, bis keiner mehr einsteigt: Jede neue Person setzt den Türtimer zurück. Erst wenn kurz Ruhe ist, fährt er los.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>debounce</code> gibt eine neue Funktion zurück, die sich <code>timer</code> per Closure merkt.</li><li>Bei jedem Tastendruck wird der alte Timer mit <code>clearTimeout</code> gelöscht.</li><li>Dann startet ein neuer Timer.</li><li>Nur wenn innerhalb von <code>delay</code> Millisekunden kein neuer Tastendruck kommt, läuft der Timer ab und <code>fn</code> wird ausgeführt.</li><li>Ergebnis: Wer „berlin“ tippt, löst einen Request aus statt sechs.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>In React die Debounce-Funktion bei jedem Render neu erzeugen. Dann hat jede Version ihren eigenen <code>timer</code>, und nichts wird abgebrochen. Lösung: mit <code>useMemo</code> oder <code>useRef</code> stabil halten oder einen fertigen Hook nutzen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Die ausführliche Version reicht nur ein Argument durch. Die kurze reicht mit <code>...args</code> beliebig viele durch und ist dadurch universeller.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist der Unterschied zwischen Debounce und Throttle?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Debounce wartet auf Ruhe und feuert einmal am Ende. Throttle feuert höchstens einmal pro Zeitintervall, auch wenn ununterbrochen Events kommen, z.B. beim Scrollen.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Guard Clauses</h3>
+        <p>Hier ist es umgekehrt: Die kurze Variante mit frühen <code>return</code>s ist die empfohlene, die verschachtelte ist schwerer zu lesen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>function checkout(cart, user) {
+  if (!user) return redirect("/login");
+  if (!cart.length) return showError("Korb leer");
+
+  placeOrder(cart, user);
+}</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>function checkout(cart, user) {
+  if (user) {
+    if (cart.length > 0) {
+      placeOrder(cart, user);
+    } else {
+      showError("Korb leer");
+    }
+  } else {
+    redirect("/login");
+  }
+}</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/return" target="_blank" rel="noopener">return</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/if...else" target="_blank" rel="noopener">if...else</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Türsteher prüft am Eingang: Wer kein Ticket hat, wird sofort abgewiesen. Wer durchkommt, ist garantiert berechtigt, drinnen muss niemand mehr kontrollieren.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Jede Bedingung prüft einen Fehlerfall und beendet die Funktion sofort mit <code>return</code>.</li><li>Nach allen Guards steht fest, dass alle Voraussetzungen erfüllt sind.</li><li>Der eigentliche Zweck der Funktion, der Happy Path, steht ganz unten und ohne Einrückung.</li><li>Die verschachtelte Variante macht dasselbe, aber Bedingung und Fehlerbehandlung liegen weit auseinander.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das <code>return</code> vergessen: Dann wird zwar der Fehler gezeigt, aber der Code läuft weiter und bestellt trotzdem. Im Backend ist es derselbe Klassiker: <code>res.status(400).json(...)</code> ohne <code>return</code> führt zu „Cannot set headers after they are sent“.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Guard Clauses sind hier die empfohlene Variante. Faustregel: Ab mehr als zwei Ebenen Einrückung prüfen, ob sich Bedingungen umdrehen und früh beenden lassen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wo begegnen dir Guard Clauses im Backend ständig?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>In Express-Routen und Middleware: <code>if (!req.user) return res.status(401)...</code>, <code>if (!item) return res.status(404)...</code> und erst danach die eigentliche Logik.</p></details></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="card"><h3>Lade-, Fehler- und Daten-Zustand</h3>
+        <p>Jeder Request hat drei mögliche Ausgänge, und das UI sollte alle drei zeigen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>useEffect(() => {
+  fetch("/api/todos")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(setData)
+    .catch(setError)
+    .finally(() => setLoading(false));
+}, []);
+
+if (loading) return &lt;Spinner /&gt;;
+if (error) return &lt;p&gt;Fehler: {error.message}&lt;/p&gt;;
+return &lt;TodoList todos={data} /&gt;;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>useEffect(function () {
+  async function loadTodos() {
+    try {
+      const response = await fetch("/api/todos");
+      if (response.ok === false) {
+        throw new Error("HTTP " + response.status);
+      }
+      const todos = await response.json();
+      setData(todos);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+  loadTodos();
+}, []);
+
+if (loading) {
+  return &lt;Spinner /&gt;;
+}
+if (error) {
+  return &lt;p&gt;Fehler: {error.message}&lt;/p&gt;;
+}
+return &lt;TodoList todos={data} /&gt;;</pre></div>
+      
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://react.dev/reference/react/useEffect" target="_blank" rel="noopener">useEffect (EN)</a><a href="https://react.dev/reference/react/useEffect#fetching-data-with-effects" target="_blank" rel="noopener">Daten laden mit Effects (EN)</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/try...catch" target="_blank" rel="noopener">try...catch...finally</a></div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Jeder Request ist wie eine Bestellung: Sie ist unterwegs (Laden), sie ist schiefgegangen (Fehler) oder sie ist angekommen (Daten). Das UI braucht für jeden dieser drei Zustände eine eigene Ansicht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Startzustand: <code>loading</code> ist <code>true</code>, es gibt keine Daten und keinen Fehler.</li><li><code>useEffect</code> mit leerem Abhängigkeits-Array <code>[]</code> startet den Request einmal nach dem ersten Render.</li><li>Bei Erfolg landen die Daten per <code>setData</code> im State, bei einem Fehler per <code>setError</code>.</li><li><code>finally</code> setzt <code>loading</code> in beiden Fällen auf <code>false</code>.</li><li>Die frühen <code>return</code>s beim Rendern sind Guard Clauses: erst Laden, dann Fehler, dann der Normalfall.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Die Effect-Funktion selbst <code>async</code> machen, also <code>useEffect(async () =&gt; ...)</code>. React erwartet als Rückgabe eine Cleanup-Funktion, kein Promise. Deshalb gibt es die innere <code>async function loadTodos()</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Bei mehreren Schritten ist die <code>async/await</code>-Variante lesbarer. In größeren Projekten übernehmen Bibliotheken wie TanStack Query genau dieses Muster für dich.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was passiert, wenn du <code>if (loading) return &lt;Spinner /&gt;</code> weglässt und direkt <code>data.map(...)</code> renderst?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Beim ersten Render ist <code>data</code> noch <code>null</code>, und <code>data.map</code> wirft einen TypeError. Deshalb muss der Ladezustand zuerst abgefangen werden.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <p class="empty" id="empty" hidden>Kein Konzept passt zu diesem Suchbegriff.</p>
+
+  <footer>Übungsidee: Lies die kurze Variante, deck die ausführliche ab und schreib sie selbst aus. Danach umgekehrt. Wer beide Richtungen kann, versteht die Kurzschreibweise wirklich. Weiter mit dem <a href="https://claude.ai/artifact/W9b8p3sj4TGiwhcaTx8DLW" target="_blank" rel="noopener">TypeScript Spickzettel</a> oder zurück zum <a href="https://claude.ai/artifact/8MMr1HXJMFnYe4ubTYDY4x" target="_blank" rel="noopener">Spickzettel-Hub</a>.</footer>
+</div>
+
+<script>
+(function () {
+  // Einfaches Syntax-Highlighting
+  var KW = /\b(const|let|var|function|return|if|else|for|of|in|async|await|new|class|extends|constructor|super|this|throw|try|catch|finally|import|export|default|from|as|true|false|null|undefined|typeof|delete|break|get)\b/;
+  var RE = new RegExp("(\\/\\/[^\\n]*)|(\"(?:[^\"\\\\\\n]|\\\\.)*\"|`(?:[^`\\\\]|\\\\.)*`)|" + KW.source, "g");
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  document.querySelectorAll("pre").forEach(function (pre) {
+    var src = pre.textContent, out = "", last = 0, m;
+    RE.lastIndex = 0;
+    while ((m = RE.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      var cls = m[1] ? "c" : m[2] ? "s" : "k";
+      out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
+      last = RE.lastIndex;
+    }
+    pre.innerHTML = out + esc(src.slice(last));
+  });
+
+  // Filter
+  var input = document.getElementById("filter");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section"));
+  var empty = document.getElementById("empty");
+  input.addEventListener("input", function () {
+    var q = input.value.trim().toLowerCase(), total = 0;
+    cards.forEach(function (c) {
+      var hit = !q || c.textContent.toLowerCase().indexOf(q) !== -1;
+      c.hidden = !hit;
+      if (hit) total++;
+    });
+    sections.forEach(function (s) { s.hidden = !s.querySelector(".card:not([hidden])"); });
+    empty.hidden = total > 0;
+  });
+
+  // Alle Erklärungen auf/zu
+  var tAll = document.getElementById("toggle-all");
+  var exps = Array.prototype.slice.call(document.querySelectorAll(".explain"));
+  function syncAll() {
+    var allOpen = exps.every(function (d) { return d.open; });
+    tAll.textContent = allOpen ? "Alle Erklärungen zuklappen" : "Alle Erklärungen aufklappen";
+  }
+  tAll.addEventListener("click", function () {
+    var open = !exps.every(function (d) { return d.open; });
+    exps.forEach(function (d) { d.open = open; });
+    syncAll();
+  });
+  exps.forEach(function (d) { d.addEventListener("toggle", syncAll); });
+
+  // Varianten umschalten
+  var modes = { "show-both": "", "show-short": "only-short", "show-long": "only-long" };
+  var btns = Object.keys(modes).map(function (id) { return document.getElementById(id); });
+  function setMode(id) {
+    document.body.classList.remove("only-short", "only-long");
+    if (modes[id]) document.body.classList.add(modes[id]);
+    btns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.id === id)); });
+    try { localStorage.setItem("js-cheat-mode", id); } catch (e) {}
+  }
+  btns.forEach(function (b) { b.addEventListener("click", function () { setMode(b.id); }); });
+  try { var saved = localStorage.getItem("js-cheat-mode"); if (saved && modes.hasOwnProperty(saved)) setMode(saved); } catch (e) {}
+})();
+</script>

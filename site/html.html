@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HTML · Spickzettel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body data-sheet="html" data-lang="html">
+<header class="topbar" id="topbar">
+  <div class="topbar-row">
+    <a class="tb-home" href="index.html" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
+    <span class="tb-title">HTML</span>
+    <input id="filter" type="search" placeholder="Filtern, z.B. dialog, label, alt …" aria-label="Karten auf dieser Seite filtern">
+    <details class="menu">
+      <summary><span class="sum-label">Themen</span><span aria-hidden="true">☰</span></summary>
+      <div class="menu-panel"><nav aria-label="Abschnitte"><a href="#grundgeruest">Grundgerüst</a><a href="#semantik">Semantik und Struktur</a><a href="#medien">Bilder und Medien</a><a href="#formulare">Formulare</a><a href="#interaktiv">Interaktiv ohne JavaScript</a><a href="#a11y">Barrierefreiheit</a></nav></div>
+    </details>
+    <details class="menu">
+      <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
+      <div class="menu-panel">
+        <h4>Code-Varianten</h4>
+          <div class="seg" role="group" aria-label="Varianten anzeigen">
+            <button type="button" id="show-both" aria-pressed="true">Beide</button>
+            <button type="button" id="show-short" aria-pressed="false">Nur kurz</button>
+            <button type="button" id="show-long" aria-pressed="false">Nur ausführlich</button>
+          </div>
+        <h4>Erklärungen</h4>
+        <button type="button" class="ghost" id="toggle-all">Alle Erklärungen aufklappen</button>
+      </div>
+    </details>
+  </div>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+</header>
+
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Web-Grundlagen · HTML</div>
+    <h1>HTML Spickzettel</h1>
+    <p class="lede">24 Konzepte, jedes in zwei Schreibweisen. <b>Kurz</b> heißt hier: das passende native Element oder Attribut, das Tastatur, Screenreader und Verhalten gleich mitbringt. <b>Ausführlich</b> heißt: der Nachbau mit <code>&lt;div&gt;</code>, ARIA und JavaScript oder die ältere Schreibweise, die dir in bestehendem Code begegnet. Unter jedem Beispiel klappt eine Erklärung auf, mit Bild zum Merken, Ablauf, typischem Fehler und Selbsttest. Die Doku-Links führen zu MDN auf Deutsch.</p>
+    <div class="legend"><span><b class="lbl" style="color:var(--accent);background:var(--accent-soft)">Kurz</b> natives Element oder Attribut</span><span><b class="lbl" style="color:var(--long);background:var(--long-soft)">Ausführlich</b> Nachbau oder ältere Schreibweise</span></div>
+  </header>
+
+  <section id="grundgeruest">
+    <h2>Grundgerüst <span class="tag">basics</span></h2>
+    <p class="sub">Was in jeder HTML-Datei steht und wie Skripte richtig eingebunden werden.</p>
+    <div class="grid">
+      <article class="card" id="html-grundgeruest-1">
+        <div class="card-main"><h3>Das Grundgerüst</h3>
+        <p>Jede Seite braucht dieselben paar Zeilen. Heute sind sie viel kürzer als früher.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;!doctype html&gt;
+&lt;html lang="de"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Todo-App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de"&gt;
+&lt;head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Todo-App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/html" target="_blank" rel="noopener">&lt;html&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/meta" target="_blank" rel="noopener">&lt;meta&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Global_attributes/lang" target="_blank" rel="noopener">lang</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Das Grundgerüst ist der Briefkopf: Sprache, Zeichensatz und Titel stehen immer an derselben Stelle, damit Browser und Suchmaschinen sofort wissen, womit sie es zu tun haben.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;!doctype html&gt;</code> schaltet den Browser in den Standardmodus. Ohne ihn rendert er im Quirks-Modus mit alten Sonderregeln.</li><li><code>lang="de"</code> sagt Screenreadern, Übersetzungstools und der Silbentrennung, welche Sprache die Seite hat.</li><li><code>&lt;meta charset="utf-8"&gt;</code> sorgt dafür, dass Umlaute und Emojis richtig erscheinen. Es gehört möglichst weit nach oben in den <code>&lt;head&gt;</code>.</li><li>Das Viewport-Meta-Tag lässt Handys mit der echten Bildschirmbreite rechnen, sonst greifen keine Media Queries.</li><li>Die ausführliche Variante ist der alte XHTML-Stil. Den brauchst du nicht mehr, aber du begegnest ihm in alten Projekten.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das Viewport-Meta-Tag vergessen. Auf dem Handy erscheint die Seite dann winzig verkleinert, als wäre sie für den Desktop gebaut.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer die kurze HTML5-Variante. In VS Code erzeugen <code>!</code> und Tab dieses Gerüst automatisch.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wo ist der Inhalt von <code>&lt;title&gt;</code> zu sehen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Im Browser-Tab, in Lesezeichen und als Überschrift im Suchergebnis. Darum sollte jede Seite einen eigenen, aussagekräftigen Titel haben.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-grundgeruest-2">
+        <div class="card-main"><h3>Skripte laden: <code>defer</code> und <code>type="module"</code></h3>
+        <p>Skripte so einbinden, dass sie die Seite nicht blockieren und das HTML schon da ist, wenn sie laufen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;head&gt;
+  &lt;script src="app.js" defer&gt;&lt;/script&gt;
+  &lt;!-- oder als ES-Modul, automatisch verzögert --&gt;
+  &lt;script type="module" src="main.js"&gt;&lt;/script&gt;
+&lt;/head&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;body&gt;
+  ...
+  &lt;!-- ganz unten, damit das HTML vorher eingelesen ist --&gt;
+  &lt;script src="app.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    document.addEventListener("DOMContentLoaded", function () {
+      init();
+    });
+  &lt;/script&gt;
+&lt;/body&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/script" target="_blank" rel="noopener">&lt;script&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noopener">JavaScript-Module</a><a href="https://developer.mozilla.org/de/docs/Web/API/Document/DOMContentLoaded_event" target="_blank" rel="noopener">DOMContentLoaded</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ohne <code>defer</code> hält der Browser beim Lesen des HTML an jedem Skript an, wie jemand, der mitten im Satz aufsteht, um ein Buch zu holen. Mit <code>defer</code> wird das Buch nebenbei geholt und erst gelesen, wenn die Seite fertig ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ein normales <code>&lt;script&gt;</code> stoppt das Einlesen des HTML, bis das Skript geladen und ausgeführt ist.</li><li>Steht es im <code>&lt;head&gt;</code>, existieren die Elemente im <code>&lt;body&gt;</code> noch nicht. <code>document.querySelector</code> findet dann nichts.</li><li><code>defer</code> lädt das Skript parallel und führt es erst aus, wenn das HTML komplett eingelesen ist, in der Reihenfolge der Skripte.</li><li><code>type="module"</code> verhält sich automatisch wie <code>defer</code> und erlaubt <code>import</code> und <code>export</code>. Vite erzeugt genau das.</li><li>Die ausführliche Variante erreicht dasselbe mit Skripten am Ende des <code>&lt;body&gt;</code> und dem Event <code>DOMContentLoaded</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Skript ohne <code>defer</code> in den <code>&lt;head&gt;</code> setzen und sich wundern, warum <code>document.querySelector("#app")</code> <code>null</code> liefert. Das Element gibt es zu diesem Zeitpunkt noch nicht.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>defer</code> oder <code>type="module"</code> im <code>&lt;head&gt;</code>. Skripte am Ende des Body sind der klassische Weg, der genauso funktioniert, aber später mit dem Laden beginnt.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was ist der Unterschied zwischen <code>defer</code> und <code>async</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Beide laden parallel. <code>defer</code> wartet mit dem Ausführen, bis das HTML fertig ist, und hält die Reihenfolge ein. <code>async</code> führt sofort nach dem Laden aus, in beliebiger Reihenfolge. Das passt für unabhängige Skripte wie Statistik-Tools.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-grundgeruest-3">
+        <div class="card-main"><h3>Boolesche Attribute</h3>
+        <p>Manche Attribute sind Schalter: Allein ihre Anwesenheit bedeutet „an“.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;input type="checkbox" checked&gt;
+&lt;input type="email" required&gt;
+&lt;button disabled&gt;Speichern&lt;/button&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;input type="checkbox" checked="checked"&gt;
+&lt;input type="email" required="required"&gt;
+&lt;button disabled="disabled"&gt;Speichern&lt;/button&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/disabled" target="_blank" rel="noopener">disabled</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/required" target="_blank" rel="noopener">required</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein boolesches Attribut ist ein Lichtschalter, kein Dimmer. Es gibt nur an und aus, und an ist es, sobald es dasteht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Attribute wie <code>checked</code>, <code>required</code>, <code>disabled</code>, <code>hidden</code> oder <code>open</code> brauchen keinen Wert.</li><li>Steht das Attribut im Tag, gilt es als eingeschaltet.</li><li>Die Schreibweise mit wiederholtem Namen stammt aus XHTML und ist weiterhin gültig.</li><li>Zum Ausschalten muss das Attribut ganz verschwinden.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>disabled="false"</code> schreiben und erwarten, dass der Button aktiv ist. Er ist trotzdem deaktiviert, weil das Attribut vorhanden ist. Per JavaScript schaltest du es mit <code>button.disabled = false</code> oder <code>removeAttribute("disabled")</code> aus.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer die kurze Form. In JSX schreibst du dagegen <code>disabled={false}</code>, und React entfernt das Attribut dann selbst.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Ist <code>&lt;input required="no"&gt;</code> ein Pflichtfeld?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ja. Der Wert ist egal, nur die Anwesenheit des Attributs zählt.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="semantik">
+    <h2>Semantik und Struktur <span class="tag">semantics</span></h2>
+    <p class="sub">Das passende Element sagt Browsern, Suchmaschinen und Screenreadern, was ein Inhalt ist.</p>
+    <div class="grid">
+      <article class="card" id="html-semantik-1">
+        <div class="card-main"><h3>Seitenstruktur mit Landmarks</h3>
+        <p>Semantische Elemente beschreiben, welche Rolle ein Bereich hat. Ein <code>&lt;div&gt;</code> sagt dazu nichts.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;header&gt;...&lt;/header&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;main&gt;
+  &lt;article&gt;...&lt;/article&gt;
+  &lt;aside&gt;...&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;...&lt;/footer&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div id="header" role="banner"&gt;...&lt;/div&gt;
+&lt;div id="nav" role="navigation"&gt;...&lt;/div&gt;
+&lt;div id="main" role="main"&gt;
+  &lt;div class="article"&gt;...&lt;/div&gt;
+  &lt;div class="sidebar" role="complementary"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="footer" role="contentinfo"&gt;...&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/main" target="_blank" rel="noopener">&lt;main&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/header" target="_blank" rel="noopener">&lt;header&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/article" target="_blank" rel="noopener">&lt;article&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/aside" target="_blank" rel="noopener">&lt;aside&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Semantische Elemente sind wie beschriftete Umzugskartons: „Küche“, „Bad“, „Bücher“. Ein <code>&lt;div&gt;</code> ist ein Karton ohne Aufschrift. Man kommt auch ans Ziel, muss aber jeden einzelnen öffnen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;aside&gt;</code> und <code>&lt;footer&gt;</code> heißen Landmarks. Screenreader können direkt zwischen ihnen springen.</li><li><code>&lt;main&gt;</code> gibt es pro Seite nur einmal sichtbar. Dort steht der eigentliche Inhalt.</li><li><code>&lt;article&gt;</code> ist ein in sich geschlossener Inhalt, der auch allein Sinn ergibt, z.B. ein Blogpost oder eine Produktkarte.</li><li>Die ausführliche Variante erreicht dieselbe Bedeutung mit <code>role</code>-Attributen. So machte man es vor HTML5.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Jedes <code>&lt;div&gt;</code> durch <code>&lt;section&gt;</code> ersetzen. <code>&lt;section&gt;</code> ist ein thematischer Abschnitt, der eine Überschrift haben sollte. Für reine Layout-Container bleibt <code>&lt;div&gt;</code> richtig.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer die semantischen Elemente. <code>role</code> brauchst du nur, wenn es für eine Rolle kein passendes Element gibt.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie oft darf <code>&lt;header&gt;</code> auf einer Seite vorkommen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mehrfach. Neben dem Seitenkopf kann jedes <code>&lt;article&gt;</code> oder <code>&lt;section&gt;</code> einen eigenen <code>&lt;header&gt;</code> haben. Nur <code>&lt;main&gt;</code> ist einmalig.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-semantik-2">
+        <div class="card-main"><h3>Überschriften-Hierarchie</h3>
+        <p>Überschriften bilden das Inhaltsverzeichnis der Seite. Die Ebene richtet sich nach der Struktur, nicht nach der Schriftgröße.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;h1&gt;Meine Todos&lt;/h1&gt;
+&lt;h2&gt;Heute&lt;/h2&gt;
+&lt;h3&gt;Arbeit&lt;/h3&gt;
+&lt;h3&gt;Privat&lt;/h3&gt;
+&lt;h2&gt;Diese Woche&lt;/h2&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div class="title-xl" role="heading" aria-level="1"&gt;Meine Todos&lt;/div&gt;
+&lt;div class="title-l" role="heading" aria-level="2"&gt;Heute&lt;/div&gt;
+&lt;div class="title-m" role="heading" aria-level="3"&gt;Arbeit&lt;/div&gt;
+&lt;div class="title-m" role="heading" aria-level="3"&gt;Privat&lt;/div&gt;
+&lt;div class="title-l" role="heading" aria-level="2"&gt;Diese Woche&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/Heading_Elements" target="_blank" rel="noopener">&lt;h1&gt; bis &lt;h6&gt;</a><a href="https://developer.mozilla.org/de/docs/Learn_web_development/Core/Accessibility/HTML" target="_blank" rel="noopener">HTML und Barrierefreiheit</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Die Überschriften sind die Gliederung eines Buches: Kapitel, Unterkapitel, Abschnitte. Screenreader-Nutzer springen durch diese Gliederung wie durch ein Inhaltsverzeichnis.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;h1&gt;</code> ist der Titel der Seite, meist genau einer.</li><li>Darunter folgen <code>&lt;h2&gt;</code> für Hauptabschnitte, <code>&lt;h3&gt;</code> für Unterabschnitte und so weiter.</li><li>Ebenen sollten nicht übersprungen werden: Auf <code>&lt;h2&gt;</code> folgt <code>&lt;h3&gt;</code>, nicht <code>&lt;h5&gt;</code>.</li><li>Wie groß eine Überschrift aussieht, regelst du mit CSS, nicht mit der Ebene.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Die Ebene nach der gewünschten Größe wählen, z.B. <code>&lt;h4&gt;</code>, weil es kleiner aussieht. Dann stimmt die Gliederung nicht mehr, und Screenreader-Nutzer verlieren die Orientierung.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer echte <code>&lt;h1&gt;</code> bis <code>&lt;h6&gt;</code>. Die Variante mit <code>role="heading"</code> zeigt nur, wie viel Aufwand der Nachbau eines nativen Elements kostet.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Eine Karte unter einem <code>&lt;h2&gt;</code> soll eine kleine Überschrift bekommen. Welche Ebene nimmst du?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>&lt;h3&gt;</code>, weil sie inhaltlich unter dem <code>&lt;h2&gt;</code> liegt. Die kleine Darstellung erledigt CSS.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-semantik-3">
+        <div class="card-main"><h3><code>&lt;button&gt;</code> statt klickbarem <code>&lt;div&gt;</code></h3>
+        <p>Ein <code>&lt;button&gt;</code> kann von Haus aus alles, was ein Button braucht. Ein klickbares <code>&lt;div&gt;</code> muss das mühsam nachbauen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;button type="button" onclick="toggleMenu()"&gt;Menü&lt;/button&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div class="button" role="button" tabindex="0"
+     onclick="toggleMenu()"
+     onkeydown="if (event.key === 'Enter' || event.key === ' ') toggleMenu()"&gt;
+  Menü
+&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/button" target="_blank" rel="noopener">&lt;button&gt;</a><a href="https://developer.mozilla.org/de/docs/Learn_web_development/Core/Accessibility/HTML" target="_blank" rel="noopener">HTML und Barrierefreiheit</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein <code>&lt;button&gt;</code> ist ein Werkzeug von der Stange: Griff, Klinge und Sicherung sind schon dran. Ein klickbares <code>&lt;div&gt;</code> ist ein Stück Holz, an das du jedes Teil selbst schrauben musst.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;button&gt;</code> ist per Tab erreichbar, reagiert auf Enter und Leertaste und wird von Screenreadern als Schaltfläche angesagt.</li><li>Ein <code>&lt;div&gt;</code> kann nichts davon. <code>role="button"</code> sorgt für die Ansage, <code>tabindex="0"</code> für die Erreichbarkeit per Tab.</li><li>Die Tastaturbedienung musst du per <code>onkeydown</code> selbst nachbauen.</li><li><code>type="button"</code> ist wichtig: In einem Formular ist der Standard <code>submit</code>, und jeder Klick würde das Formular absenden.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>type="button"</code> in Formularen vergessen. Ein Button zum Anzeigen des Passworts schickt dann bei jedem Klick das Formular ab.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer <code>&lt;button&gt;</code> für Aktionen. Die div-Variante ist ein Beispiel, wie man es nicht machen sollte. Du triffst sie aber in vielen alten Codebasen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wann nimmst du <code>&lt;button&gt;</code> und wann <code>&lt;a&gt;</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>&lt;a href&gt;</code> für Navigation zu einer anderen Seite oder Stelle. <code>&lt;button&gt;</code> für Aktionen auf der aktuellen Seite: öffnen, speichern, löschen, absenden.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-semantik-4">
+        <div class="card-main"><h3>Links: neue Tabs und Sprungmarken</h3>
+        <p>Externe Links in neuen Tabs öffnen und zu Stellen auf derselben Seite springen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;a href="https://developer.mozilla.org" target="_blank"&gt;MDN&lt;/a&gt;
+
+&lt;a href="#kontakt"&gt;Zum Kontakt&lt;/a&gt;
+&lt;section id="kontakt"&gt;...&lt;/section&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;a href="https://developer.mozilla.org" target="_blank"
+   rel="noopener noreferrer"&gt;MDN&lt;/a&gt;
+
+&lt;a href="#" onclick="document.getElementById('kontakt').scrollIntoView(); return false;"&gt;
+  Zum Kontakt
+&lt;/a&gt;
+&lt;section id="kontakt"&gt;...&lt;/section&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/a" target="_blank" rel="noopener">&lt;a&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/rel/noopener" target="_blank" rel="noopener">rel=&quot;noopener&quot;</a><a href="https://developer.mozilla.org/de/docs/Web/CSS/scroll-margin-top" target="_blank" rel="noopener">scroll-margin-top</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Anker wie <code>#kontakt</code> ist ein Lesezeichen im Buch: Der Link schlägt die Seite genau an dieser Stelle auf, und die Adresse merkt sich die Stelle.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>target="_blank"</code> öffnet den Link in einem neuen Tab.</li><li>Früher konnte die neue Seite über <code>window.opener</code> die alte Seite manipulieren. Darum schrieb man <code>rel="noopener"</code> dazu.</li><li>Moderne Browser setzen <code>noopener</code> bei <code>target="_blank"</code> automatisch. <code>noreferrer</code> verhindert zusätzlich, dass die Zielseite erfährt, woher der Besuch kam.</li><li><code>href="#kontakt"</code> springt zum Element mit <code>id="kontakt"</code>. Das funktioniert ohne JavaScript, mit Zurück-Button und als teilbarer Link.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Sprungmarken mit JavaScript nachbauen. Dann funktionieren Zurück-Button, Lesezeichen und Teilen nicht. Ebenfalls häufig: Linktexte wie „hier klicken“. Screenreader-Nutzer lassen sich oft alle Links auflisten, und dann steht dort zehnmal „hier“.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Die Kurzform reicht in aktuellen Browsern. <code>rel="noopener noreferrer"</code> schadet nicht und ist bei fremden Seiten ein gutes Sicherheitsnetz. Für sanftes Scrollen genügt im CSS <code>scroll-behavior: smooth</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie verhinderst du, dass das Sprungziel unter einem Sticky-Header verschwindet?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>scroll-margin-top</code> im CSS auf dem Ziel, z.B. <code>section { scroll-margin-top: 5rem; }</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-semantik-5">
+        <div class="card-main"><h3>Betonung: <code>&lt;strong&gt;</code> und <code>&lt;em&gt;</code></h3>
+        <p>Bedeutung mit dem passenden Element ausdrücken, Aussehen mit CSS.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;p&gt;&lt;strong&gt;Achtung:&lt;/strong&gt; Das Löschen kann &lt;em&gt;nicht&lt;/em&gt; rückgängig gemacht werden.&lt;/p&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;p&gt;
+  &lt;span class="bold"&gt;Achtung:&lt;/span&gt; Das Löschen kann
+  &lt;span class="italic"&gt;nicht&lt;/span&gt; rückgängig gemacht werden.
+&lt;/p&gt;
+
+&lt;style&gt;
+  .bold { font-weight: bold; }
+  .italic { font-style: italic; }
+&lt;/style&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/strong" target="_blank" rel="noopener">&lt;strong&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/em" target="_blank" rel="noopener">&lt;em&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/b" target="_blank" rel="noopener">&lt;b&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>&lt;strong&gt;</code> und <code>&lt;em&gt;</code> sind wie die Stimme beim Vorlesen: Wichtiges klingt ernster, Betontes wird betont. Ein <code>&lt;span class="bold"&gt;</code> ist nur dicker gedruckt, und wer vorliest, merkt nichts davon.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;strong&gt;</code> heißt: Dieser Teil ist wichtig, ernst oder dringend.</li><li><code>&lt;em&gt;</code> heißt: Diese Stelle wird betont, und das verändert die Aussage des Satzes.</li><li>Browser zeigen beide standardmäßig fett bzw. kursiv, das lässt sich per CSS ändern.</li><li><code>&lt;b&gt;</code> und <code>&lt;i&gt;</code> gibt es auch. Sie heben hervor, ohne Wichtigkeit zu behaupten, z.B. Fachbegriffe oder fremdsprachige Wörter.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>&lt;strong&gt;</code> benutzen, nur weil Text fett aussehen soll, z.B. bei allen Labels. Dann ist jedes zweite Wort „besonders wichtig“, und die Auszeichnung verliert ihren Sinn. Für reine Optik ist CSS da.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>&lt;strong&gt;</code> und <code>&lt;em&gt;</code>, wenn sich Bedeutung oder Betonung ändern. CSS-Klassen, wenn es nur um das Aussehen geht.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie unterscheiden sich „Ich habe das &lt;em&gt;nicht&lt;/em&gt; gelöscht“ und „Ich habe &lt;em&gt;das&lt;/em&gt; nicht gelöscht“?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Im ersten Satz wird bestritten, dass überhaupt gelöscht wurde. Im zweiten wurde etwas anderes gelöscht. <code>&lt;em&gt;</code> trägt also echte Bedeutung.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-semantik-6">
+        <div class="card-main"><h3>Listen</h3>
+        <p>Aufzählungen als echte Listen auszeichnen. Nummerierung und Ansage übernimmt der Browser.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;ol&gt;
+  &lt;li&gt;Repository klonen&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;npm install&lt;/code&gt; ausführen&lt;/li&gt;
+  &lt;li&gt;Server starten&lt;/li&gt;
+&lt;/ol&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div class="steps"&gt;
+  &lt;p&gt;1. Repository klonen&lt;/p&gt;
+  &lt;p&gt;2. &lt;code&gt;npm install&lt;/code&gt; ausführen&lt;/p&gt;
+  &lt;p&gt;3. Server starten&lt;/p&gt;
+&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/ol" target="_blank" rel="noopener">&lt;ol&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/ul" target="_blank" rel="noopener">&lt;ul&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/li" target="_blank" rel="noopener">&lt;li&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine echte Liste ist ein Einkaufszettel, den der Screenreader mit „Liste, 3 Einträge“ ankündigt. Absätze mit Nummern davor sind lose Zettel ohne Zusammenhang.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;ol&gt;</code> ist eine geordnete Liste, die Reihenfolge zählt. <code>&lt;ul&gt;</code> ist eine ungeordnete Liste.</li><li>Jeder Eintrag steht in einem <code>&lt;li&gt;</code>.</li><li>Die Nummerierung erzeugt der Browser. Fügst du einen Schritt ein, zählt er automatisch neu.</li><li>Screenreader sagen die Anzahl der Einträge an, und man kann von Liste zu Liste springen.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Text oder ein <code>&lt;div&gt;</code> direkt in eine <code>&lt;ul&gt;</code> schreiben. Erlaubte Kinder sind nur <code>&lt;li&gt;</code> (plus <code>&lt;script&gt;</code> und <code>&lt;template&gt;</code>). Auch Navigationsmenüs sind typischerweise eine <code>&lt;ul&gt;</code> in <code>&lt;nav&gt;</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer echte Listen. Das Aussehen, z.B. ohne Aufzählungspunkte, regelst du mit <code>list-style: none</code> im CSS.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie lässt du eine <code>&lt;ol&gt;</code> bei 5 statt bei 1 beginnen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit dem Attribut <code>start</code>, also <code>&lt;ol start="5"&gt;</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="medien">
+    <h2>Bilder und Medien <span class="tag">media</span></h2>
+    <p class="sub">Bilder zugänglich, schnell und ohne springendes Layout einbinden.</p>
+    <div class="grid">
+      <article class="card" id="html-medien-1">
+        <div class="card-main"><h3>Bilder richtig einbinden</h3>
+        <p>Alternativtext, feste Maße und Lazy Loading sorgen dafür, dass Bilder zugänglich sind und die Seite nicht springt.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;img src="team.jpg" alt="Das Team beim Hackathon"
+     width="800" height="450" loading="lazy"&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;img class="lazy" data-src="team.jpg" alt="Das Team beim Hackathon"
+     style="width: 800px; height: 450px"&gt;
+
+&lt;script&gt;
+  const observer = new IntersectionObserver(entries =&gt; {
+    entries.forEach(entry =&gt; {
+      if (entry.isIntersecting) {
+        entry.target.src = entry.target.dataset.src;
+        observer.unobserve(entry.target);
+      }
+    });
+  });
+  document.querySelectorAll("img.lazy").forEach(img =&gt; observer.observe(img));
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/img" target="_blank" rel="noopener">&lt;img&gt;</a><a href="https://developer.mozilla.org/de/docs/Learn_web_development/Core/Accessibility/HTML" target="_blank" rel="noopener">HTML und Barrierefreiheit</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>width</code> und <code>height</code> sind eine Tischreservierung im Restaurant: Der Platz ist frei gehalten, bevor der Gast kommt. Ohne Reservierung rücken alle zusammen, sobald er erscheint, und die Seite springt.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>alt</code> beschreibt, was das Bild zeigt. Screenreader lesen es vor, und es erscheint, wenn das Bild nicht lädt.</li><li>Rein dekorative Bilder bekommen <code>alt=""</code>, dann werden sie übersprungen.</li><li><code>width</code> und <code>height</code> geben das Seitenverhältnis vor. Der Browser reserviert den Platz, bevor das Bild geladen ist. Per CSS kann es trotzdem responsiv skalieren.</li><li><code>loading="lazy"</code> lädt das Bild erst, wenn es in die Nähe des sichtbaren Bereichs kommt. Die ausführliche Variante baut genau das mit JavaScript nach.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>alt</code> ganz weglassen. Dann liest der Screenreader oft den Dateinamen vor, z.B. „IMG-4711.jpg“. Ebenfalls ungünstig: <code>loading="lazy"</code> beim großen Bild ganz oben. Das verzögert genau das Bild, das man zuerst sieht.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer die native Variante. Lazy Loading nur für Bilder weiter unten auf der Seite.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welcher <code>alt</code>-Text passt zu einem Lupen-Icon in einem Suchbutton?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Einer, der die Funktion beschreibt, also „Suchen“ und nicht „Lupe“. Bei Bildern in Links und Buttons zählt, was passiert.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-medien-2">
+        <div class="card-main"><h3>Bildunterschriften: <code>&lt;figure&gt;</code></h3>
+        <p>Bild und Bildunterschrift als zusammengehörige Einheit auszeichnen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;figure&gt;
+  &lt;img src="chart.png" alt="Umsatz steigt von 2 auf 5 Mio. Euro"&gt;
+  &lt;figcaption&gt;Umsatzentwicklung 2022 bis 2025&lt;/figcaption&gt;
+&lt;/figure&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div class="figure"&gt;
+  &lt;img src="chart.png" alt="Umsatz steigt von 2 auf 5 Mio. Euro"
+       aria-describedby="caption-1"&gt;
+  &lt;p class="caption" id="caption-1"&gt;Umsatzentwicklung 2022 bis 2025&lt;/p&gt;
+&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/figure" target="_blank" rel="noopener">&lt;figure&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/figcaption" target="_blank" rel="noopener">&lt;figcaption&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>&lt;figure&gt;</code> ist der Kasten im Schulbuch, in dem Abbildung und „Abb. 3: …“ zusammenstehen. Wird der Kasten verschoben, wandert die Unterschrift mit.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;figure&gt;</code> umschließt einen in sich geschlossenen Inhalt: Bild, Diagramm, Code-Beispiel oder Zitat.</li><li><code>&lt;figcaption&gt;</code> ist die Beschriftung und wird automatisch mit der Figur verknüpft.</li><li>Die ausführliche Variante muss diese Verbindung per <code>aria-describedby</code> und <code>id</code> selbst herstellen.</li><li><code>alt</code> und <code>&lt;figcaption&gt;</code> haben verschiedene Aufgaben: <code>alt</code> ersetzt das Bild, die Bildunterschrift ergänzt es.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Denselben Text in <code>alt</code> und <code>&lt;figcaption&gt;</code> schreiben. Dann hört ein Screenreader-Nutzer alles doppelt. <code>alt</code> beschreibt den Bildinhalt, die Bildunterschrift liefert den Kontext.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>&lt;figure&gt;</code> immer, wenn ein Bild eine sichtbare Unterschrift hat. Für Bilder ohne Unterschrift reicht <code>&lt;img&gt;</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Darf <code>&lt;figure&gt;</code> auch Code statt eines Bildes enthalten?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Ja. <code>&lt;figure&gt;</code> kann jeden eigenständigen Inhalt enthalten, z.B. <code>&lt;pre&gt;&lt;code&gt;</code> mit der Unterschrift „Beispiel 2: Express-Route“.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-medien-3">
+        <div class="card-main"><h3>Responsive Bilder: <code>srcset</code> und <code>&lt;picture&gt;</code></h3>
+        <p>Der Browser lädt die passende Bildgröße, statt dem Handy das riesige Desktop-Bild zu schicken.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;img src="hero-800.jpg"
+     srcset="hero-480.jpg 480w, hero-800.jpg 800w, hero-1600.jpg 1600w"
+     sizes="(width &lt; 48rem) 100vw, 50vw"
+     alt="Bergpanorama bei Sonnenaufgang"&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;picture&gt;
+  &lt;source media="(width &lt; 30rem)" srcset="hero-480.jpg"&gt;
+  &lt;source media="(width &lt; 64rem)" srcset="hero-800.jpg"&gt;
+  &lt;img src="hero-1600.jpg" alt="Bergpanorama bei Sonnenaufgang"&gt;
+&lt;/picture&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Responsive_images" target="_blank" rel="noopener">Responsive Bilder</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/picture" target="_blank" rel="noopener">&lt;picture&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>srcset</code> ist eine Speisekarte mit Portionsgrößen: Du bietest klein, mittel und groß an, und der Browser bestellt, was zu Bildschirm und Auflösung passt.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>srcset</code> listet die verfügbaren Dateien mit ihrer echten Breite: <code>480w</code> heißt 480 Pixel breit.</li><li><code>sizes</code> sagt, wie breit das Bild im Layout angezeigt wird: auf kleinen Bildschirmen die volle Breite, sonst die Hälfte.</li><li>Aus beidem und der Pixeldichte des Displays wählt der Browser selbst die beste Datei.</li><li><code>&lt;picture&gt;</code> mit <code>&lt;source media&gt;</code> legt dagegen fest, welches Bild bei welcher Breite kommt. Das brauchst du, wenn sich der Bildausschnitt ändern soll (Art Direction) oder für moderne Formate wie AVIF mit Fallback.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>sizes</code> vergessen. Dann geht der Browser davon aus, dass das Bild <code>100vw</code> breit ist, und lädt auf großen Bildschirmen eine viel zu große Datei, auch wenn das Bild nur in einer schmalen Spalte steht.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>srcset</code> und <code>sizes</code> für dasselbe Motiv in verschiedenen Größen, das ist der häufigste Fall. <code>&lt;picture&gt;</code> für andere Ausschnitte je Bildschirm oder für Format-Fallbacks.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie lieferst du ein AVIF-Bild mit JPEG als Fallback aus?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>&lt;picture&gt;&lt;source type="image/avif" srcset="bild.avif"&gt;&lt;img src="bild.jpg" alt="..."&gt;&lt;/picture&gt;</code>. Browser ohne AVIF-Unterstützung nehmen das <code>&lt;img&gt;</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="formulare">
+    <h2>Formulare <span class="tag">forms</span></h2>
+    <p class="sub">Die Brücke zu deinem Backend: Was im Formular steht, landet in req.body.</p>
+    <div class="grid">
+      <article class="card" id="html-formulare-1">
+        <div class="card-main"><h3>Labels</h3>
+        <p>Jedes Eingabefeld braucht eine Beschriftung, die technisch mit ihm verbunden ist.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;label&gt;
+  E-Mail
+  &lt;input type="email" name="email"&gt;
+&lt;/label&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;label for="email"&gt;E-Mail&lt;/label&gt;
+&lt;input type="email" id="email" name="email"&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/label" target="_blank" rel="noopener">&lt;label&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/input" target="_blank" rel="noopener">&lt;input&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Label ist das Namensschild am Eingabefeld. Ohne Verbindung hängt das Schild irgendwo daneben, und niemand weiß sicher, zu welchem Feld es gehört.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>In der kurzen Variante umschließt das <code>&lt;label&gt;</code> das Feld. Die Verbindung entsteht automatisch.</li><li>In der ausführlichen Variante verbindet <code>for</code> das Label mit der <code>id</code> des Feldes. So können beide getrennt im Layout stehen.</li><li>Ein Klick auf das Label setzt den Fokus ins Feld. Bei Checkboxen wird die Klickfläche dadurch viel größer.</li><li>Screenreader lesen das Label vor, sobald das Feld fokussiert ist.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>placeholder</code> statt Label benutzen. Der Platzhalter verschwindet beim Tippen, hat oft zu wenig Kontrast und wird nicht von allen Screenreadern als Beschriftung gelesen. Und in React heißt <code>for</code> übrigens <code>htmlFor</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Beide Varianten sind gleichwertig. Die Variante mit <code>for</code> und <code>id</code> ist flexibler im Layout und in Formular-Bibliotheken üblich, das Umschließen spart IDs.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was passiert, wenn zwei Felder auf derselben Seite <code>id="email"</code> haben?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>IDs müssen eindeutig sein. Das zweite Label zeigt dann auf das erste Feld. In wiederverwendbaren React-Komponenten erzeugst du eindeutige IDs mit <code>useId()</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-formulare-2">
+        <div class="card-main"><h3>Eingabetypen und <code>autocomplete</code></h3>
+        <p>Der richtige <code>type</code> bringt passende Tastatur, Prüfung und Bedienelemente mit. <code>autocomplete</code> lässt den Browser ausfüllen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;input type="email" name="email" autocomplete="email"&gt;
+&lt;input type="tel" name="phone" autocomplete="tel"&gt;
+&lt;input type="date" name="birthday" autocomplete="bday"&gt;
+&lt;input type="password" name="password" autocomplete="new-password"&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;input type="text" name="email" class="js-email"&gt;
+&lt;input type="text" name="phone" class="js-phone"&gt;
+&lt;input type="text" name="birthday" class="js-datepicker"&gt;
+&lt;input type="password" name="password"&gt;
+&lt;!-- dazu: eigene Prüfung, eigener Datepicker, eigene Tastaturlogik --&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/input" target="_blank" rel="noopener">&lt;input&gt;-Typen</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/autocomplete" target="_blank" rel="noopener">autocomplete</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/input/email" target="_blank" rel="noopener">type=&quot;email&quot;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Der Eingabetyp ist wie ein vorgedrucktes Papierformular: Beim Datum steht TT.MM.JJJJ schon da, bei der Telefonnummer gibt es Kästchen für Ziffern. Wer alles als Freitext anbietet, muss hinterher alles selbst prüfen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>type="email"</code> prüft das Format und zeigt auf dem Handy eine Tastatur mit @.</li><li><code>type="tel"</code> öffnet ein Ziffernfeld, <code>type="date"</code> den Datumswähler des Systems.</li><li><code>autocomplete</code> sagt dem Browser, welche gespeicherten Daten passen. <code>new-password</code> löst den Passwortgenerator aus, <code>current-password</code> das Ausfüllen beim Login.</li><li>Der <code>name</code> bestimmt, unter welchem Schlüssel der Wert beim Absenden ans Backend geht.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>type="number"</code> für Postleitzahlen, Telefon- oder Kartennummern benutzen. Führende Nullen gehen verloren, und das Mausrad verändert den Wert. Für Ziffernfolgen ohne Rechenbedeutung besser <code>type="text"</code> mit <code>inputmode="numeric"</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Immer den passenden <code>type</code> und wo möglich <code>autocomplete</code>. Eigene Datepicker nur, wenn das Design es zwingend verlangt.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welches <code>autocomplete</code> gehört an das Passwortfeld im Login-Formular?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>current-password</code>. <code>new-password</code> ist für Registrierung und Passwortänderung.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-formulare-3">
+        <div class="card-main"><h3>Optionen gruppieren: <code>&lt;fieldset&gt;</code></h3>
+        <p>Zusammengehörige Felder, vor allem Radio-Buttons, mit einer gemeinsamen Überschrift versehen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;fieldset&gt;
+  &lt;legend&gt;Versandart&lt;/legend&gt;
+  &lt;label&gt;&lt;input type="radio" name="shipping" value="standard" checked&gt; Standard&lt;/label&gt;
+  &lt;label&gt;&lt;input type="radio" name="shipping" value="express"&gt; Express&lt;/label&gt;
+&lt;/fieldset&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div role="radiogroup" aria-labelledby="shipping-label"&gt;
+  &lt;p id="shipping-label"&gt;Versandart&lt;/p&gt;
+  &lt;label&gt;&lt;input type="radio" name="shipping" value="standard" checked&gt; Standard&lt;/label&gt;
+  &lt;label&gt;&lt;input type="radio" name="shipping" value="express"&gt; Express&lt;/label&gt;
+&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/fieldset" target="_blank" rel="noopener">&lt;fieldset&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/legend" target="_blank" rel="noopener">&lt;legend&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/input/radio" target="_blank" rel="noopener">type=&quot;radio&quot;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>&lt;fieldset&gt;</code> ist der Rahmen um eine Frage auf einem Fragebogen, <code>&lt;legend&gt;</code> die Frage selbst. Ohne sie stehen nur lose Antworten da: „Standard“, „Express“, aber wofür?</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;fieldset&gt;</code> gruppiert Felder, <code>&lt;legend&gt;</code> beschriftet die Gruppe.</li><li>Screenreader lesen die Legende vor, sobald man in die Gruppe springt: „Versandart, Standard, Optionsfeld“.</li><li>Radio-Buttons mit demselben <code>name</code> gehören zusammen. Nur einer kann ausgewählt sein, und mit den Pfeiltasten wechselt man zwischen ihnen.</li><li>Beim Absenden geht der <code>value</code> des ausgewählten Buttons unter dem <code>name</code> ans Backend: <code>shipping=express</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Radio-Buttons unterschiedliche <code>name</code>-Attribute geben. Dann lassen sich mehrere gleichzeitig auswählen. Oder den <code>value</code> vergessen: Dann kommt beim Server nur <code>on</code> an.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>&lt;fieldset&gt;</code> immer bei Radio-Gruppen und zusammengehörigen Checkboxen. Ein <code>disabled</code> auf dem Fieldset deaktiviert alle Felder darin auf einmal.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was steht in <code>req.body.shipping</code>, wenn „Express“ gewählt und das Formular abgeschickt wurde?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>"express"</code>, also der <code>value</code> des gewählten Radio-Buttons.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-formulare-4">
+        <div class="card-main"><h3>Validierung im Browser</h3>
+        <p>HTML-Attribute prüfen Eingaben schon vor dem Absenden, ohne eine Zeile JavaScript.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;input type="text" name="username" required minlength="3" maxlength="20"
+       pattern="[a-z0-9_]+" title="Nur Kleinbuchstaben, Ziffern und _"&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;input type="text" name="username" id="username"&gt;
+&lt;span class="error" id="username-error"&gt;&lt;/span&gt;
+
+&lt;script&gt;
+  const input = document.getElementById("username");
+  const error = document.getElementById("username-error");
+  input.form.addEventListener("submit", e =&gt; {
+    const v = input.value;
+    let msg = "";
+    if (!v) msg = "Bitte ausfüllen";
+    else if (v.length &lt; 3 || v.length &gt; 20) msg = "3 bis 20 Zeichen";
+    else if (!/^[a-z0-9_]+$/.test(v)) msg = "Nur a-z, 0-9 und _";
+    if (msg) { e.preventDefault(); error.textContent = msg; }
+  });
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Learn_web_development/Extensions/Forms/Form_validation" target="_blank" rel="noopener">Formularvalidierung</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/required" target="_blank" rel="noopener">required</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/pattern" target="_blank" rel="noopener">pattern</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Die Browser-Validierung ist der Türsteher vor dem Club: Er weist offensichtlich falsche Gäste ab. Die Ausweiskontrolle an der Kasse, also das Backend, ersetzt er aber nicht.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>required</code> verlangt einen Wert, <code>minlength</code> und <code>maxlength</code> begrenzen die Länge.</li><li><code>pattern</code> prüft gegen einen regulären Ausdruck. Er muss den ganzen Wert treffen, <code>^</code> und <code>$</code> sind automatisch dabei.</li><li>Ist etwas ungültig, verhindert der Browser das Absenden und zeigt eine Meldung am Feld.</li><li>Im CSS markierst du ungültige Felder mit <code>:invalid</code> oder <code>:user-invalid</code>. <code>:user-invalid</code> greift erst, nachdem jemand mit dem Feld interagiert hat.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Sich auf die Browser-Validierung verlassen. Jeder kann sie in den Entwicklertools abschalten oder direkt einen Request an deine API schicken. Prüfen muss immer auch das Backend.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>HTML-Attribute für alle einfachen Regeln. JavaScript zusätzlich für Regeln, die HTML nicht kann, z.B. dass zwei Passwortfelder übereinstimmen (mit <code>setCustomValidity</code>).</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie schaltest du die Browser-Meldungen für ein Formular ab, um eigene Fehlermeldungen zu zeigen?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>novalidate</code> auf dem <code>&lt;form&gt;</code>. Die Attribute bleiben trotzdem nützlich, weil du sie per JavaScript mit <code>checkValidity()</code> und <code>validity</code> abfragen kannst.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-formulare-5">
+        <div class="card-main"><h3>Formulare ans Backend senden</h3>
+        <p>Ein Formular kann Daten ganz ohne JavaScript an den Server schicken. Mit <code>fetch</code> bleibt die Seite dabei stehen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;form action="/api/todos" method="post"&gt;
+  &lt;input name="title" required&gt;
+  &lt;button&gt;Anlegen&lt;/button&gt;
+&lt;/form&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;form id="todo-form"&gt;
+  &lt;input name="title" required&gt;
+  &lt;button&gt;Anlegen&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+  document.getElementById("todo-form").addEventListener("submit", async e =&gt; {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    await fetch("/api/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  });
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/form" target="_blank" rel="noopener">&lt;form&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/API/FormData" target="_blank" rel="noopener">FormData</a><a href="https://expressjs.com/en/api.html#express.urlencoded" target="_blank" rel="noopener">express.urlencoded (EN)</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein natives Formular ist ein Brief per Post: Er wird abgeschickt, und als Antwort kommt eine ganz neue Seite. <code>fetch</code> ist eine Chatnachricht: Sie geht raus, und die Seite bleibt, wie sie ist.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>action</code> ist die Zieladresse, <code>method</code> die HTTP-Methode. Formulare können nur <code>get</code> und <code>post</code>.</li><li>Beim Absenden sammelt der Browser alle Felder mit <code>name</code> und schickt sie URL-kodiert, z.B. <code>title=Einkaufen</code>. Felder ohne <code>name</code> werden ignoriert.</li><li>Im Express-Backend brauchst du dafür <code>express.urlencoded()</code>, damit <code>req.body.title</code> gefüllt ist.</li><li>Die <code>fetch</code>-Variante verhindert mit <code>preventDefault()</code> das Neuladen, liest die Felder mit <code>FormData</code> und schickt JSON. Dafür braucht das Backend <code>express.json()</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das <code>name</code>-Attribut am Input vergessen. Das Feld wird dann nicht mitgeschickt, und <code>req.body.title</code> ist <code>undefined</code>, obwohl im Browser alles ausgefüllt war.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Native Formulare für einfache Seiten und als robuste Grundlage. <code>fetch</code> in Single-Page-Apps wie React, wo die Seite nicht neu laden soll.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Welcher Express-Parser wird für das native Formular gebraucht und welcher für die <code>fetch</code>-Variante?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Für das native Formular <code>express.urlencoded()</code>, für JSON per <code>fetch</code> <code>express.json()</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="interaktiv">
+    <h2>Interaktiv ohne JavaScript <span class="tag">native</span></h2>
+    <p class="sub">Aufklappen, Dialoge und Menüs kann HTML heute selbst, mit Tastatur- und Screenreader-Unterstützung.</p>
+    <div class="grid">
+      <article class="card" id="html-interaktiv-1">
+        <div class="card-main"><h3>Aufklappen: <code>&lt;details&gt;</code></h3>
+        <p>Ein Akkordeon zum Auf- und Zuklappen, ganz ohne JavaScript. Die Erklärungen auf diesen Spickzetteln funktionieren genau so.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;details&gt;
+  &lt;summary&gt;Was kostet der Versand?&lt;/summary&gt;
+  &lt;p&gt;Ab 30 € ist der Versand kostenlos.&lt;/p&gt;
+&lt;/details&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;button class="faq-toggle" aria-expanded="false" aria-controls="faq-1"&gt;
+  Was kostet der Versand?
+&lt;/button&gt;
+&lt;div id="faq-1" hidden&gt;
+  &lt;p&gt;Ab 30 € ist der Versand kostenlos.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  document.querySelector(".faq-toggle").addEventListener("click", e =&gt; {
+    const btn = e.currentTarget;
+    const open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+    document.getElementById("faq-1").hidden = open;
+  });
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/details" target="_blank" rel="noopener">&lt;details&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/summary" target="_blank" rel="noopener">&lt;summary&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>&lt;details&gt;</code> ist eine Schublade mit Griff: <code>&lt;summary&gt;</code> ist der Griff, der Rest ist der Inhalt. Aufziehen, zuschieben, fertig.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;summary&gt;</code> ist immer sichtbar und lässt sich per Klick, Enter oder Leertaste bedienen.</li><li>Der restliche Inhalt erscheint nur, wenn das Attribut <code>open</code> gesetzt ist. Der Browser schaltet es beim Klicken selbst um.</li><li>Screenreader melden den Zustand „erweitert“ oder „reduziert“ automatisch.</li><li>Haben mehrere <code>&lt;details&gt;</code> denselben <code>name</code>, ist immer nur eins offen, wie bei einem klassischen Akkordeon. Die ausführliche Variante baut all das mit <code>aria-expanded</code> und JavaScript nach.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Links oder Buttons in <code>&lt;summary&gt;</code> legen. Klicks darauf lösen dann auch das Auf- und Zuklappen aus, und Screenreader kommen durcheinander.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>&lt;details&gt;</code> für FAQs, Erklärungen und optionale Zusatzinfos. Einen eigenen Nachbau nur, wenn sich Optik oder Verhalten damit wirklich nicht umsetzen lassen.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie entfernst du das Dreieck vor der <code>&lt;summary&gt;</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>summary { list-style: none; }</code> und für Safari zusätzlich <code>summary::-webkit-details-marker { display: none; }</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-interaktiv-2">
+        <div class="card-main"><h3>Dialoge: <code>&lt;dialog&gt;</code></h3>
+        <p>Modale Dialoge mit eingebauter Tastatur- und Fokussteuerung.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;button onclick="document.getElementById('confirm').showModal()"&gt;Löschen&lt;/button&gt;
+
+&lt;dialog id="confirm"&gt;
+  &lt;p&gt;Wirklich löschen?&lt;/p&gt;
+  &lt;form method="dialog"&gt;
+    &lt;button value="cancel"&gt;Abbrechen&lt;/button&gt;
+    &lt;button value="ok"&gt;Löschen&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;button id="open"&gt;Löschen&lt;/button&gt;
+
+&lt;div class="overlay" hidden&gt;
+  &lt;div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-text"&gt;
+    &lt;p id="modal-text"&gt;Wirklich löschen?&lt;/p&gt;
+    &lt;button class="cancel"&gt;Abbrechen&lt;/button&gt;
+    &lt;button class="ok"&gt;Löschen&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  // Öffnen, Schließen, Escape-Taste, Fokus in den Dialog setzen,
+  // Fokus im Dialog halten, Hintergrund sperren, Fokus zurückgeben ...
+  // schnell 40 Zeilen JavaScript
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/dialog" target="_blank" rel="noopener">&lt;dialog&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/CSS/::backdrop" target="_blank" rel="noopener">::backdrop</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein modaler Dialog ist ein Behördenschalter, an dem du stehen bleibst, bis dein Anliegen erledigt ist. <code>&lt;dialog&gt;</code> baut den Schalter samt Absperrband auf. Beim Nachbau musst du jedes Band selbst spannen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>showModal()</code> öffnet den Dialog in der obersten Ebene über allem anderen. Der Rest der Seite ist gesperrt.</li><li>Der Fokus springt in den Dialog, Escape schließt ihn, und danach kehrt der Fokus zum auslösenden Button zurück.</li><li><code>&lt;form method="dialog"&gt;</code> schließt den Dialog beim Klick auf einen Button. Dessen <code>value</code> steht danach in <code>dialog.returnValue</code>.</li><li>Der abgedunkelte Hintergrund lässt sich per CSS mit <code>::backdrop</code> gestalten.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das Attribut <code>open</code> direkt setzen statt <code>showModal()</code> aufzurufen. Dann ist der Dialog zwar sichtbar, aber nicht modal: kein Hintergrund, keine Sperre, kein Escape.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>&lt;dialog&gt;</code> für Bestätigungen, Formulare im Overlay und Hinweise. Neuere Browser öffnen ihn sogar ganz ohne JavaScript über die Attribute <code>command</code> und <code>commandfor</code> am Button.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie findest du nach dem Schließen heraus, welcher Button geklickt wurde?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Über <code>dialog.returnValue</code>. Es enthält den <code>value</code> des Buttons aus dem <code>&lt;form method="dialog"&gt;</code>, hier also <code>"ok"</code> oder <code>"cancel"</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-interaktiv-3">
+        <div class="card-main"><h3>Menüs und Hinweise: <code>popover</code></h3>
+        <p>Menüs, Tooltips und Hinweise, die über allem schweben und sich von selbst wieder schließen.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;button popovertarget="user-menu"&gt;Konto&lt;/button&gt;
+
+&lt;div id="user-menu" popover&gt;
+  &lt;a href="/profil"&gt;Profil&lt;/a&gt;
+  &lt;a href="/logout"&gt;Abmelden&lt;/a&gt;
+&lt;/div&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;button id="menu-btn" aria-expanded="false" aria-controls="user-menu"&gt;Konto&lt;/button&gt;
+&lt;div id="user-menu" class="dropdown" hidden&gt;...&lt;/div&gt;
+
+&lt;script&gt;
+  const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("user-menu");
+  btn.addEventListener("click", () =&gt; {
+    menu.hidden = !menu.hidden;
+    btn.setAttribute("aria-expanded", String(!menu.hidden));
+  });
+  document.addEventListener("click", e =&gt; {
+    if (!menu.contains(e.target) &amp;&amp; e.target !== btn) menu.hidden = true;
+  });
+  document.addEventListener("keydown", e =&gt; {
+    if (e.key === "Escape") menu.hidden = true;
+  });
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Global_attributes/popover" target="_blank" rel="noopener">popover</a><a href="https://developer.mozilla.org/de/docs/Web/API/Popover_API" target="_blank" rel="noopener">Popover API</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Popover ist ein Klebezettel, der kurz über der Seite erscheint. Ein Klick daneben oder Escape, und er ist wieder weg, ohne dass du das selbst programmieren musst.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Das Attribut <code>popover</code> macht ein Element zum Popover. Es ist zunächst unsichtbar.</li><li><code>popovertarget</code> am Button verknüpft ihn mit der <code>id</code> des Popovers. Ein Klick schaltet es um.</li><li>Das Popover erscheint in der obersten Ebene. <code>z-index</code> und <code>overflow</code> der Elternelemente spielen keine Rolle.</li><li>Ein Klick daneben oder Escape schließt es automatisch (Light Dismiss). Die ausführliche Variante baut jeden dieser Punkte einzeln nach.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Popover für etwas benutzen, das den Rest der Seite sperren soll. Popover sind nicht modal. Für „erst entscheiden, dann weiter“ ist <code>&lt;dialog&gt;</code> mit <code>showModal()</code> richtig.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p>Popover für Dropdown-Menüs, Tooltips und Hinweise. Seit 2024 unterstützen alle aktuellen Browser das Attribut.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie verhinderst du, dass sich ein Popover per Klick daneben schließt?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Mit <code>popover="manual"</code>. Dann schließt es sich nur über einen Button oder per JavaScript mit <code>hidePopover()</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-interaktiv-4">
+        <div class="card-main"><h3>Eigene Daten: <code>data-*</code></h3>
+        <p>Eigene Daten direkt am Element speichern, z.B. die Datenbank-ID für einen Löschen-Button.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;li data-id="42" data-status="done"&gt;Einkaufen&lt;/li&gt;
+
+&lt;script&gt;
+  const li = document.querySelector("li");
+  li.dataset.id;      // "42"
+  li.dataset.status;  // "done"
+&lt;/script&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;li class="todo todo-42 status-done"&gt;
+  Einkaufen
+  &lt;input type="hidden" class="todo-id" value="42"&gt;
+&lt;/li&gt;
+
+&lt;script&gt;
+  const li = document.querySelector("li");
+  li.querySelector(".todo-id").value;     // "42"
+  li.classList.contains("status-done");   // true
+&lt;/script&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Global_attributes/data-*" target="_blank" rel="noopener">data-*</a><a href="https://developer.mozilla.org/de/docs/Web/API/HTMLElement/dataset" target="_blank" rel="noopener">dataset</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>data-</code>-Attribute sind Etiketten, die du an ein Element klebst. Wer die Seite benutzt, sieht sie nicht, aber JavaScript und CSS können sie lesen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Jedes Attribut, das mit <code>data-</code> beginnt, ist erlaubt und frei benennbar.</li><li>In JavaScript liest du es über <code>element.dataset</code>. Aus <code>data-user-id</code> wird dabei <code>dataset.userId</code> in camelCase.</li><li>Werte sind immer Strings. <code>"42"</code> musst du für Berechnungen mit <code>Number()</code> umwandeln.</li><li>Auch CSS kann darauf reagieren, z.B. <code>[data-status="done"] { text-decoration: line-through; }</code>.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Vertrauliche Daten in <code>data-</code>-Attribute schreiben. Jeder kann sie im Quelltext lesen und in den Entwicklertools ändern. Eine ID aus <code>data-id</code> muss das Backend deshalb immer gegen die Rechte des Nutzers prüfen.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>data-</code>-Attribute für Werte, die JavaScript oder CSS zu einem Element brauchen. Versteckte Inputs nur in Formularen, deren Wert mitgeschickt werden soll.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Wie heißt <code>data-created-at</code> in <code>dataset</code>?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p><code>dataset.createdAt</code>. Bindestriche werden zu camelCase.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  <section id="a11y">
+    <h2>Barrierefreiheit <span class="tag">a11y</span></h2>
+    <p class="sub">Kleine Details, die entscheiden, ob deine Seite für alle benutzbar ist.</p>
+    <div class="grid">
+      <article class="card" id="html-a11y-1">
+        <div class="card-main"><h3>Icon-Buttons beschriften</h3>
+        <p>Buttons, die nur ein Icon zeigen, brauchen trotzdem einen Namen für Screenreader.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;button type="button" aria-label="Schließen"&gt;
+  &lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+&lt;/button&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;button type="button"&gt;
+  &lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+  &lt;span class="visually-hidden"&gt;Schließen&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;style&gt;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+&lt;/style&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/Accessibility/ARIA/Attributes/aria-label" target="_blank" rel="noopener">aria-label</a><a href="https://developer.mozilla.org/de/docs/Web/Accessibility/ARIA/Attributes/aria-hidden" target="_blank" rel="noopener">aria-hidden</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Ein Icon-Button ohne Beschriftung ist eine Tür mit Bild statt Schild. Wer das Bild nicht sieht, hört nur „Schaltfläche“ und weiß nicht, was dahinter liegt.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li>Ohne Text liest der Screenreader nur „Schaltfläche“ vor.</li><li><code>aria-label</code> gibt dem Button einen unsichtbaren Namen.</li><li><code>aria-hidden="true"</code> am Icon verhindert, dass das SVG zusätzlich vorgelesen wird.</li><li>Die ausführliche Variante versteckt echten Text nur optisch, nicht für Screenreader. Vorteil: Übersetzungstools erfassen ihn zuverlässig.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>display: none</code> oder <code>hidden</code> zum Verstecken des Textes benutzen. Dann ist er auch für Screenreader weg. Genau dafür gibt es die Klasse <code>visually-hidden</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>aria-label</code> für einzelne Icon-Buttons. Die Klasse <code>visually-hidden</code>, wenn die Seite übersetzt wird oder du sie ohnehin hast. In Tailwind heißt sie <code>sr-only</code>.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Was hört ein Screenreader-Nutzer bei <code>&lt;button&gt;&lt;svg&gt;...&lt;/svg&gt;&lt;/button&gt;</code> ohne Beschriftung?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Nur „Schaltfläche“, im schlimmsten Fall noch einen Dateinamen. Die Funktion bleibt unklar.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-a11y-2">
+        <div class="card-main"><h3>Datentabellen</h3>
+        <p>Tabellarische Daten gehören in eine echte Tabelle, mit Kopfzellen und Beschriftung.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;table&gt;
+  &lt;caption&gt;Bestellungen im Oktober&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th scope="col"&gt;Datum&lt;/th&gt;&lt;th scope="col"&gt;Betrag&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;01.10.&lt;/td&gt;&lt;td&gt;49,90 €&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div class="table" role="table" aria-label="Bestellungen im Oktober"&gt;
+  &lt;div class="row" role="row"&gt;
+    &lt;div role="columnheader"&gt;Datum&lt;/div&gt;
+    &lt;div role="columnheader"&gt;Betrag&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row" role="row"&gt;
+    &lt;div role="cell"&gt;01.10.&lt;/div&gt;
+    &lt;div role="cell"&gt;49,90 €&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/table" target="_blank" rel="noopener">&lt;table&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/th" target="_blank" rel="noopener">&lt;th&gt;</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/caption" target="_blank" rel="noopener">&lt;caption&gt;</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p>Eine Tabelle ist ein Koordinatensystem. Mit <code>&lt;th&gt;</code> weiß ein Screenreader bei jeder Zelle, zu welcher Spalte sie gehört: „Betrag: 49,90 €“. Ohne Kopfzellen hört man nur Zahlen ohne Bedeutung.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>&lt;caption&gt;</code> ist der Titel der Tabelle.</li><li><code>&lt;thead&gt;</code> enthält die Kopfzeile, <code>&lt;tbody&gt;</code> die Daten.</li><li><code>&lt;th scope="col"&gt;</code> markiert eine Spaltenüberschrift. Für Zeilenüberschriften gibt es <code>scope="row"</code>.</li><li>Die div-Variante braucht für jede Zelle eine ARIA-Rolle, um dieselbe Struktur zu beschreiben.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Tabellen für das Seitenlayout benutzen, wie in den 2000ern. Und umgekehrt: echte Daten als div-Raster bauen, nur weil es sich leichter stylen lässt. Tabellen lassen sich heute gut mit CSS gestalten, auf schmalen Bildschirmen z.B. in einem Wrapper mit <code>overflow-x: auto</code>.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>&lt;table&gt;</code> immer für Daten mit Zeilen und Spalten. Für Layout CSS Grid.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Links in einer Tabelle stehen die Produktnamen als Zeilenüberschriften. Wie zeichnest du sie aus?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Als <code>&lt;th scope="row"&gt;</code> statt <code>&lt;td&gt;</code> in der ersten Zelle jeder Zeile.</p></details></div>
+          </div>
+        </details>
+      </article>
+      <article class="card" id="html-a11y-3">
+        <div class="card-main"><h3>Verstecken: <code>hidden</code>, <code>aria-hidden</code>, <code>inert</code></h3>
+        <p>Drei Arten, etwas zu verstecken: vor allen, nur vor Screenreadern oder nur vor der Bedienung.</p>
+        <div class="v short"><span class="lbl">Kurz</span>
+<pre>&lt;div hidden&gt;Nirgends sichtbar&lt;/div&gt;
+
+&lt;svg aria-hidden="true"&gt;...&lt;/svg&gt;
+
+&lt;main inert&gt;...&lt;/main&gt;</pre></div>
+        <div class="v long"><span class="lbl">Ausführlich</span>
+<pre>&lt;div style="display: none"&gt;Nirgends sichtbar&lt;/div&gt;
+
+&lt;svg role="presentation" focusable="false"&gt;...&lt;/svg&gt;
+
+&lt;main aria-hidden="true"&gt;
+  &lt;!-- zusätzlich jedes fokussierbare Element darin sperren: --&gt;
+  &lt;button tabindex="-1"&gt;...&lt;/button&gt;
+  &lt;a href="/" tabindex="-1"&gt;...&lt;/a&gt;
+&lt;/main&gt;</pre></div>
+        
+        <div class="docs"><span class="docs-l">Doku</span><a href="https://developer.mozilla.org/de/docs/Web/HTML/Global_attributes/hidden" target="_blank" rel="noopener">hidden</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Global_attributes/inert" target="_blank" rel="noopener">inert</a><a href="https://developer.mozilla.org/de/docs/Web/Accessibility/ARIA/Attributes/aria-hidden" target="_blank" rel="noopener">aria-hidden</a></div>
+        </div>
+        <details class="explain"><summary>Erklärung</summary>
+          <div class="ex">
+            <div class="ex-b"><h4>Vorstellung</h4><p><code>hidden</code> ist ein abgeschlossener Raum, den niemand betritt. <code>aria-hidden</code> ist ein Raum, den Sehende sehen, der aber im Lageplan für Blinde fehlt. <code>inert</code> ist ein Raum hinter Glas: sichtbar, aber nichts darin lässt sich anfassen.</p></div>
+            <div class="ex-b"><h4>Was passiert, Schritt für Schritt</h4><ol><li><code>hidden</code> versteckt ein Element vollständig, wie <code>display: none</code>. Es ist weder sichtbar noch für Screenreader vorhanden.</li><li><code>aria-hidden="true"</code> entfernt ein Element nur aus der Ansage für Screenreader. Sichtbar bleibt es. Gut für dekorative Icons.</li><li><code>inert</code> macht einen ganzen Bereich unbedienbar: kein Klick, kein Tab, keine Ansage. Praktisch für den Hintergrund hinter einem eigenen Overlay.</li><li>Ohne <code>inert</code> musst du wie in der ausführlichen Variante jedes fokussierbare Element einzeln mit <code>tabindex="-1"</code> sperren.</li></ol></div>
+            <div class="ex-b warn"><h4>Typischer Fehler</h4><p><code>aria-hidden="true"</code> auf ein fokussierbares Element setzen, z.B. einen Button. Dann landet man per Tab darauf, aber der Screenreader schweigt. Für solche Bereiche ist <code>inert</code> richtig.</p></div>
+            <div class="ex-b"><h4>Wann welche Schreibweise?</h4><p><code>hidden</code> für Inhalte, die erst später erscheinen. <code>aria-hidden</code> für reine Deko. <code>inert</code> für vorübergehend gesperrte Bereiche. <code>&lt;dialog&gt;</code> mit <code>showModal()</code> erledigt das sogar automatisch.</p></div>
+            <div class="ex-b quiz"><h4>Selbsttest</h4><p>Ein Element mit <code>hidden</code> bekommt per CSS <code>display: block</code>. Was passiert?</p>
+              <details class="answer"><summary>Lösung zeigen</summary><p>Es wird sichtbar. <code>hidden</code> ist nur ein Standard-Style mit <code>display: none</code>, und CSS kann ihn überschreiben. Deshalb setzen viele Resets <code>[hidden] { display: none !important; }</code>.</p></details></div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+
+  
+  <p class="empty" id="empty" hidden>Kein Konzept passt zu diesem Suchbegriff.</p>
+
+  <footer>Übungsidee: Öffne eines deiner Kursprojekte, aktiviere in den Chrome-Entwicklertools unter „Lighthouse“ die Kategorie Barrierefreiheit und arbeite die Hinweise ab. Fast jeder davon passt zu einer Karte auf dieser Seite. Gestaltung geht weiter im <a href="css.html">CSS Spickzettel</a>, alle Zettel im <a href="index.html">Spickzettel-Hub</a>.<br><br>Weitere Zettel: <a href="css.html">CSS</a> · <a href="js.html">JavaScript</a> · <a href="ts.html">TypeScript</a> · <a href="gsap.html">GSAP</a> · <a href="three.html">Three.js</a> · <a href="cro.html">Conversion-Optimierung</a></footer>
+</main>
+
+<button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
+<script src="assets/app.js"></script>
+
+</body>
+</html>
