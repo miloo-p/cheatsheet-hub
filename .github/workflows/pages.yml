@@ -29,7 +29,9 @@ jobs:
         run: npm ci
 
       - name: Typen und Inhalte prüfen
-        run: npm run check
+        run: |
+          set -o pipefail
+          npm run check 2>&1 | tee check.log || { echo "::error::$(grep -v '^\s*$' check.log | tail -40 | sed 's/\x1b\[[0-9;]*m//g' | tr '\n' '|')"; exit 1; }
 
       - name: Seite bauen
         run: npm run build
