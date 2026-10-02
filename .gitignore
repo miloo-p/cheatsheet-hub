@@ -1,6 +1,13 @@
+# Build-Ausgabe
+dist/
+.astro/
+
+# Abhängigkeiten
+node_modules/
+
+# Logs und Umgebung
+npm-debug.log*
+.env
+.env.*
+.DS_Store
 __pycache__/
-*.pyc
-generator/site/
-# Zwischenstufen, entstehen beim Bauen
-generator/*-spickzettel.html
-!generator/js-spickzettel.html
