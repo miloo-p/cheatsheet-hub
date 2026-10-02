@@ -1,0 +1,34 @@
+---
+/*
+ * Farben der Zettel als CSS-Variablen. Gilt für jedes Element mit data-sheet="<zettel>":
+ * den <body> einer Zettelseite und die Panels auf der Startseite.
+ */
+import type { SheetInfo } from '../lib/content';
+
+interface Props {
+  sheets: SheetInfo[];
+}
+const { sheets } = Astro.props;
+
+const vars = (p: { accent: string; accentSoft: string; long: string; longSoft: string }) =>
+  `--accent: ${p.accent}; --accent-soft: ${p.accentSoft}; --long: ${p.long}; --long-soft: ${p.longSoft};`;
+
+const css = sheets
+  .map(({ key, entry }) => {
+    const { colors, tones } = entry.data;
+    const sel = `[data-sheet="${key}"]`;
+    const toneVars =
+      tones[0] === 'accent' && tones[1] === 'long'
+        ? ''
+        : ` --t1: var(--${tones[0]}); --t1-soft: var(--${tones[0]}-soft); --t1-line: var(--${tones[0]});` +
+          ` --t2: var(--${tones[1]}); --t2-soft: var(--${tones[1]}-soft); --t2-line: var(--${tones[1]});`;
+    return [
+      `${sel} { ${vars(colors.light)} --code-kw: ${colors.keyword};${toneVars} }`,
+      `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) ${sel} { ${vars(colors.dark)} } }`,
+      `:root[data-theme="dark"] ${sel} { ${vars(colors.dark)} }`,
+    ].join('\n');
+  })
+  .join('\n');
+---
+
+<style is:inline set:html={css}></style>

@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+import SheetColors from '../components/SheetColors.astro';
+import type { SheetInfo } from '../lib/content';
+import { url } from '../lib/inline';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Zettel, deren Farben die Seite braucht */
+  colors: SheetInfo[];
+  /** Schlüssel des Zettels, wenn es eine Zettelseite ist */
+  sheet?: string;
+}
+const { title, description, colors, sheet } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="head" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"
+    />
+    <SheetColors sheets={colors} />
+  </head>
+  <body data-sheet={sheet}>
+    <slot />
+  </body>
+</html>
