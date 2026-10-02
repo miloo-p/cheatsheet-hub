@@ -22,12 +22,12 @@ code:
 preview:
   height: 200
   html: |-
-    <div class="menu">Dropdown-Menü (z-index: 1)</div>
+    <div class="menu">Menü</div>
     <div class="grid">
       <div class="card plain"><span class="badge">Neu</span>ohne isolation</div>
       <div class="card"><span class="badge">Neu</span>mit isolation</div>
     </div>
-    <p class="hint">Links drängelt sich das Badge über das Menü, rechts bleibt es in seiner Karte.</p>
+    <p class="hint">Links drängelt sich das Badge über das Menü, rechts bleibt es darunter in seiner Karte.</p>
   css: |-
     .card {
       isolation: isolate;
@@ -39,7 +39,7 @@ preview:
 
     .card.plain { isolation: auto; }
 
-    .menu { position: absolute; z-index: 1; top: 30px; left: 12px; right: 12px; padding: 20px 12px; border-radius: 8px;
+    .menu { position: absolute; z-index: 1; top: 30px; left: 12px; right: 12px; padding: 14px 12px; border-radius: 8px;
             background: var(--surface); border: 1px solid var(--line); box-shadow: 0 8px 24px rgb(0 0 0 / .2); font-weight: 600; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
     .card { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 70px 10px 10px; font-size: 12px; color: var(--muted); }

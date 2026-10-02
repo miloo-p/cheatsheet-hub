@@ -31,7 +31,7 @@ code:
       }
     }
 preview:
-  height: 170
+  height: 200
   replay: true
   html: |-
     <div class="toast">Gespeichert</div>

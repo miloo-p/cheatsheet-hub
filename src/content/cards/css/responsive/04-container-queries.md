@@ -24,8 +24,8 @@ code:
       flex-direction: column;
     }
 preview:
-  height: 260
-  sizes: [900, 600]
+  height: 230
+  sizes: [760, 460]
   html: |-
     <div class="page">
       <section class="card-list"><div class="card"><div class="img"></div><p>Hauptspalte: breit genug, Bild neben Text</p></div></section>
@@ -39,7 +39,7 @@ preview:
       .card { flex-direction: row; }
     }
 
-    .page { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+    .page { display: grid; grid-template-columns: 1fr 12rem; gap: 12px; }
     .card { display: flex; flex-direction: column; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
     .img { flex: 0 0 auto; width: 100%; max-width: 160px; aspect-ratio: 4 / 3; border-radius: 6px; background: linear-gradient(135deg, var(--brand), #f0c35a); }
     .card p { margin: 0; font-size: 13px; }

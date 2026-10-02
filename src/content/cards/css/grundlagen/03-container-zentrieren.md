@@ -17,12 +17,12 @@ code:
       padding-right: 1rem;
     }
 preview:
-  height: 170
+  height: 180
   sizes: [1440, 375]
   html: |-
     <div class="container">
       <h2>Inhalt bleibt lesbar</h2>
-      <p>Höchstens 70rem breit und mittig. Auf schmalen Bildschirmen sorgt das Padding für Abstand zum Rand.</p>
+      <p>Höchstens 70rem breit und mittig. Schmal sorgt das Padding für Abstand zum Rand.</p>
     </div>
   css: |-
     .container {
@@ -31,10 +31,10 @@ preview:
       padding-inline: 1rem;
     }
 
-    body { padding: 24px 0; background: repeating-linear-gradient(45deg, var(--bg) 0 10px, var(--surface) 10px 20px); }
-    .container { background: var(--surface); border-inline: 2px solid var(--brand); padding-block: 1px; }
-    h2 { margin: 12px 0 4px; font-size: 22px; }
-    p { margin: 0 0 12px; color: var(--muted); }
+    body { padding: 40px 0; min-height: 100vh; background: repeating-linear-gradient(45deg, var(--bg) 0 16px, var(--surface) 16px 32px); }
+    .container { background: var(--surface); border-inline: 6px solid var(--brand); padding-block: 1px; }
+    h2 { margin: 24px 0 8px; font-size: 64px; }
+    p { margin: 0 0 24px; font-size: 36px; color: var(--muted); }
 explain:
   picture: "Zwei gleich starke Federn links und rechts drücken den Block in die Mitte. `auto` heißt: Nimm dir den restlichen Platz, und beide Seiten teilen ihn gerecht."
   steps:

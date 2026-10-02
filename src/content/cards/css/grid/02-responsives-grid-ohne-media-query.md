@@ -25,7 +25,7 @@ code:
     }
 preview:
   height: 200
-  sizes: [375, 800, 1200]
+  sizes: [800, 375, 1200]
   html: |-
     <div class="cards"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div>
     <p class="hint">Breite umschalten: Die Spaltenzahl passt sich ohne Media Query an.</p>

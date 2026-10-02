@@ -24,7 +24,7 @@ code:
     }
 preview:
   height: 200
-  sizes: [375, 800, 1200]
+  sizes: [800, 375, 1200]
   html: |-
     <div class="cards"><div class="card">1</div><div class="card">2</div><div class="card">3</div><div class="card">4</div><div class="card">5</div></div>
   css: |-
