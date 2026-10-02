@@ -39,6 +39,7 @@ Jede Karte erklärt ein Konzept und folgt immer demselben Muster:
   - wann man welche Variante nimmt
   - eine Selbsttest-Frage mit verdeckter Lösung
 - **Doku-Links** zu MDN (auf Deutsch, wo vorhanden) und den offiziellen Dokus.
+- **Vorschau** bei CSS: Das Ergebnis des Beispiels direkt unter dem Code, isoliert in einem eigenen Rahmen. Bei responsiven Themen lässt sich die Breite umschalten.
 - **Live-Demo** bei GSAP und Three.js. Die Bibliotheken werden erst beim ersten Klick geladen.
 
 ### Bedienung
@@ -76,7 +77,7 @@ src/
     index.astro                           Startseite mit Bereichen und Suche
     [zettel].astro                        eine Seite pro Zettel, z.B. /css/
     search.json.ts                        Suchindex für die Startseite
-  components/                             Karte, Erklärung, Live-Demo, Inhaltsverzeichnis, Farben
+  components/                             Karte, Erklärung, Vorschau, Live-Demo, Inhaltsverzeichnis, Farben
   lib/                                    Laden der Inhalte, Inline-Markdown, Loader für Demos
   scripts/                                Browser-Logik: Filter, Menüs, Kopieren, Demos, Suche
   styles/                                 gemeinsame Gestaltung und Startseite
@@ -118,7 +119,8 @@ Optional: eigene Notizen in Markdown. Sie erscheinen unter der Karte.
 
 - In allen Texten funktionieren `Code`, `**fett**` und `[Links](/css/)`. Links mit `/` am Anfang zeigen auf Seiten dieser Website.
 - `lang` legt bei Bedarf die Sprache fürs Highlighting fest, z.B. `lang: { short: tsx }`. Sonst gilt die Sprache des Zettels.
-- `demo` fügt eine Live-Demo hinzu, siehe die Karten in `cards/gsap/`.
+- `preview` zeigt HTML und CSS als Vorschau, siehe die Karten in `cards/css/`. Mit `sizes: [375, 1200]` lässt sich die Breite umschalten, mit `replay: true` eine Animation neu starten. Variablen wie `--brand`, `--surface` und `--line` stehen in jeder Vorschau bereit.
+- `demo` fügt eine Live-Demo mit JavaScript hinzu, siehe die Karten in `cards/gsap/`.
 
 **Neue Karte:** Datei im passenden Abschnitt anlegen. Die Nummer am Anfang des Dateinamens bestimmt die Reihenfolge und den Anker, z.B. wird `cards/css/grid/03-*.md` zu `/css/#css-grid-3`.
 
