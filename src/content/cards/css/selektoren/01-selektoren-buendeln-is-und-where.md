@@ -11,6 +11,19 @@ code:
     .nav button:hover {
       color: var(--brand);
     }
+preview:
+  height: 110
+  html: |-
+    <nav class="nav"><a href="#">Start</a> <a href="#">Kurse</a> <button>Abmelden</button></nav>
+    <p class="hint">Mit der Maus über Links und Button fahren.</p>
+  css: |-
+    .nav :is(a, button):hover {
+      color: var(--brand);
+    }
+
+    .nav { display: flex; gap: 16px; align-items: center; }
+    .nav a { color: var(--fg); text-decoration: none; font-weight: 600; }
+    .nav button { color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; font-weight: 600; }
 explain:
   picture: "`:is()` ist ein Oder-Platzhalter in einer Adresse: „In der Nav, ein Link oder ein Button, im Hover-Zustand.“"
   steps:

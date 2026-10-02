@@ -20,6 +20,26 @@ code:
       bottom: 0;
       left: 0;
     }
+preview:
+  height: 170
+  html: |-
+    <div class="card">
+      <div class="photo"></div>
+      <div class="overlay"><b>Bildunterschrift</b><span>liegt genau über der Karte</span></div>
+    </div>
+  css: |-
+    .card { position: relative; }
+
+    .card .overlay {
+      position: absolute;
+      inset: 0;
+    }
+
+    .card { max-width: 320px; border-radius: 10px; overflow: hidden; }
+    .photo { height: 140px; background: linear-gradient(135deg, #177258, #6fd3ad 60%, #f0c35a); }
+    .overlay { display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; color: #fff;
+               background: linear-gradient(to top, rgb(0 0 0 / .6), transparent 60%); }
+    .overlay span { font-size: 12px; opacity: .85; }
 explain:
   picture: "`position: relative` beim Elternelement schlägt einen Nagel ein. `position: absolute` beim Kind hängt es an diesem Nagel auf, statt am Rand der ganzen Seite."
   steps:

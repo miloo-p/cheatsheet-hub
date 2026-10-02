@@ -15,6 +15,19 @@ code:
     .button:focus:not(:focus-visible) {
       outline: none;
     }
+preview:
+  height: 120
+  html: |-
+    <div class="row"><button class="button">Erster</button> <button class="button">Zweiter</button></div>
+    <p class="hint">Klicken: kein Rahmen. In die Vorschau klicken und mit Tab wechseln: Rahmen.</p>
+  css: |-
+    .button:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .button { background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 16px; }
+    .row { display: flex; gap: 12px; }
 explain:
   picture: "Der Fokusring ist der Mauszeiger für Menschen, die mit der Tastatur navigieren. Ohne ihn ist die Seite für sie wie eine Maus ohne Zeiger."
   steps:

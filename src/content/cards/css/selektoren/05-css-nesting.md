@@ -28,6 +28,25 @@ code:
         padding: 2rem;
       }
     }
+preview:
+  height: 150
+  sizes: [375, 900]
+  html: |-
+    <article class="card"><h2>Verschachtelt</h2><p>Ab 48rem Breite wird das Padding größer. Mit der Maus drüberfahren färbt den Rahmen.</p></article>
+  css: |-
+    .card {
+      padding: 1rem;
+
+      & h2 { margin: 0; }
+      &:hover { border-color: var(--brand); }
+
+      @media (width >= 48rem) {
+        padding: 2rem;
+      }
+    }
+
+    .card { background: var(--surface); border: 2px solid var(--line); border-radius: 8px; }
+    .card p { margin: 4px 0 0; color: var(--muted); }
 explain:
   picture: "Nesting ist wie eine Ordnerstruktur: Alles, was zur Karte gehört, liegt im Ordner `.card` statt verstreut auf dem Schreibtisch."
   steps:

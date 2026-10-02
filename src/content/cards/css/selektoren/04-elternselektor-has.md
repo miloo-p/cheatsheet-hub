@@ -16,6 +16,23 @@ code:
     document.querySelectorAll(".card").forEach(card => {
       if (card.querySelector("img")) card.classList.add("has-image");
     });
+preview:
+  height: 200
+  html: |-
+    <div class="grid">
+      <div class="card"><img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop offset='0' stop-color='%23177258'/%3E%3Cstop offset='1' stop-color='%236fd3ad'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='300' height='120' fill='url(%23g)'/%3E%3C/svg%3E"><h3>Mit Bild</h3><p>Kein Abstand oben.</p></div>
+      <div class="card"><h3>Ohne Bild</h3><p>Normales Padding oben.</p></div>
+    </div>
+  css: |-
+    .card:has(img) {
+      padding-top: 0;
+    }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+    .card { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .card img { display: block; width: calc(100% + 32px); margin: 0 -16px 10px; height: 70px; object-fit: cover; }
+    h3 { margin: 0 0 4px; font-size: 15px; }
+    p { margin: 0; color: var(--muted); font-size: 13px; }
 explain:
   picture: "`:has()` ist der Elternselektor, auf den CSS jahrzehntelang gewartet hat: Er schaut ins Element hinein und fragt, ob etwas Bestimmtes darin steckt."
   steps:

@@ -21,6 +21,24 @@ code:
       height: 100%;
       object-fit: cover;
     }
+preview:
+  height: 220
+  html: |-
+    <div class="row">
+      <figure><img class="thumb" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%23177258'/%3E%3Ccircle cx='100' cy='100' r='70' fill='%23f0c35a'/%3E%3Ccircle cx='100' cy='100' r='30' fill='%23a8452a'/%3E%3C/svg%3E"><figcaption>quadratisches Bild, 16:9 zugeschnitten</figcaption></figure>
+      <figure><img class="thumb" alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='100'%3E%3Crect width='400' height='100' fill='%232b5fae'/%3E%3Ccircle cx='200' cy='50' r='40' fill='%23f0c35a'/%3E%3C/svg%3E"><figcaption>Panorama, ebenfalls 16:9</figcaption></figure>
+    </div>
+  css: |-
+    .thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    figure { margin: 0; }
+    .thumb { display: block; border-radius: 8px; }
+    figcaption { font-size: 12px; color: var(--muted); margin-top: 4px; }
 explain:
   picture: "`object-fit: cover` ist wie ein Foto, das im Bilderrahmen so weit vergrößert wird, bis kein Rand mehr frei bleibt. Was übersteht, wird abgeschnitten, aber nichts wird gestaucht."
   steps:

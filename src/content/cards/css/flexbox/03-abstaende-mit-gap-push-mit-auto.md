@@ -23,6 +23,22 @@ code:
     .nav .logout {
       margin-left: auto;
     }
+preview:
+  height: 100
+  html: |-
+    <nav class="nav"><b class="logo">Bootcamp</b><a href="#">Kurse</a><a href="#">Profil</a><button class="logout">Abmelden</button></nav>
+  css: |-
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav .logout { margin-left: auto; }
+
+    .nav { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+    .nav a { color: var(--fg); text-decoration: none; }
+    .logo { color: var(--brand); }
+    .logout { background: none; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; color: var(--fg); }
 explain:
   picture: "`gap` ist wie die Fugen zwischen Fliesen: Sie liegen nur zwischen den Fliesen, nie am Rand. Margins kleben dagegen an jeder einzelnen Fliese."
   steps:

@@ -21,6 +21,20 @@ code:
       background-color: var(--brand-dark);
       transform: translateY(-2px);
     }
+preview:
+  height: 110
+  html: |-
+    <button class="button">Mit der Maus drüberfahren</button>
+  css: |-
+    .button {
+      transition: background-color 200ms ease-out, transform 200ms ease-out;
+    }
+    .button:hover {
+      background-color: var(--brand-dark);
+      transform: translateY(-2px);
+    }
+
+    .button { margin-top: 16px; background-color: var(--brand); color: var(--on-brand); border: 0; border-radius: 8px; padding: 10px 18px; font-weight: 600; }
 explain:
   picture: "Ohne `transition` springt das Licht wie bei einem Kippschalter von aus auf an. Mit `transition` ist es ein Dimmer, der in festgelegter Zeit hochfährt."
   steps:

@@ -18,6 +18,21 @@ code:
       grid-column-start: auto;
       grid-column-end: span 2;
     }
+preview:
+  height: 200
+  html: |-
+    <div class="grid"><div class="featured">.featured: 1 / -1</div><div class="wide">.wide: span 2</div><div>3</div><div>4</div><div>5</div><div>6</div></div>
+  css: |-
+    .featured {
+      grid-column: 1 / -1;
+    }
+    .wide {
+      grid-column: span 2;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .grid > div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: 600 12px ui-monospace, monospace; }
+    .grid > .featured, .grid > .wide { background: var(--brand); color: var(--on-brand); border: 0; }
 explain:
   picture: "Gitterlinien sind wie Hausnummern, die man von beiden Enden der Straße zählen kann: von vorne 1, 2, 3, von hinten -1, -2, -3. `1 / -1` heißt: von der ersten bis zur letzten Linie."
   steps:

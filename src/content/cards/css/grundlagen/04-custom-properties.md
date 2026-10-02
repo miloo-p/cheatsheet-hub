@@ -19,6 +19,25 @@ code:
     .link {
       color: #2b5fae;
     }
+preview:
+  height: 150
+  html: |-
+    <div class="row"><button class="button">Kaufen</button> <a class="link" href="#">Mehr erfahren</a></div>
+    <div class="row sale"><button class="button">Kaufen</button> <a class="link" href="#">Mehr erfahren</a></div>
+    <p class="hint">Zweite Zeile: nur --brand und --radius neu gesetzt, alles andere folgt automatisch.</p>
+  css: |-
+    :root {
+      --brand: #2b5fae;
+      --radius: 8px;
+    }
+
+    .button { background: var(--brand); border-radius: var(--radius); }
+    .link   { color: var(--brand); }
+
+    .sale { --brand: #a8326a; --radius: 999px; }
+
+    .button { color: #fff; border: 0; padding: 8px 16px; }
+    .row { display: flex; gap: 16px; align-items: center; margin-bottom: 12px; }
 explain:
   picture: "Custom Properties sind wie Farbtöpfe mit Etikett. Statt jedes Mal den Farbton neu anzumischen, greifst du zum Topf „brand“. Tauschst du den Inhalt des Topfs, ändert sich die Farbe überall."
   steps:
