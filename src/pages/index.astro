@@ -1,0 +1,139 @@
+---
+/* Startseite: alle Zettel nach Themenbereichen, Volltextsuche über alle Karten */
+import Base from '../layouts/Base.astro';
+import '../styles/hub.css';
+import { CATEGORIES, PLANNED } from '../data/hub';
+import { getSheets } from '../lib/content';
+import { plain, url } from '../lib/inline';
+
+const sheets = await getSheets();
+const total = sheets.reduce((n, s) => n + s.count, 0);
+const sectionCount = sheets.reduce((n, s) => n + s.sections.length, 0);
+const categories = CATEGORIES.map((c) => ({ ...c, sheets: sheets.filter((s) => s.entry.data.category === c.id) }));
+---
+
+<Base
+  title="Cheatsheet Hub"
+  description="Persönliches Frontend-Glossar aus dem Bootcamp: Spickzettel zu HTML, CSS, JavaScript, TypeScript, GSAP, Three.js und Conversion-Optimierung."
+  colors={sheets}
+>
+  <script is:inline slot="head" define:vars={{ keys: sheets.map((s) => s.key), base: url('/') }}>
+    /* Kürzel hinter dem Link öffnen direkt einen Zettel (#css) oder eine Karte (#css-grid-2) */
+    var h = location.hash.slice(1);
+    var key = h.split('-')[0];
+    if (h && keys.indexOf(key) !== -1) location.replace(base + key + '/' + (h.indexOf('-') > 0 ? '#' + h : ''));
+  </script>
+
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Fullstack-Bootcamp · Nachschlagen &amp; Üben</div>
+      <h1>Cheatsheet Hub</h1>
+      <p class="lede">
+        Alle Spickzettel an einem Ort, nach Themen gruppiert. Jeder Abschnitt und jede Karte ist direkt verlinkt, und die
+        Suche durchsucht auch die Erklärungen aller Zettel. Jede Karte hat Code-Beispiele, eine Erklärung zum Aufklappen,
+        einen Selbsttest und Links zur Doku.
+      </p>
+      <div class="stats">
+        <span><b>{sheets.length}</b> Spickzettel</span><span><b>{sectionCount}</b> Abschnitte</span><span
+          ><b>{total}</b> Konzepte</span
+        >
+      </div>
+    </header>
+
+    <div class="search">
+      <input
+        id="q"
+        type="search"
+        placeholder="Alles durchsuchen, z.B. reduce, Generics, Consent …"
+        aria-label="Alle Spickzettel durchsuchen"
+        data-index={url('/search.json')}
+        data-base={url('/')}
+      />
+      <div id="results" aria-live="polite"></div>
+    </div>
+
+    <nav class="cat-nav" aria-label="Themenbereiche">
+      {categories.map((c) => <a href={`#cat-${c.id}`}>{c.title} ({c.sheets.length})</a>)}
+    </nav>
+
+    <div class="sheets">
+      {
+        categories.map((c) => (
+          <section class="cat" id={`cat-${c.id}`} aria-labelledby={`h-${c.id}`}>
+            <div class="cat-head">
+              <h2 id={`h-${c.id}`}>{c.title}</h2>
+              <p>{c.text}</p>
+            </div>
+            {c.sheets.map((sheet) => {
+              const d = sheet.entry.data;
+              const href = url(`/${sheet.key}/`);
+              return (
+                <article class="sheet" id={`sheet-${sheet.key}`} data-sheet={sheet.key}>
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class={`badge len-${Math.min(d.badge.length, 4)}`} aria-hidden="true">
+                        {d.badge}
+                      </div>
+                      <div>
+                        <h3>{d.name}</h3>
+                        <div class="meta">
+                          {sheet.count} Konzepte · {sheet.sections.length} Abschnitte · {d.level}
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href={href}>
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">{d.blurb}</p>
+                  <div class="secs">
+                    {sheet.sections.map((sec) => (
+                      <div class="sec">
+                        <a href={`${href}#${sec.id}`}>
+                          {sec.title}
+                          <span class="n">{sec.cards.length}</span>
+                        </a>
+                        <ul>
+                          {sec.cards.map((card) => (
+                            <li>
+                              <a href={`${href}#${card.id}`}>{plain(card.entry.data.title)}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </section>
+        ))
+      }
+    </div>
+
+    <section class="planned-sec" aria-labelledby="plan-h">
+      <h3 class="plan-h" id="plan-h">Noch nicht erstellt</h3>
+      <p class="hint">Vorschläge für die nächsten Zettel, passend zum Backend-Modul.</p>
+      <div class="planned">
+        {
+          PLANNED.map((p) => (
+            <div class="plan">
+              <em>geplant</em>
+              <b>{p.title}</b>
+              <span>{p.text}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <footer>
+      Tipp: Ein Kürzel hinter dem Link öffnet direkt einen Zettel, z.B. <code>#css</code>, oder eine Karte, z.B.
+      <code>#css-grid-2</code>. Die Kürzel der Karten stehen hinter dem #-Zeichen an jeder Kartenüberschrift.
+    </footer>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/hub.js';
+</script>
