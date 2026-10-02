@@ -4,7 +4,9 @@
 
 Mein persönliches Glossar aus dem Frontend-Teil meines Fullstack-Bootcamps. Hier sammle ich, was ich gelernt habe, damit es nicht verloren geht, während ich im Backend-Modul stecke.
 
-Das Projekt ist **vibe-gecodet**: Inhalte, Generator und Website sind im Gespräch mit Claude (KI von Anthropic) entstanden. Ich habe Richtung, Themen und Aufbau vorgegeben, Claude hat geschrieben, gebaut und getestet. Mehr dazu unter [Wie das entstanden ist](#wie-das-entstanden-ist).
+Das Projekt ist **vibe-gecodet**: Inhalte und Website sind im Gespräch mit Claude (KI von Anthropic) entstanden. Ich habe Richtung, Themen und Aufbau vorgegeben, Claude hat geschrieben, gebaut und getestet. Mehr dazu unter [Wie das entstanden ist](#wie-das-entstanden-ist).
+
+Gebaut ist die Seite mit [Astro](https://astro.build): Jede Karte ist eine eigene Markdown-Datei, Astro macht daraus beim Bauen statische HTML-Seiten.
 
 ## Was drin ist
 
@@ -41,75 +43,104 @@ Jede Karte erklärt ein Konzept und folgt immer demselben Muster:
 
 ### Bedienung
 
-- **Hub mit Volltextsuche:** Die Suche durchsucht alle Zettel inklusive der Erklärungen und springt direkt zur Karte.
+- **Startseite mit Volltextsuche:** Die Suche durchsucht alle Zettel inklusive der Erklärungen und springt direkt zur Karte.
 - **Inhaltsverzeichnis auf jeder Seite:** Am Desktop als Seitenleiste, die die aktuelle Karte markiert. Am Handy im Menü.
 - **Filter pro Seite.** Zusätzlich lässt sich umschalten, ob beide Code-Varianten oder nur eine angezeigt werden.
+- **Syntax-Highlighting** mit Shiki, schon beim Bauen erzeugt.
 - **Kopieren-Button** an jedem Code-Block und ein **Link** an jeder Karte.
 - **Hell und dunkel:** passt sich dem System an.
 - **Handytauglich:** Die Leiste blendet sich beim Scrollen aus.
 
-## Ansehen
+## Lokal starten
 
-Die Website ist statisch, es braucht also keinen Server mit eigener Logik:
+Voraussetzung ist Node.js ab Version 22.12.
 
 ```bash
-cd site
-python3 -m http.server
+npm install
+npm run dev       # Entwicklungsserver auf http://localhost:4321/cheatsheet-hub/
+npm run build     # fertige Seite nach dist/
+npm run preview   # dist/ lokal ansehen
 ```
 
-Dann `http://localhost:8000/index.html` öffnen.
-
-Veröffentlicht wird automatisch: Jeder Push auf `main` startet den Workflow `.github/workflows/pages.yml`, der `site/` auf GitHub Pages stellt. Zusätzlich gibt es eine Version als Claude-Artifact.
-
-`site/index.html` hat absichtlich kein eigenes `<html>`-Gerüst, weil die Artifact-Plattform das ergänzt. Für GitHub Pages fügt der Workflow es beim Veröffentlichen hinzu.
+Veröffentlicht wird automatisch: Jeder Push auf `main` startet den Workflow `.github/workflows/pages.yml`. Er baut die Seite und stellt sie auf GitHub Pages. Auf anderen Branches wird nur gebaut, so fallen Fehler vor dem Merge auf.
 
 ## Projektstruktur
 
 ```
-site/                     fertige Website
-  index.html              Hub mit Kategorien und Volltextsuche
-  html.html … cro.html    eine Seite pro Zettel
-  assets/app.css          gemeinsame Gestaltung
-  assets/app.js           Highlighting, Filter, Menüs, Inhaltsverzeichnis, Kopieren, Demos
-  assets/search.json      Suchindex für den Hub
-generator/                Python-Skripte, aus denen site/ entsteht
-  *_data.py               Inhalte der Zettel: Karten, Erklärungen, Links, Demos
-  js-spickzettel.html     Inhalte des JavaScript-Zettels (als HTML geschrieben)
-  sheetgen.py             rendert einen Zettel aus *_data.py als Einzelseite
-  build_*.py              Einstellungen je Zettel: Farben, Texte, Bibliotheken
-  sitegen.py              setzt alles zur gemeinsamen Website zusammen
-  build_all.sh            baut alles in einem Rutsch
-  check_site.py           lokaler Test mit Playwright
+src/
+  content/
+    sheets/<zettel>.md                    ein Zettel: Titel, Farben, Texte, Abschnitte
+    cards/<zettel>/<abschnitt>/NN-*.md    eine Karte pro Datei
+  content.config.ts                       Schema beider Sammlungen, prüft jede Datei beim Bauen
+  pages/
+    index.astro                           Startseite mit Bereichen und Suche
+    [zettel].astro                        eine Seite pro Zettel, z.B. /css/
+    search.json.ts                        Suchindex für die Startseite
+  components/                             Karte, Erklärung, Live-Demo, Inhaltsverzeichnis, Farben
+  lib/                                    Laden der Inhalte, Inline-Markdown, Loader für Demos
+  scripts/                                Browser-Logik: Filter, Menüs, Kopieren, Demos, Suche
+  styles/                                 gemeinsame Gestaltung und Startseite
+  data/hub.ts                             Themenbereiche und geplante Zettel
 ```
 
-## Bauen und erweitern
+## Inhalte ändern und erweitern
 
-```bash
-cd generator
-./build_all.sh          # baut site/ komplett neu
-python3 check_site.py   # optional: prüft Fehler, Layout am Handy, Suche und Menüs
+Alle Inhalte liegen in `src/content/`. Beim Bauen prüft Astro jede Datei gegen das Schema in `src/content.config.ts`. Fehlt ein Feld oder ist ein Link kaputt, bricht der Build mit einer verständlichen Meldung ab.
+
+**Karte ändern:** Die passende Datei öffnen, Text oder Code anpassen, speichern. Im Entwicklungsserver ist die Änderung sofort zu sehen.
+
+So sieht eine Karte aus:
+
+```yaml
+---
+title: "Box Model: `box-sizing`"
+description: "Mit `border-box` zählen Padding und Rahmen zur angegebenen Breite."
+code:
+  short: |-
+    *, *::before, *::after { box-sizing: border-box; }
+  long: |-
+    .card { width: 258px; /* 300 - 2 × 20 Padding - 2 × 1 Rahmen */ }
+explain:
+  picture: "Stell dir einen Bilderrahmen vor …"
+  steps:
+    - "Jedes Element besteht von innen nach außen aus …"
+  mistake: "Zwei Spalten mit `width: 50%` und Padding …"
+  when: "Die globale `border-box`-Regel gehört an den Anfang …"
+  question: "Wie breit ist …?"
+  answer: "230px: …"
+links:
+  - text: "box-sizing"
+    url: "https://developer.mozilla.org/de/docs/Web/CSS/box-sizing"
+---
+
+Optional: eigene Notizen in Markdown. Sie erscheinen unter der Karte.
 ```
 
-Für das Bauen reicht Python 3. Für den Test braucht es zusätzlich Playwright mit Chromium.
+- In allen Texten funktionieren `Code`, `**fett**` und `[Links](/css/)`. Links mit `/` am Anfang zeigen auf Seiten dieser Website.
+- `lang` legt bei Bedarf die Sprache fürs Highlighting fest, z.B. `lang: { short: tsx }`. Sonst gilt die Sprache des Zettels.
+- `demo` fügt eine Live-Demo hinzu, siehe die Karten in `cards/gsap/`.
 
-**Karte ändern:** In der passenden `*_data.py` den Text oder Code anpassen und neu bauen. Text in Backticks wird automatisch als Code formatiert.
+**Neue Karte:** Datei im passenden Abschnitt anlegen. Die Nummer am Anfang des Dateinamens bestimmt die Reihenfolge und den Anker, z.B. wird `cards/css/grid/03-*.md` zu `/css/#css-grid-3`.
 
-**Neuen Zettel hinzufügen:**
-1. `neu_data.py` nach dem Muster der anderen Dateien anlegen.
-2. `build_neu.py` nach dem Muster von `build_gsap.py` anlegen und in `build_all.sh` eintragen.
-3. In `sitegen.py` einen Eintrag in `SHEETS` ergänzen: Kategorie, Farben, Kurztext.
-4. `./build_all.sh` ausführen.
+**Neuer Abschnitt:** In `sheets/<zettel>.md` unter `sections` eintragen und einen gleichnamigen Ordner unter `cards/<zettel>/` anlegen.
+
+**Neuer Zettel:**
+1. `src/content/sheets/neu.md` nach dem Muster der anderen Dateien anlegen: Name, Bereich, Farben, Texte, Abschnitte.
+2. Karten unter `src/content/cards/neu/<abschnitt>/` anlegen.
+3. Fertig. Startseite, Suche und Navigation übernehmen den Zettel automatisch.
 
 Ideen für die nächsten Zettel: Node & Express, SQL & Datenbanken, React Hooks, Git.
 
 ## Wie das entstanden ist
 
-Angefangen hat es mit einer einfachen Frage: Wie halte ich mein Frontend-Wissen frisch, während das Bootcamp im Backend weitergeht? Daraus wurde zuerst eine Liste mit JavaScript-Konzepten, dann ein Spickzettel, dann mehrere. Am Ende stand eine eigene kleine Website mit Generator.
+Angefangen hat es mit einer einfachen Frage: Wie halte ich mein Frontend-Wissen frisch, während das Bootcamp im Backend weitergeht? Daraus wurde zuerst eine Liste mit JavaScript-Konzepten, dann ein Spickzettel, dann mehrere. Am Ende stand eine eigene kleine Website.
+
+Die erste Version wurde von Python-Skripten erzeugt. Weil Inhalte und Darstellung dort eng verwoben waren, ist das Projekt danach auf Astro umgezogen: Jede Karte ist jetzt eine eigene Datei, und Layout, Menüs, Inhaltsverzeichnis und Demos sind Komponenten. Die Inhalte wurden dabei per Skript übernommen und Karte für Karte mit der alten Version verglichen.
 
 Die Arbeitsteilung:
 
-- **Von mir:** welche Themen, welches Format, was fehlt, was sich falsch anfühlt. Zum Beispiel jedes Beispiel kurz und ausführlich, Doku-Links, Live-Demos, Erklärungen zum Aufklappen, später der Umbau zu einer gemeinsamen Website und das Inhaltsverzeichnis.
-- **Von Claude:** Texte, Code-Beispiele, Generator, Gestaltung und die Tests im Browser.
+- **Von mir:** welche Themen, welches Format, was fehlt, was sich falsch anfühlt. Zum Beispiel jedes Beispiel kurz und ausführlich, Doku-Links, Live-Demos, Erklärungen zum Aufklappen, die gemeinsame Website, das Inhaltsverzeichnis und der Umzug auf Astro.
+- **Von Claude:** Texte, Code-Beispiele, Umsetzung, Gestaltung und die Tests im Browser.
 
 Beim Bau wurde geprüft:
 
