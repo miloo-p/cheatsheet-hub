@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Cheatsheet Hub</title>
+    <meta name="description" content="Persönliches Frontend-Glossar aus dem Bootcamp: Spickzettel zu HTML, CSS, JavaScript, TypeScript, GSAP, Three.js und Conversion-Optimierung.">
+    <link rel="canonical" href="https://miloo-p.github.io/cheatsheet-hub/">
+    <link rel="icon" type="image/svg+xml" href="/cheatsheet-hub/favicon.svg">
+    <meta name="generator" content="Astro v7.3.5">
+    <script>(function(){const keys = ["html","css","js","ts","gsap","three","cro"];
+const base = "/cheatsheet-hub/";
+
+    /* Kürzel hinter dem Link öffnen direkt einen Zettel (#css) oder eine Karte (#css-grid-2) */
+    var h = location.hash.slice(1);
+    var key = h.split('-')[0];
+    if (h && keys.indexOf(key) !== -1) location.replace(base + key + '/' + (h.indexOf('-') > 0 ? '#' + h : ''));
+  })();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+    <style>[data-sheet="html"] { --accent: #a8326a; --accent-soft: #f8e2ec; --long: #4b52a8; --long-soft: #e6e7f7; --code-kw: #f39ac0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="html"] { --accent: #f39ac0; --accent-soft: #3a1d2a; --long: #aeb2f5; --long-soft: #22243f; } }
+:root[data-theme="dark"] [data-sheet="html"] { --accent: #f39ac0; --accent-soft: #3a1d2a; --long: #aeb2f5; --long-soft: #22243f; }
+[data-sheet="css"] { --accent: #177258; --accent-soft: #dcf1e9; --long: #a8452a; --long-soft: #f8e6df; --code-kw: #6fd3ad; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="css"] { --accent: #6fd3ad; --accent-soft: #15302a; --long: #f0a487; --long-soft: #36221c; } }
+:root[data-theme="dark"] [data-sheet="css"] { --accent: #6fd3ad; --accent-soft: #15302a; --long: #f0a487; --long-soft: #36221c; }
+[data-sheet="js"] { --accent: #9a6f00; --accent-soft: #fbf1d3; --long: #2f6f8f; --long-soft: #e1eef5; --code-kw: #f0c35a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="js"] { --accent: #f0c35a; --accent-soft: #2e2a1c; --long: #8cc7e6; --long-soft: #1b2b38; } }
+:root[data-theme="dark"] [data-sheet="js"] { --accent: #f0c35a; --accent-soft: #2e2a1c; --long: #8cc7e6; --long-soft: #1b2b38; }
+[data-sheet="ts"] { --accent: #2b5fae; --accent-soft: #e2eaf7; --long: #7a3f97; --long-soft: #f2e7f7; --code-kw: #8db4f2; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="ts"] { --accent: #8db4f2; --accent-soft: #1b2740; --long: #d3a3ec; --long-soft: #2b1f35; } }
+:root[data-theme="dark"] [data-sheet="ts"] { --accent: #8db4f2; --accent-soft: #1b2740; --long: #d3a3ec; --long-soft: #2b1f35; }
+[data-sheet="gsap"] { --accent: #3d7a12; --accent-soft: #e4f2d6; --long: #7a5a17; --long-soft: #f3ead6; --code-kw: #9be15d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="gsap"] { --accent: #9be15d; --accent-soft: #1f2e14; --long: #e2c27a; --long-soft: #2f2716; } }
+:root[data-theme="dark"] [data-sheet="gsap"] { --accent: #9be15d; --accent-soft: #1f2e14; --long: #e2c27a; --long-soft: #2f2716; }
+[data-sheet="three"] { --accent: #2563c9; --accent-soft: #e1eafa; --long: #8a4b14; --long-soft: #f6e8da; --code-kw: #7fb0ff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="three"] { --accent: #7fb0ff; --accent-soft: #17243d; --long: #f0b07a; --long-soft: #33241a; } }
+:root[data-theme="dark"] [data-sheet="three"] { --accent: #7fb0ff; --accent-soft: #17243d; --long: #f0b07a; --long-soft: #33241a; }
+[data-sheet="cro"] { --accent: #0f7a5c; --accent-soft: #d9f2ea; --long: #5b55a8; --long-soft: #e8e6f7; --code-kw: #5fd3ae; --t1: var(--warn); --t1-soft: var(--warn-soft); --t1-line: var(--warn); --t2: var(--accent); --t2-soft: var(--accent-soft); --t2-line: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="cro"] { --accent: #5fd3ae; --accent-soft: #143029; --long: #b3adf2; --long-soft: #24223d; } }
+:root[data-theme="dark"] [data-sheet="cro"] { --accent: #5fd3ae; --accent-soft: #143029; --long: #b3adf2; --long-soft: #24223d; }</style>
+  <link rel="stylesheet" href="/cheatsheet-hub/_astro/Base.GHdcGOMs.css">
+<link rel="stylesheet" href="/cheatsheet-hub/_astro/index.BgpX4gli.css"></head>
+  <body>
+    
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Fullstack-Bootcamp · Nachschlagen &amp; Üben</div>
+      <h1>Cheatsheet Hub</h1>
+      <p class="lede">
+        Alle Spickzettel an einem Ort, nach Themen gruppiert. Jeder Abschnitt und jede Karte ist direkt verlinkt, und die
+        Suche durchsucht auch die Erklärungen aller Zettel. Jede Karte hat Code-Beispiele, eine Erklärung zum Aufklappen,
+        einen Selbsttest und Links zur Doku.
+      </p>
+      <div class="stats">
+        <span><b>7</b> Spickzettel</span><span><b>44</b> Abschnitte</span><span><b>159</b> Konzepte</span>
+      </div>
+    </header>
+
+    <div class="search">
+      <input id="q" type="search" placeholder="Alles durchsuchen, z.B. reduce, Generics, Consent …" aria-label="Alle Spickzettel durchsuchen" data-index="/cheatsheet-hub/search.json" data-base="/cheatsheet-hub/">
+      <div id="results" aria-live="polite"></div>
+    </div>
+
+    <nav class="cat-nav" aria-label="Themenbereiche">
+      <a href="#cat-grundlagen">Web-Grundlagen (4)</a><a href="#cat-animation">Animation &amp; 3D (2)</a><a href="#cat-produkt">Produkt &amp; Wirkung (1)</a>
+    </nav>
+
+    <div class="sheets">
+      <section class="cat" id="cat-grundlagen" aria-labelledby="h-grundlagen">
+            <div class="cat-head">
+              <h2 id="h-grundlagen">Web-Grundlagen</h2>
+              <p>Die vier Sprachen des Webs, in Lernreihenfolge. Jede Karte zeigt eine kurze und eine ausführliche Schreibweise.</p>
+            </div>
+            <article class="sheet" id="sheet-html" data-sheet="html">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-4" aria-hidden="true">
+                        HTML
+                      </div>
+                      <div>
+                        <h3>HTML</h3>
+                        <div class="meta">
+                          24 Konzepte · 6 Abschnitte · Basis
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/html/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">Das Fundament: Semantik, Bilder, Formulare fürs Backend, native Dialoge und Barrierefreiheit.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/html/#grundgeruest">
+                          Grundgerüst
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/html/#html-grundgeruest-1">Das Grundgerüst</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-grundgeruest-2">Skripte laden: defer und type=&quot;module&quot;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-grundgeruest-3">Boolesche Attribute</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/html/#semantik">
+                          Semantik und Struktur
+                          <span class="n">6</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/html/#html-semantik-1">Seitenstruktur mit Landmarks</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-semantik-2">Überschriften-Hierarchie</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-semantik-3">&lt;button&gt; statt klickbarem &lt;div&gt;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-semantik-4">Links: neue Tabs und Sprungmarken</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-semantik-5">Betonung: &lt;strong&gt; und &lt;em&gt;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-semantik-6">Listen</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/html/#medien">
+                          Bilder und Medien
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/html/#html-medien-1">Bilder richtig einbinden</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-medien-2">Bildunterschriften: &lt;figure&gt;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-medien-3">Responsive Bilder: srcset und &lt;picture&gt;</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/html/#formulare">
+                          Formulare
+                          <span class="n">5</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/html/#html-formulare-1">Labels</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-formulare-2">Eingabetypen und autocomplete</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-formulare-3">Optionen gruppieren: &lt;fieldset&gt;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-formulare-4">Validierung im Browser</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-formulare-5">Formulare ans Backend senden</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/html/#interaktiv">
+                          Interaktiv ohne JavaScript
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/html/#html-interaktiv-1">Aufklappen: &lt;details&gt;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-interaktiv-2">Dialoge: &lt;dialog&gt;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-interaktiv-3">Menüs und Hinweise: popover</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-interaktiv-4">Eigene Daten: data-*</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/html/#a11y">
+                          Barrierefreiheit
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/html/#html-a11y-1">Icon-Buttons beschriften</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-a11y-2">Datentabellen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/html/#html-a11y-3">Verstecken: hidden, aria-hidden, inert</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article><article class="sheet" id="sheet-css" data-sheet="css">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-3" aria-hidden="true">
+                        CSS
+                      </div>
+                      <div>
+                        <h3>CSS</h3>
+                        <div class="meta">
+                          28 Konzepte · 7 Abschnitte · Basis
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/css/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">Layout und Gestaltung: Box Model, Selektoren, Flexbox, Grid, Positionierung, Responsive Design und Animation.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/css/#grundlagen">
+                          Grundlagen
+                          <span class="n">6</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-grundlagen-1">Box Model: box-sizing</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grundlagen-2">margin und padding kurz</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grundlagen-3">Container zentrieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grundlagen-4">Custom Properties</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grundlagen-5">Kurzformen: border, background, font</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grundlagen-6">Relative Einheiten: rem und em</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/css/#selektoren">
+                          Selektoren und Zustände
+                          <span class="n">5</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-selektoren-1">Selektoren bündeln: :is() und :where()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-selektoren-2">Sichtbarer Fokus: :focus-visible</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-selektoren-3">Pseudo-Elemente: ::before und ::after</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-selektoren-4">Elternselektor: :has()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-selektoren-5">CSS Nesting</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/css/#flexbox">
+                          Flexbox
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-flexbox-1">Zentrieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-flexbox-2">Restplatz füllen: flex: 1</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-flexbox-3">Abstände mit gap, Push mit auto</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-flexbox-4">Umbrechende Reihen: flex-wrap</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/css/#grid">
+                          Grid
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-grid-1">Spalten mit repeat() und fr</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grid-2">Responsives Grid ohne Media Query</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grid-3">Seitenlayout mit grid-template-areas</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-grid-4">Über alle Spalten: 1 / -1</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/css/#position">
+                          Positionierung
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-position-1">Überlagern mit inset</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-position-2">Kleben bleiben: sticky</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-position-3">Ebenen ordnen: z-index und isolation</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/css/#responsive">
+                          Responsive Design
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-responsive-1">Media Queries, mobile-first</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-responsive-2">Fließende Größen: clamp()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-responsive-3">Bilder: aspect-ratio und object-fit</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-responsive-4">Container Queries</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/css/#animation">
+                          Übergänge und Animation
+                          <span class="n">2</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/css/#css-animation-1">Übergänge: transition</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/css/#css-animation-2">Animationen und reduzierte Bewegung</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article><article class="sheet" id="sheet-js" data-sheet="js">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-2" aria-hidden="true">
+                        JS
+                      </div>
+                      <div>
+                        <h3>JavaScript</h3>
+                        <div class="meta">
+                          27 Konzepte · 7 Abschnitte · Basis
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/js/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">Die Sprache selbst: Arrays, Objekte, Funktionen, Asynchronität und typische Frontend-Muster.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/js/#grundlagen">
+                          Grundlagen
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-grundlagen-1">const vs let</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-grundlagen-2">Truthy / Falsy und ===</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-grundlagen-3">Template Literals</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-grundlagen-4">Optional Chaining ?. und ??</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/js/#funktionen">
+                          Funktionen
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-funktionen-1">Arrow Functions</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-funktionen-2">Default- und Rest-Parameter</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-funktionen-3">Closures</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-funktionen-4">Higher-Order Functions</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/js/#arrays">
+                          Arrays
+                          <span class="n">5</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-arrays-1">map: transformieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-arrays-2">filter und find</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-arrays-3">some und every</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-arrays-4">reduce: zusammenfassen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-arrays-5">Immutable Updates (React State)</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/js/#objekte">
+                          Objekte
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-objekte-1">Destructuring</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-objekte-2">Spread: Objekte kopieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-objekte-3">Über Objekte iterieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-objekte-4">Shorthand und dynamische Keys</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/js/#async">
+                          Asynchronität
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-async-1">Promises mit .then</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-async-2">async / await</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-async-3">fetch mit POST und Fehlerprüfung</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-async-4">Promise.all: parallel laden</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/js/#module">
+                          Module &amp; Klassen
+                          <span class="n">2</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-module-1">Named vs. Default Export</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-module-2">Klassen</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/js/#muster">
+                          Typische Muster
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/js/#js-muster-1">Event Delegation</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-muster-2">Debounce</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-muster-3">Guard Clauses</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/js/#js-muster-4">Lade-, Fehler- und Daten-Zustand</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article><article class="sheet" id="sheet-ts" data-sheet="ts">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-2" aria-hidden="true">
+                        TS
+                      </div>
+                      <div>
+                        <h3>TypeScript</h3>
+                        <div class="meta">
+                          27 Konzepte · 8 Abschnitte · Aufbauend auf JavaScript
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/ts/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">Typen für Frontend und Backend: Unions, Generics, Utility Types, API-Daten, React und Express.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/ts/#grundlagen">
+                          Grundlagen
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-grundlagen-1">Typinferenz und Basistypen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-grundlagen-2">Tupel</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-grundlagen-3">unknown statt any</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#funktionen">
+                          Funktionen
+                          <span class="n">2</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-funktionen-1">Funktionen typisieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-funktionen-2">Optionale Parameter und Defaults</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#objekte">
+                          Objekte
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-objekte-1">Objekttypen: interface und type</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-objekte-2">Optionale und readonly Felder</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-objekte-3">Typen erweitern: extends und &amp;</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-objekte-4">Nachschlage-Objekte: Record</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#unions">
+                          Unions und Narrowing
+                          <span class="n">5</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-unions-1">Union Types</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-unions-2">Literal Types statt enum</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-unions-3">Discriminated Unions</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-unions-4">Eigene Type Guards</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-unions-5">null und undefined</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#generics">
+                          Generics
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-generics-1">Generische Funktionen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-generics-2">Generic Constraints</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-generics-3">Generische Typen</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#utility">
+                          Utility Types
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-utility-1">Partial und Required</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-utility-2">Pick und Omit</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-utility-3">keyof und typeof</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#backend">
+                          Async, API und Backend
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-backend-1">Promise&lt;T&gt; als Rückgabetyp</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-backend-2">Daten von außen prüfen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-backend-3">Typen teilen: DTOs</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-backend-4">Express-Routen typisieren</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/ts/#react">
+                          React mit TypeScript
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/ts/#ts-react-1">Props typisieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-react-2">useState typisieren</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/ts/#ts-react-3">Events typisieren</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article>
+          </section><section class="cat" id="cat-animation" aria-labelledby="h-animation">
+            <div class="cat-head">
+              <h2 id="h-animation">Animation &amp; 3D</h2>
+              <p>Bewegung und Raum im Browser. Mit Live-Demos auf fast jeder Karte, direkt zum Ausprobieren.</p>
+            </div>
+            <article class="sheet" id="sheet-gsap" data-sheet="gsap">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-4" aria-hidden="true">
+                        GSAP
+                      </div>
+                      <div>
+                        <h3>GSAP</h3>
+                        <div class="meta">
+                          17 Konzepte · 5 Abschnitte · Aufbauend auf CSS und JavaScript
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/gsap/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">Animationen mit GSAP 3.15: Tweens, Timelines, ScrollTrigger, Flip, SplitText und React. Jeweils im Vergleich mit CSS und Web Animations API.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/gsap/#grundlagen">
+                          Grundlagen
+                          <span class="n">6</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-grundlagen-1">Animieren mit gsap.to()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-grundlagen-2">from() und fromTo()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-grundlagen-3">Easing</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-grundlagen-4">Versetzt starten: stagger</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-grundlagen-5">Transforms setzen: gsap.set()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-grundlagen-6">Steuern: play, pause, reverse</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/gsap/#timelines">
+                          Timelines
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-timelines-1">Abfolgen mit gsap.timeline()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-timelines-2">Der Positionsparameter</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-timelines-3">defaults, repeat und yoyo</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/gsap/#scrolltrigger">
+                          ScrollTrigger
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-scrolltrigger-1">Beim Hineinscrollen abspielen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-scrolltrigger-2">An den Scroll koppeln: scrub</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-scrolltrigger-3">Festhalten: pin</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/gsap/#plugins">
+                          Plugins
+                          <span class="n">2</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-plugins-1">Layout-Wechsel animieren: Flip</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-plugins-2">Text animieren: SplitText</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/gsap/#praxis">
+                          Praxis: React, Performance, Barrierefreiheit
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-praxis-1">GSAP in React: useGSAP</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-praxis-2">Flüssig animieren: Transforms statt Layout</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/gsap/#gsap-praxis-3">Weniger Bewegung respektieren: matchMedia</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article><article class="sheet" id="sheet-three" data-sheet="three">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-2" aria-hidden="true">
+                        3D
+                      </div>
+                      <div>
+                        <h3>Three.js</h3>
+                        <div class="meta">
+                          17 Konzepte · 6 Abschnitte · Aufbauend auf JavaScript
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/three/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">3D im Browser mit Three.js r186: Szene und Render-Loop, Licht und Schatten, Interaktion, Performance und React Three Fiber.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/three/#grundlagen">
+                          Grundlagen
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/three/#three-grundlagen-1">Szene, Kamera, Renderer</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-grundlagen-2">Die Render-Schleife mit Timer</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-grundlagen-3">Responsiv: Größe und Pixeldichte</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/three/#objekte">
+                          Objekte
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/three/#three-objekte-1">Mesh = Geometrie + Material</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-objekte-2">Position, Drehung, Größe</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-objekte-3">Gruppen und Hierarchie</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/three/#licht">
+                          Licht und Oberflächen
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/three/#three-licht-1">Materialien: Basic und Standard</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-licht-2">Lichtarten</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-licht-3">Schatten</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-licht-4">Farben und Texturen: colorSpace</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/three/#interaktion">
+                          Interaktion
+                          <span class="n">2</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/three/#three-interaktion-1">Kamera steuern: OrbitControls</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-interaktion-2">Objekte anklicken: Raycaster</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/three/#animation">
+                          Modelle und Animation
+                          <span class="n">2</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/three/#three-animation-1">3D-Modelle laden: GLTF</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-animation-2">Animieren mit GSAP</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/three/#performance">
+                          Performance und React
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/three/#three-performance-1">Aufräumen: dispose()</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-performance-2">Viele Objekte: InstancedMesh</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/three/#three-performance-3">Three.js in React: React Three Fiber</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article>
+          </section><section class="cat" id="cat-produkt" aria-labelledby="h-produkt">
+            <div class="cat-head">
+              <h2 id="h-produkt">Produkt &amp; Wirkung</h2>
+              <p>Was Besucher zu Kunden macht, aus Entwicklersicht: messen, testen, schneller werden und rechtlich sauber bleiben.</p>
+            </div>
+            <article class="sheet" id="sheet-cro" data-sheet="cro">
+                  <div class="sheet-head">
+                    <div class="sheet-id">
+                      <div class="badge len-3" aria-hidden="true">
+                        CRO
+                      </div>
+                      <div>
+                        <h3>Conversion-Optimierung</h3>
+                        <div class="meta">
+                          19 Konzepte · 5 Abschnitte · Aufbauend auf HTML und JavaScript
+                        </div>
+                      </div>
+                    </div>
+                    <a class="open" href="/cheatsheet-hub/cro/">
+                      Spickzettel öffnen →
+                    </a>
+                  </div>
+                  <p class="blurb">Tracking, A/B-Tests, Formulare, Core Web Vitals und Rechtspflichten in Deutschland, als Vorher/Nachher mit Messhinweisen. Plus Lesestoff aus Marketing-Sicht.</p>
+                  <div class="secs">
+                    <div class="sec">
+                        <a href="/cheatsheet-hub/cro/#messen">
+                          Messen und Testen
+                          <span class="n">5</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/cro/#cro-messen-1">Funnel statt einer einzigen Zahl</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-messen-2">Events sauber benennen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-messen-3">Hypothesen statt Bauchgefühl</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-messen-4">A/B-Tests technisch sauber</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-messen-5">Statistikfallen: Stichprobengröße und Peeking</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/cro/#inhalt">
+                          Seiteninhalte
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/cro/#cro-inhalt-1">Button-Texte, die sagen, was passiert</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-inhalt-2">Ein klarer Hauptbutton</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-inhalt-3">Kosten und Vertrauen früh zeigen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-inhalt-4">Social Proof, aber ehrlich</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/cro/#formulare">
+                          Formulare und Checkout
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/cro/#cro-formulare-1">Weniger Felder</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-formulare-2">Fehlermeldungen am Feld</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-formulare-3">Gastbestellung erlauben</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/cro/#performance">
+                          Ladezeit
+                          <span class="n">3</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/cro/#cro-performance-1">Core Web Vitals echt messen</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-performance-2">Das Hauptbild schnell laden (LCP)</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-performance-3">Springende Seiten vermeiden (CLS)</a>
+                            </li>
+                        </ul>
+                      </div><div class="sec">
+                        <a href="/cheatsheet-hub/cro/#recht">
+                          Rechtliches in Deutschland
+                          <span class="n">4</span>
+                        </a>
+                        <ul>
+                          <li>
+                              <a href="/cheatsheet-hub/cro/#cro-recht-1">Der Bestell-Button</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-recht-2">Fairer Consent-Banner</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-recht-3">Barrierefreiheit ist seit 2025 Pflicht</a>
+                            </li><li>
+                              <a href="/cheatsheet-hub/cro/#cro-recht-4">Dark Patterns vermeiden</a>
+                            </li>
+                        </ul>
+                      </div>
+                  </div>
+                </article>
+          </section>
+    </div>
+
+    <section class="planned-sec" aria-labelledby="plan-h">
+      <h3 class="plan-h" id="plan-h">Noch nicht erstellt</h3>
+      <p class="hint">Vorschläge für die nächsten Zettel, passend zum Backend-Modul.</p>
+      <div class="planned">
+        <div class="plan">
+              <em>geplant</em>
+              <b>Node &amp; Express</b>
+              <span>Routing, Middleware, Fehlerbehandlung, Umgebungsvariablen</span>
+            </div><div class="plan">
+              <em>geplant</em>
+              <b>SQL &amp; Datenbanken</b>
+              <span>SELECT, JOIN, Relationen, Migrations, ORM-Grundlagen</span>
+            </div><div class="plan">
+              <em>geplant</em>
+              <b>React Hooks</b>
+              <span>useEffect im Detail, useRef, useContext, eigene Hooks</span>
+            </div><div class="plan">
+              <em>geplant</em>
+              <b>Git</b>
+              <span>Branches, Merge vs. Rebase, Konflikte lösen, Pull Requests</span>
+            </div>
+      </div>
+    </section>
+
+    <footer>
+      Tipp: Ein Kürzel hinter dem Link öffnet direkt einen Zettel, z.B. <code>#css</code>, oder eine Karte, z.B.
+      <code>#css-grid-2</code>. Die Kürzel der Karten stehen hinter dem #-Zeichen an jeder Kartenüberschrift.
+    </footer>
+  </div>
+
+  </body>
+</html>
+
+<script type="module">(function(){var e=document.getElementById(`q`),t=document.getElementById(`results`);if(!e||!t)return;var n=e.dataset.base,r=null,i=null;function a(e){return String(e).replace(/&/g,`&amp;`).replace(/</g,`&lt;`).replace(/>/g,`&gt;`).replace(/"/g,`&quot;`)}function o(){return r?Promise.resolve(r):(i||=fetch(e.dataset.index).then(function(e){return e.json()}).then(function(e){return r=e.map(function(e){return e.hay=(e.t+` `+e.d+` `+e.sec+` `+e.st+` `+e.x).toLowerCase(),e.head=(e.t+` `+e.sec).toLowerCase(),e}),r},function(e){throw i=null,e}),i)}function s(e,t){var n=e.d+` `+e.x,r=n.toLowerCase().indexOf(t);if(r<0)return a(e.d);var i=Math.max(0,r-50),o=Math.min(n.length,r+t.length+70);return(i>0?`… `:``)+a(n.slice(i,r))+`<mark>`+a(n.slice(r,r+t.length))+`</mark>`+a(n.slice(r+t.length,o))+(o<n.length?` …`:``)}function c(){var r=e.value.trim().toLowerCase();if(!r){t.innerHTML=``;return}o().then(function(i){if(e.value.trim().toLowerCase()===r){var o=i.filter(function(e){return e.hay.indexOf(r)!==-1});o.sort(function(e,t){return(t.head.indexOf(r)!==-1)-(e.head.indexOf(r)!==-1)}),t.innerHTML=o.length?o.slice(0,15).map(function(e){return`<a href="`+n+e.s+`/#`+a(e.id)+`"><span class="r-c">`+a(e.t)+` <span class="r-p">`+a(e.st)+` › `+a(e.sec)+`</span></span><span class="r-x">`+s(e,r)+`</span></a>`}).join(``)+(o.length>15?`<p class="hint">`+(o.length-15)+` weitere Treffer. Präziser suchen grenzt ein.</p>`:``):`<p class="hint">Kein Treffer. Das Thema könnte ein guter nächster Spickzettel sein.</p>`}},function(){t.innerHTML=`<p class="hint">Der Suchindex konnte nicht geladen werden.</p>`})}e.addEventListener(`focus`,o,{once:!0}),e.addEventListener(`input`,c)})();</script>

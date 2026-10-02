@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Conversion-Optimierung · Cheatsheet Hub</title>
+    <meta name="description" content="Tracking, A/B-Tests, Formulare, Core Web Vitals und Rechtspflichten in Deutschland, als Vorher/Nachher mit Messhinweisen. Plus Lesestoff aus Marketing-Sicht.">
+    <link rel="canonical" href="https://miloo-p.github.io/cheatsheet-hub/cro/">
+    <link rel="icon" type="image/svg+xml" href="/cheatsheet-hub/favicon.svg">
+    <meta name="generator" content="Astro v7.3.5">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+    <style>[data-sheet="cro"] { --accent: #0f7a5c; --accent-soft: #d9f2ea; --long: #5b55a8; --long-soft: #e8e6f7; --code-kw: #5fd3ae; --t1: var(--warn); --t1-soft: var(--warn-soft); --t1-line: var(--warn); --t2: var(--accent); --t2-soft: var(--accent-soft); --t2-line: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-sheet="cro"] { --accent: #5fd3ae; --accent-soft: #143029; --long: #b3adf2; --long-soft: #24223d; } }
+:root[data-theme="dark"] [data-sheet="cro"] { --accent: #5fd3ae; --accent-soft: #143029; --long: #b3adf2; --long-soft: #24223d; }</style>
+  <link rel="stylesheet" href="/cheatsheet-hub/_astro/Base.GHdcGOMs.css"></head>
+  <body data-sheet="cro">
+    
+  
+
+  <header class="topbar" id="topbar">
+    <div class="topbar-row">
+      <a class="tb-home" href="/cheatsheet-hub/" aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
+      <span class="tb-title">Conversion-Optimierung</span>
+      <input id="filter" type="search" placeholder="Filtern, z.B. Funnel, Formular, Consent …" aria-label="Karten auf dieser Seite filtern">
+      <details class="menu topics">
+        <summary><span class="sum-label">Inhalt</span><span aria-hidden="true">☰</span></summary>
+        <div class="menu-panel toc-panel"><nav aria-label="Inhalt"><ol class="toc-list">
+  <li class="toc-sec" data-sec="messen">
+        <a href="#messen">Messen und Testen</a>
+        <ol>
+          <li data-for="cro-messen-1">
+              <a href="#cro-messen-1">Funnel statt einer einzigen Zahl</a>
+            </li><li data-for="cro-messen-2">
+              <a href="#cro-messen-2">Events sauber benennen</a>
+            </li><li data-for="cro-messen-3">
+              <a href="#cro-messen-3">Hypothesen statt Bauchgefühl</a>
+            </li><li data-for="cro-messen-4">
+              <a href="#cro-messen-4">A/B-Tests technisch sauber</a>
+            </li><li data-for="cro-messen-5">
+              <a href="#cro-messen-5">Statistikfallen: Stichprobengröße und Peeking</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="inhalt">
+        <a href="#inhalt">Seiteninhalte</a>
+        <ol>
+          <li data-for="cro-inhalt-1">
+              <a href="#cro-inhalt-1">Button-Texte, die sagen, was passiert</a>
+            </li><li data-for="cro-inhalt-2">
+              <a href="#cro-inhalt-2">Ein klarer Hauptbutton</a>
+            </li><li data-for="cro-inhalt-3">
+              <a href="#cro-inhalt-3">Kosten und Vertrauen früh zeigen</a>
+            </li><li data-for="cro-inhalt-4">
+              <a href="#cro-inhalt-4">Social Proof, aber ehrlich</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="formulare">
+        <a href="#formulare">Formulare und Checkout</a>
+        <ol>
+          <li data-for="cro-formulare-1">
+              <a href="#cro-formulare-1">Weniger Felder</a>
+            </li><li data-for="cro-formulare-2">
+              <a href="#cro-formulare-2">Fehlermeldungen am Feld</a>
+            </li><li data-for="cro-formulare-3">
+              <a href="#cro-formulare-3">Gastbestellung erlauben</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="performance">
+        <a href="#performance">Ladezeit</a>
+        <ol>
+          <li data-for="cro-performance-1">
+              <a href="#cro-performance-1">Core Web Vitals echt messen</a>
+            </li><li data-for="cro-performance-2">
+              <a href="#cro-performance-2">Das Hauptbild schnell laden (LCP)</a>
+            </li><li data-for="cro-performance-3">
+              <a href="#cro-performance-3">Springende Seiten vermeiden (CLS)</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="recht">
+        <a href="#recht">Rechtliches in Deutschland</a>
+        <ol>
+          <li data-for="cro-recht-1">
+              <a href="#cro-recht-1">Der Bestell-Button</a>
+            </li><li data-for="cro-recht-2">
+              <a href="#cro-recht-2">Fairer Consent-Banner</a>
+            </li><li data-for="cro-recht-3">
+              <a href="#cro-recht-3">Barrierefreiheit ist seit 2025 Pflicht</a>
+            </li><li data-for="cro-recht-4">
+              <a href="#cro-recht-4">Dark Patterns vermeiden</a>
+            </li>
+        </ol>
+      </li>
+  <li class="toc-sec">
+        <a href="#mehr">Mehr aus Marketing-Sicht</a>
+      </li>
+</ol></nav></div>
+      </details>
+      <details class="menu">
+        <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
+        <div class="menu-panel">
+          
+                <h4>Code-Varianten</h4>
+                <div class="seg" role="group" aria-label="Varianten anzeigen">
+                  <button type="button" id="show-both" aria-pressed="true">Beide</button>
+                  <button type="button" id="show-short" aria-pressed="false">Nur vorher</button>
+                  <button type="button" id="show-long" aria-pressed="false">Nur nachher</button>
+                </div>
+              
+          <h4>Erklärungen</h4>
+          <button type="button" class="ghost" id="toggle-all">Alle Erklärungen aufklappen</button>
+        </div>
+      </details>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc" aria-label="Inhaltsverzeichnis">
+      <div class="toc-head">Inhalt</div>
+      <nav><ol class="toc-list">
+  <li class="toc-sec" data-sec="messen">
+        <a href="#messen">Messen und Testen</a>
+        <ol>
+          <li data-for="cro-messen-1">
+              <a href="#cro-messen-1">Funnel statt einer einzigen Zahl</a>
+            </li><li data-for="cro-messen-2">
+              <a href="#cro-messen-2">Events sauber benennen</a>
+            </li><li data-for="cro-messen-3">
+              <a href="#cro-messen-3">Hypothesen statt Bauchgefühl</a>
+            </li><li data-for="cro-messen-4">
+              <a href="#cro-messen-4">A/B-Tests technisch sauber</a>
+            </li><li data-for="cro-messen-5">
+              <a href="#cro-messen-5">Statistikfallen: Stichprobengröße und Peeking</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="inhalt">
+        <a href="#inhalt">Seiteninhalte</a>
+        <ol>
+          <li data-for="cro-inhalt-1">
+              <a href="#cro-inhalt-1">Button-Texte, die sagen, was passiert</a>
+            </li><li data-for="cro-inhalt-2">
+              <a href="#cro-inhalt-2">Ein klarer Hauptbutton</a>
+            </li><li data-for="cro-inhalt-3">
+              <a href="#cro-inhalt-3">Kosten und Vertrauen früh zeigen</a>
+            </li><li data-for="cro-inhalt-4">
+              <a href="#cro-inhalt-4">Social Proof, aber ehrlich</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="formulare">
+        <a href="#formulare">Formulare und Checkout</a>
+        <ol>
+          <li data-for="cro-formulare-1">
+              <a href="#cro-formulare-1">Weniger Felder</a>
+            </li><li data-for="cro-formulare-2">
+              <a href="#cro-formulare-2">Fehlermeldungen am Feld</a>
+            </li><li data-for="cro-formulare-3">
+              <a href="#cro-formulare-3">Gastbestellung erlauben</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="performance">
+        <a href="#performance">Ladezeit</a>
+        <ol>
+          <li data-for="cro-performance-1">
+              <a href="#cro-performance-1">Core Web Vitals echt messen</a>
+            </li><li data-for="cro-performance-2">
+              <a href="#cro-performance-2">Das Hauptbild schnell laden (LCP)</a>
+            </li><li data-for="cro-performance-3">
+              <a href="#cro-performance-3">Springende Seiten vermeiden (CLS)</a>
+            </li>
+        </ol>
+      </li><li class="toc-sec" data-sec="recht">
+        <a href="#recht">Rechtliches in Deutschland</a>
+        <ol>
+          <li data-for="cro-recht-1">
+              <a href="#cro-recht-1">Der Bestell-Button</a>
+            </li><li data-for="cro-recht-2">
+              <a href="#cro-recht-2">Fairer Consent-Banner</a>
+            </li><li data-for="cro-recht-3">
+              <a href="#cro-recht-3">Barrierefreiheit ist seit 2025 Pflicht</a>
+            </li><li data-for="cro-recht-4">
+              <a href="#cro-recht-4">Dark Patterns vermeiden</a>
+            </li>
+        </ol>
+      </li>
+  <li class="toc-sec">
+        <a href="#mehr">Mehr aus Marketing-Sicht</a>
+      </li>
+</ol></nav>
+    </aside>
+    <main class="wrap">
+      <header>
+        <div class="eyebrow">Produkt &amp; Wirkung · Conversion</div>
+        <h1>Conversion-Optimierung</h1>
+        <p class="lede">19 Themen der Conversion-Optimierung aus Entwicklersicht: messen, testen, Formulare, Ladezeit und die rechtlichen Pflichten in Deutschland. Jede Karte zeigt ein typisches <b>Vorher</b> und ein verbessertes <b>Nachher</b>. In der Erklärung steht statt „Wann welche Schreibweise?“ jeweils <b>So misst du es</b>, denn eine Änderung ist erst dann eine Verbesserung, wenn die Zahlen es zeigen. Zahlen und Rechtslage sind mit Quellen belegt (Stand Oktober 2026). Ganz unten gibt es einen Kasten mit Lesestoff aus Marketing-Sicht.</p>
+        <p class="disclaimer">Die Karten zum Recht ersetzen keine Rechtsberatung. Sie zeigen, was du als Entwickler kennen solltest, um die richtigen Fragen zu stellen.</p>
+        <div class="legend">
+          <span>
+                <b class="lbl t1">Vorher</b> häufige Umsetzung mit Problem
+              </span><span>
+                <b class="lbl t2">Nachher</b> verbesserte Umsetzung
+              </span>
+        </div>
+      </header>
+
+      <section id="messen">
+            <h2>
+              Messen und Testen <span class="tag">data</span>
+            </h2>
+            <p class="sub">Ohne saubere Daten ist jede Optimierung geraten. Hier liegt der größte Hebel für Entwickler.</p>
+            <div class="grid">
+              <article class="card" id="cro-messen-1">
+  <div class="card-main">
+    <h3>Funnel statt einer einzigen Zahl<a class="anchor" href="#cro-messen-1" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Die Conversion Rate sagt, wie viele kaufen. Der Funnel sagt, wo die anderen aussteigen.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// Nur das Endergebnis messen</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"purchase"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// Auswertung: 2 % Conversion Rate.</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// Aber warum nicht mehr? Keine Ahnung.</span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// Jeden Schritt messen</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"view_product"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)">   { id });</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"add_to_cart"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)">    { id</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> value });</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"begin_checkout"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> { value });</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"add_shipping"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"add_payment"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"purchase"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)">       { value</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> orderId });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// Auswertung: 40 % springen bei add_shipping ab</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// -> Versandkosten früher zeigen?</span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://developers.google.com/analytics/devguides/collection/ga4/reference/events" target="_blank" rel="noopener">GA4: empfohlene Events (EN)</a><a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank" rel="noopener">Kaufabbrüche (Baymard, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Ein Funnel ist ein Trichter mit Löchern. Nur zu zählen, was unten herauskommt, hilft wenig. Erst wenn du an jeder Stufe misst, siehst du, wo das größte Loch ist.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Conversion Rate = Conversions ÷ Besuche. Was als Conversion zählt, legst du fest: Kauf, Anmeldung, Anfrage.</li><li>Makro-Conversions sind die Hauptziele (Kauf). Mikro-Conversions sind Zwischenschritte (in den Warenkorb, Newsletter, Video angesehen).</li><li>Ein Funnel misst jeden Schritt einzeln. Die Abbruchrate pro Schritt zeigt, wo du ansetzen solltest.</li><li>Die Event-Namen im Beispiel folgen den empfohlenen E-Commerce-Events von Google Analytics 4. Einheitliche Namen machen Auswertungen und Toolwechsel einfacher.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Nur Seitenaufrufe messen. Ein Aufruf der Checkout-Seite sagt nicht, ob jemand das Formular ausgefüllt, einen Fehler bekommen oder abgebrochen hat. Wichtige Schritte brauchen eigene Events.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Im Analytics-Tool einen Trichter aus den Events anlegen und die Abbruchrate je Schritt vergleichen, getrennt nach Mobil und Desktop. Oft unterscheiden sich die Probleme stark.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Wo setzt du an, wenn 1000 Leute in den Warenkorb legen, 900 den Checkout starten und 300 kaufen?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Im Checkout. Zwischen Start und Kauf gehen zwei Drittel verloren, das ist das größte Loch.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-messen-2">
+  <div class="card-main">
+    <h3>Events sauber benennen<a class="anchor" href="#cro-messen-2" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Ein kleiner Tracking-Wrapper mit klaren Namen und Parametern macht Daten auswertbar und das Tool austauschbar.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> onclick</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"</span><span style="color:var(--astro-code-token-function)">gtag</span><span style="color:var(--astro-code-token-string-expression)">('event'</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-string-expression)"> 'click')"</span><span style="color:var(--astro-code-foreground)">>Jetzt testen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> onclick</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"</span><span style="color:var(--astro-code-token-function)">gtag</span><span style="color:var(--astro-code-token-string-expression)">('event'</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-string-expression)"> 'Click Button 2')"</span><span style="color:var(--astro-code-foreground)">>Preise&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> onclick</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"</span><span style="color:var(--astro-code-token-function)">plausible</span><span style="color:var(--astro-code-token-string-expression)">('cta')"</span><span style="color:var(--astro-code-foreground)">>Kontakt&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> data-track</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cta_click"</span><span style="color:var(--astro-code-token-function)"> data-track-location</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hero"</span><span style="color:var(--astro-code-foreground)">>Jetzt testen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  // Ein Wrapper für alle Tools, mit Consent-Prüfung</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  export</span><span style="color:var(--astro-code-token-keyword)"> function</span><span style="color:var(--astro-code-token-function)"> track</span><span style="color:var(--astro-code-foreground)">(name</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> params </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-foreground)"> {}) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    if</span><span style="color:var(--astro-code-foreground)"> (</span><span style="color:var(--astro-code-token-keyword)">!</span><span style="color:var(--astro-code-token-function)">hasConsent</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"analytics"</span><span style="color:var(--astro-code-foreground)">)) </span><span style="color:var(--astro-code-token-keyword)">return</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    window</span><span style="color:var(--astro-code-token-function)">.gtag?.</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"event"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> name</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> params);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">  document</span><span style="color:var(--astro-code-token-function)">.addEventListener</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"click"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> (e) </span><span style="color:var(--astro-code-token-keyword)">=></span><span style="color:var(--astro-code-foreground)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    const</span><span style="color:var(--astro-code-token-constant)"> el</span><span style="color:var(--astro-code-token-keyword)"> =</span><span style="color:var(--astro-code-token-constant)"> e</span><span style="color:var(--astro-code-token-function)">.</span><span style="color:var(--astro-code-token-constant)">target</span><span style="color:var(--astro-code-token-function)">.closest</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"[data-track]"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    if</span><span style="color:var(--astro-code-foreground)"> (el) </span><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-constant)">el</span><span style="color:var(--astro-code-foreground)">.</span><span style="color:var(--astro-code-token-constant)">dataset</span><span style="color:var(--astro-code-foreground)">.track</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> { location</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> el</span><span style="color:var(--astro-code-foreground)">.</span><span style="color:var(--astro-code-token-constant)">dataset</span><span style="color:var(--astro-code-foreground)">.trackLocation });</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  });</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="/cheatsheet-hub/js/#muster">Event Delegation (JS-Spickzettel)</a><a href="https://developer.mozilla.org/de/docs/Web/API/HTMLElement/dataset" target="_blank" rel="noopener">dataset (MDN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Events sind wie Ordner in einem Archiv. Heißt jeder Ordner anders oder „Sonstiges“, findet später niemand etwas. Mit festen Namen und Etiketten lässt sich jede Frage beantworten.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Event-Namen in einem festen Schema, z.B. <code>objekt_aktion</code> in snake_case: <code>cta_click</code>, <code>form_submit</code>, <code>video_play</code>.</li><li>Details gehören in Parameter, nicht in den Namen. Statt <code>hero_cta_click</code> und <code>footer_cta_click</code> ein Event <code>cta_click</code> mit <code>location</code>.</li><li>Ein eigener <code>track()</code>-Wrapper kapselt das Tool. Ein Wechsel von Google Analytics zu Plausible oder Matomo ändert nur eine Funktion.</li><li>Die Consent-Prüfung im Wrapper sorgt dafür, dass ohne Einwilligung nichts gesendet wird.</li><li><code>data-track</code>-Attribute halten das Tracking aus der Komponentenlogik heraus, ähnlich wie bei Event Delegation.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Personenbezogene Daten in Events schicken, z.B. E-Mail-Adressen als Parameter oder in der URL. Das ist datenschutzrechtlich heikel und bei Google Analytics ausdrücklich verboten.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Ein Tracking-Plan als Tabelle mit Event-Name, Parametern, Auslöser und Zweck, bevor du Code schreibst. Prüfen kannst du die Events im Netzwerk-Tab der Entwicklertools oder in der Debug-Ansicht des Tools.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Wie trackst du, dass jemand ein Formularfeld mit Fehler verlassen hat, ohne den eingegebenen Wert zu senden?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Mit einem Event wie <code>form_error</code> und Parametern für Feldname und Fehlerart, z.B. <code>{ field: &quot;email&quot;, error: &quot;typeMismatch&quot; }</code>. Der Wert selbst bleibt im Browser.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-messen-3">
+  <div class="card-main">
+    <h3>Hypothesen statt Bauchgefühl<a class="anchor" href="#cro-messen-3" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Jede Änderung beginnt mit einer Beobachtung und einer überprüfbaren Annahme, nicht mit „mach den Button mal grün“.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"Lass uns den Button grün machen,</span></span>
+<span class="line"><span> das konvertiert besser."</span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Beobachtung:  42 % brechen auf der Versandseite ab.</span></span>
+<span class="line"><span>              In Session-Recordings scrollen viele</span></span>
+<span class="line"><span>              suchend nach den Versandkosten.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Hypothese:    Wenn wir die Versandkosten schon im</span></span>
+<span class="line"><span>              Warenkorb anzeigen, sinkt die Abbruchrate</span></span>
+<span class="line"><span>              auf der Versandseite, weil die Überraschung</span></span>
+<span class="line"><span>              wegfällt.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Messgröße:    Abbruchrate Versandseite (primär),</span></span>
+<span class="line"><span>              Bestellungen pro Besuch (Kontrolle)</span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank" rel="noopener">Kaufabbrüche und Gründe (Baymard, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Eine Hypothese ist eine Wette mit klaren Regeln: Du schreibst vorher auf, worauf du setzt, warum, und woran du erkennst, ob du gewonnen hast. Ohne diese Regeln gewinnt man jede Wette im Nachhinein.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Eine Beobachtung aus Daten oder Nutzertests ist der Ausgangspunkt, z.B. aus dem Funnel oder aus Gesprächen mit Kunden.</li><li>Die Hypothese folgt dem Muster: Wenn wir X ändern, dann passiert Y, weil Z.</li><li>Das „weil“ ist entscheidend. Es zwingt dich, eine Ursache zu benennen, und hilft beim Lernen, auch wenn der Test verliert.</li><li>Primäre Messgröße und Kontrollgröße stehen vorher fest. Die Kontrollgröße zeigt, ob du an anderer Stelle Schaden anrichtest.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ergebnisse aus Blogposts übernehmen, z.B. „roter Button = 34 % mehr Umsatz“. Solche Zahlen gelten, wenn überhaupt, für eine bestimmte Seite mit einem bestimmten Publikum und lassen sich selten übertragen.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Hypothesen in einer Liste sammeln und nach erwarteter Wirkung, Sicherheit der Annahme und Aufwand priorisieren. Nach jedem Test festhalten, was ihr gelernt habt.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Was fehlt an der Hypothese „Ein größeres Produktbild erhöht die Conversion“?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Das „weil“ und die Beobachtung, auf der sie beruht. Ohne Ursache lernst du nichts, wenn der Test verliert.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-messen-4">
+  <div class="card-main">
+    <h3>A/B-Tests technisch sauber<a class="anchor" href="#cro-messen-4" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Jeder Besucher muss dauerhaft dieselbe Variante sehen, und die Zuteilung darf die Seite nicht flackern lassen.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  // bei jedem Seitenaufruf neu würfeln</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  if</span><span style="color:var(--astro-code-foreground)"> (</span><span style="color:var(--astro-code-token-constant)">Math</span><span style="color:var(--astro-code-token-function)">.random</span><span style="color:var(--astro-code-foreground)">() </span><span style="color:var(--astro-code-token-keyword)">&#x3C;</span><span style="color:var(--astro-code-token-constant)"> 0.5</span><span style="color:var(--astro-code-foreground)">) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    document</span><span style="color:var(--astro-code-token-function)">.querySelector</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">".cta"</span><span style="color:var(--astro-code-foreground)">).textContent </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)"> "Jetzt starten"</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  }</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// Server (Express): einmal zuteilen, im Cookie merken</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">app</span><span style="color:var(--astro-code-token-function)">.use</span><span style="color:var(--astro-code-foreground)">((req</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> res</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> next) </span><span style="color:var(--astro-code-token-keyword)">=></span><span style="color:var(--astro-code-foreground)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  let</span><span style="color:var(--astro-code-foreground)"> variant </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-constant)"> req</span><span style="color:var(--astro-code-foreground)">.</span><span style="color:var(--astro-code-token-constant)">cookies</span><span style="color:var(--astro-code-foreground)">.exp_cta;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  if</span><span style="color:var(--astro-code-foreground)"> (</span><span style="color:var(--astro-code-token-keyword)">!</span><span style="color:var(--astro-code-foreground)">variant) {</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    variant </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-constant)"> Math</span><span style="color:var(--astro-code-token-function)">.random</span><span style="color:var(--astro-code-foreground)">() </span><span style="color:var(--astro-code-token-keyword)">&#x3C;</span><span style="color:var(--astro-code-token-constant)"> 0.5</span><span style="color:var(--astro-code-token-keyword)"> ?</span><span style="color:var(--astro-code-token-string-expression)"> "A"</span><span style="color:var(--astro-code-token-keyword)"> :</span><span style="color:var(--astro-code-token-string-expression)"> "B"</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    res</span><span style="color:var(--astro-code-token-function)">.cookie</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"exp_cta"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> variant</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> { maxAge</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 30</span><span style="color:var(--astro-code-token-keyword)"> *</span><span style="color:var(--astro-code-token-constant)"> 864e5</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> sameSite</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-string-expression)"> "lax"</span><span style="color:var(--astro-code-foreground)"> });</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  }</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">  res</span><span style="color:var(--astro-code-foreground)">.</span><span style="color:var(--astro-code-token-constant)">locals</span><span style="color:var(--astro-code-foreground)">.variant </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-foreground)"> variant;   </span><span style="color:var(--astro-code-token-comment)">// Template rendert direkt die richtige Variante</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">  next</span><span style="color:var(--astro-code-foreground)">();</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// Client: Zuteilung als Event melden, wenn die Variante sichtbar ist</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">track</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"experiment_view"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> { experiment</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-string-expression)"> "cta_text"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> variant });</span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://expressjs.com/en/api.html#res.cookie" target="_blank" rel="noopener">res.cookie (Express, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Ein A/B-Test ist ein Experiment mit zwei Gruppen. Wechselt ein Teilnehmer bei jedem Besuch die Gruppe, weißt du am Ende nicht mehr, welche Variante gewirkt hat. Die Zuteilung muss so fest sein wie eine Namensliste.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Bei <code>Math.random()</code> pro Seitenaufruf sieht dieselbe Person mal A, mal B. Die Ergebnisse vermischen sich.</li><li>Die Zuteilung wird einmal getroffen und gespeichert, z.B. im Cookie oder anhand einer gehashten Nutzer-ID.</li><li>Serverseitig ausgeliefert gibt es kein Flackern. Clientseitige Tests tauschen Inhalte erst nach dem Laden aus, und Besucher sehen kurz die Originalvariante.</li><li>Das <code>experiment_view</code>-Event zählt nur Besucher, die die Variante wirklich gesehen haben. Wer nie bis zum Button scrollt, gehört nicht in die Auswertung.</li><li>Auch das Test-Cookie braucht eine rechtliche Grundlage. Kläre mit dem Datenschutz, ob dafür eine Einwilligung nötig ist.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Test mitten im Lauf ändern, z.B. die Variante B nachbessern. Dann vergleichst du ab da etwas anderes, und die gesammelten Daten passen nicht mehr zusammen.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Wenige, gut begründete Tests mit großer Änderung bringen mehr als viele kleine. Für einen A/A-Test (zweimal dieselbe Variante) lohnt sich ein Probelauf: Zeigt er einen „Gewinner“, stimmt etwas am Aufbau nicht.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Warum misst du <code>experiment_view</code> und nicht einfach alle Seitenaufrufe?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Weil nur Besucher, die die Variante gesehen haben, von ihr beeinflusst werden konnten. Alle anderen verwässern das Ergebnis.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-messen-5">
+  <div class="card-main">
+    <h3>Statistikfallen: Stichprobengröße und Peeking<a class="anchor" href="#cro-messen-5" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Wer täglich auf das Dashboard schaut und bei „signifikant“ stoppt, findet fast immer einen Gewinner, auch wenn es keinen gibt.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// Tag 3: "B liegt 18 % vorne, p &#x3C; 0.05 – fertig, B gewinnt!"</span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// Vorher festlegen: Wie viele Besucher pro Variante?</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// Faustregel (Signifikanz 5 %, Power 80 %):</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">//   n ≈ 16 · p · (1 − p) / δ²</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> sampleSize</span><span style="color:var(--astro-code-foreground)">(baseRate</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> minEffect) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  const</span><span style="color:var(--astro-code-token-constant)"> delta</span><span style="color:var(--astro-code-token-keyword)"> =</span><span style="color:var(--astro-code-foreground)"> baseRate </span><span style="color:var(--astro-code-token-keyword)">*</span><span style="color:var(--astro-code-foreground)"> minEffect;          </span><span style="color:var(--astro-code-token-comment)">// absoluter Unterschied</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  return</span><span style="color:var(--astro-code-token-constant)"> Math</span><span style="color:var(--astro-code-token-function)">.ceil</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-constant)">16</span><span style="color:var(--astro-code-token-keyword)"> *</span><span style="color:var(--astro-code-foreground)"> baseRate </span><span style="color:var(--astro-code-token-keyword)">*</span><span style="color:var(--astro-code-foreground)"> (</span><span style="color:var(--astro-code-token-constant)">1</span><span style="color:var(--astro-code-token-keyword)"> -</span><span style="color:var(--astro-code-foreground)"> baseRate) </span><span style="color:var(--astro-code-token-keyword)">/</span><span style="color:var(--astro-code-foreground)"> delta </span><span style="color:var(--astro-code-token-keyword)">**</span><span style="color:var(--astro-code-token-constant)"> 2</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">sampleSize</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-constant)">0.03</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-constant)"> 0.10</span><span style="color:var(--astro-code-foreground)">);   </span><span style="color:var(--astro-code-token-comment)">// 3 % Basis, +10 % relativ</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// -> 51.734 Besucher pro Variante</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// Test erst danach auswerten, mindestens volle Wochen laufen lassen</span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.evanmiller.org/how-not-to-run-an-ab-test.html" target="_blank" rel="noopener">How Not To Run an A/B Test (Evan Miller, EN)</a><a href="https://www.evanmiller.org/ab-testing/sample-size.html" target="_blank" rel="noopener">Stichprobenrechner (Evan Miller, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Peeking ist wie ein Münzwurf-Wettbewerb, bei dem du aufhörst, sobald Kopf zufällig vorne liegt. Wenn du nur oft genug nachschaust, liegt irgendwann jede Seite einmal vorn.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Ein p-Wert unter 0,05 bedeutet nur dann 5 % Irrtumswahrscheinlichkeit, wenn du genau einmal am geplanten Ende auswertest.</li><li>Wer zwischendurch immer wieder prüft und beim ersten „signifikanten“ Ergebnis stoppt, erhöht die Fehlerquote stark. Evan Miller zeigt, dass aus 5 % so schnell über 25 % werden.</li><li>Die Faustregel berechnet, wie viele Besucher pro Variante nötig sind, um einen bestimmten Unterschied zuverlässig zu erkennen.</li><li>Kleine Effekte brauchen riesige Stichproben. Bei 3 % Conversion und +10 % relativem Effekt sind es über 50.000 Besucher pro Variante.</li><li>Tests sollten volle Wochen laufen, weil sich Besucher am Wochenende anders verhalten als unter der Woche.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Auf einer Seite mit 500 Besuchern pro Woche A/B-Tests für kleine Textänderungen fahren. Das Ergebnis ist fast immer Zufall. Mit wenig Traffic lernst du mehr aus Nutzertests mit fünf Personen.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Stichprobe und Laufzeit vor dem Start festlegen und im Hypothesen-Dokument notieren. Für genaue Werte einen Rechner wie den von Evan Miller benutzen, die Faustregel dient nur zur Abschätzung.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Dein Test hat nach zwei Tagen ein signifikantes Ergebnis, geplant waren vier Wochen. Was tust du?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Weiterlaufen lassen. Ein frühes signifikantes Ergebnis ist bei häufigem Nachsehen sehr oft Zufall.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article>
+            </div>
+          </section><section id="inhalt">
+            <h2>
+              Seiteninhalte <span class="tag">content</span>
+            </h2>
+            <p class="sub">Was auf der Seite steht und wo es steht. Auch hier entscheidest du als Entwickler oft mit.</p>
+            <div class="grid">
+              <article class="card" id="cro-inhalt-1">
+  <div class="card-main">
+    <h3>Button-Texte, die sagen, was passiert<a class="anchor" href="#cro-inhalt-1" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Ein Button-Text sollte das Ergebnis des Klicks beschreiben, nicht die Mechanik.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Absenden&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Hier klicken&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/demo"</span><span style="color:var(--astro-code-foreground)">>Mehr&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Kostenlos registrieren&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Angebot anfordern&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/demo"</span><span style="color:var(--astro-code-foreground)">>Live-Demo ansehen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hint"</span><span style="color:var(--astro-code-foreground)">>14 Tage kostenlos, keine Kreditkarte nötig.&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://developer.mozilla.org/de/docs/Learn_web_development/Core/Accessibility/HTML" target="_blank" rel="noopener">HTML und Barrierefreiheit (MDN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Ein Button ist ein Versprechen. „Absenden“ verspricht nichts, außer dass Daten irgendwohin gehen. „Angebot anfordern“ sagt, was man dafür bekommt.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Gute Button-Texte beginnen mit einem Verb und beschreiben das Ergebnis aus Sicht des Nutzers.</li><li>Mehrdeutige Texte wie „Mehr“ oder „Hier klicken“ sind auch für Screenreader-Nutzer ein Problem, wenn sie sich alle Links auflisten lassen.</li><li>Ein kurzer Satz direkt am Button kann die größte Sorge beantworten: Kosten, Verpflichtung, Aufwand.</li><li>Texte sind leicht zu testen und haben oft mehr Wirkung als Farben oder Größen.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Clevere oder lustige Texte, die niemand versteht, z.B. „Los geht's!“ auf einem Bezahl-Button. Bei Bestellungen in Deutschland ist die Beschriftung sogar gesetzlich geregelt, siehe Karte „Bestell-Button“.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Klickrate auf den Button und Abschlussrate des nächsten Schritts. Steigen die Klicks, aber nicht die Abschlüsse, hat der Text mehr versprochen, als die nächste Seite hält.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Welcher Text passt besser auf den Button eines Newsletter-Formulars: „Abonnieren“ oder „Wöchentliche Tipps erhalten“?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>„Wöchentliche Tipps erhalten“, weil er Inhalt und Häufigkeit nennt. Beides beantwortet die Frage, was man sich einhandelt.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-inhalt-2">
+  <div class="card-main">
+    <h3>Ein klarer Hauptbutton<a class="anchor" href="#cro-inhalt-2" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Mehrere gleich starke Buttons nebeneinander zwingen zum Nachdenken. Visuelle Hierarchie zeigt, was der nächste Schritt ist.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"actions"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn"</span><span style="color:var(--astro-code-foreground)">>Jetzt kaufen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn"</span><span style="color:var(--astro-code-foreground)">>Merken&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn"</span><span style="color:var(--astro-code-foreground)">>Teilen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn"</span><span style="color:var(--astro-code-foreground)">>Vergleichen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"actions"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn btn-primary"</span><span style="color:var(--astro-code-foreground)">>In den Warenkorb&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn btn-ghost"</span><span style="color:var(--astro-code-foreground)">>Merken&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">style</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">  .btn-primary</span><span style="color:var(--astro-code-foreground)"> { </span><span style="color:var(--astro-code-token-constant)">background</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-function)"> var</span><span style="color:var(--astro-code-token-constant)">(--brand)</span><span style="color:var(--astro-code-foreground)">; </span><span style="color:var(--astro-code-token-constant)">color</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> white</span><span style="color:var(--astro-code-foreground)">; </span><span style="color:var(--astro-code-token-constant)">font-weight</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 600</span><span style="color:var(--astro-code-foreground)">; }</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">  .btn-ghost</span><span style="color:var(--astro-code-foreground)">   { </span><span style="color:var(--astro-code-token-constant)">background</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> transparent</span><span style="color:var(--astro-code-foreground)">; </span><span style="color:var(--astro-code-token-constant)">border</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> 1</span><span style="color:var(--astro-code-token-keyword)">px</span><span style="color:var(--astro-code-token-constant)"> solid currentColor</span><span style="color:var(--astro-code-foreground)">; }</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">style</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.nngroup.com/articles/visual-hierarchy-ux-definition/" target="_blank" rel="noopener">Visual Hierarchy (NN/g, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Ein Hauptbutton ist ein Wegweiser mit einem großen Schild für den Hauptweg und kleinen Schildern für Nebenwege. Stehen vier gleich große Schilder da, bleibt man stehen und liest.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Pro Bildschirmbereich gibt es einen primären Button, der sich durch Farbe, Füllung und Gewicht abhebt.</li><li>Nebenaktionen werden zurückhaltend gestaltet: als Rahmen-Button, Textlink oder Icon mit Beschriftung.</li><li>Die Reihenfolge folgt der Leserichtung. Der Hauptbutton steht dort, wo der Blick zuerst landet.</li><li>Sehr seltene Aktionen wandern in ein Menü, statt Platz zu belegen.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Zwei Hauptbuttons mit unterschiedlichen Zielen nebeneinander, z.B. „Jetzt kaufen“ und „Newsletter abonnieren“. Sie konkurrieren um dieselbe Aufmerksamkeit.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Klickverteilung auf die Buttons, z.B. per Event mit <code>location</code>-Parameter, und die Rate des Hauptziels. Eine Heatmap zeigt zusätzlich, ob Leute auf Dinge klicken, die nicht klickbar sind.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Wie gestaltest du einen Löschen-Button in einem Bestätigungsdialog?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Als klar erkennbaren Button mit Warnfarbe und eindeutigem Text wie „Konto löschen“. „Abbrechen“ steht daneben als ruhigere Option.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-inhalt-3">
+  <div class="card-main">
+    <h3>Kosten und Vertrauen früh zeigen<a class="anchor" href="#cro-inhalt-3" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Überraschende Zusatzkosten sind laut Baymard der häufigste Grund für Kaufabbrüche. Was Sorgen macht, gehört an den Ort der Entscheidung.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Produktseite --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"price"</span><span style="color:var(--astro-code-foreground)">>49,90 €&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>In den Warenkorb&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Versandkosten erst im 3. Checkout-Schritt --></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"price"</span><span style="color:var(--astro-code-foreground)">>49,90 € &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">small</span><span style="color:var(--astro-code-foreground)">>inkl. MwSt.&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">small</span><span style="color:var(--astro-code-foreground)">>&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"shipping"</span><span style="color:var(--astro-code-foreground)">>Kostenloser Versand ab 50 €, sonst 4,90 €&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>In den Warenkorb&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">ul</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"trust"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">li</span><span style="color:var(--astro-code-foreground)">>Lieferung in 1–3 Werktagen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">li</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">li</span><span style="color:var(--astro-code-foreground)">>30 Tage kostenlose Rückgabe&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">li</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">li</span><span style="color:var(--astro-code-foreground)">>PayPal, Klarna, Kreditkarte, Rechnung&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">li</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">ul</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank" rel="noopener">Kaufabbrüche und Gründe (Baymard, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Vertrauen ist wie Gepäck auf einer Wanderung: Jede offene Frage wiegt etwas mehr. Was kostet der Versand? Kann ich zurückschicken? Kann ich per Rechnung zahlen? Beantwortest du sie früh, wird der Rucksack leichter.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>In Baymards Befragung nennen 40 % zu hohe Zusatzkosten als Abbruchgrund, 19 % mangelndes Vertrauen beim Bezahlen und 13 % unklare Rückgaberegeln.</li><li>Gesamtkosten, Lieferzeit und Rückgabe gehören auf die Produktseite und in den Warenkorb, nicht erst ans Ende des Checkouts.</li><li>Bekannte Zahlungsarten schaffen Vertrauen, gerade in Deutschland, wo Rechnung und PayPal sehr verbreitet sind.</li><li>In Deutschland gilt zudem die Preisangabenverordnung: Endpreise inklusive Mehrwertsteuer, Versandkosten müssen angegeben sein.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Siegel, Logos und Garantien ohne echten Hintergrund einbauen. Ein erfundenes Gütesiegel schadet dem Vertrauen und ist wettbewerbswidrig.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Abbruchrate zwischen Warenkorb und Checkout-Start sowie zwischen Versand- und Zahlungsschritt. Sinkt sie nach der Änderung, hat die frühe Information gewirkt.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Wo zeigst du die Lieferzeit am besten an?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Direkt beim Preis und beim Button auf der Produktseite und noch einmal im Warenkorb, möglichst konkret wie „Lieferung bis Freitag“.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-inhalt-4">
+  <div class="card-main">
+    <h3>Social Proof, aber ehrlich<a class="anchor" href="#cro-inhalt-4" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Echte Bewertungen helfen bei der Entscheidung. Erfundene Zähler und gefälschte Knappheit sind Täuschung.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"fomo"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  🔥 &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">span</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"viewers"</span><span style="color:var(--astro-code-foreground)">>&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">span</span><span style="color:var(--astro-code-foreground)">> Personen sehen sich das gerade an!</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  // Zufallszahl, hat nichts mit echten Besuchern zu tun</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">  viewers</span><span style="color:var(--astro-code-foreground)">.textContent </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-constant)"> 12</span><span style="color:var(--astro-code-token-keyword)"> +</span><span style="color:var(--astro-code-token-constant)"> Math</span><span style="color:var(--astro-code-token-function)">.floor</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-constant)">Math</span><span style="color:var(--astro-code-token-function)">.random</span><span style="color:var(--astro-code-foreground)">() </span><span style="color:var(--astro-code-token-keyword)">*</span><span style="color:var(--astro-code-token-constant)"> 30</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">section</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"reviews"</span><span style="color:var(--astro-code-token-function)"> aria-labelledby</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"reviews-h"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"reviews-h"</span><span style="color:var(--astro-code-foreground)">>4,6 von 5 Sternen aus 312 Bewertungen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  &#x3C;!-- Daten aus der eigenen Datenbank bzw. Bewertungsplattform --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">blockquote</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    „Nach zwei Wochen im Einsatz: leise und schnell.“</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">footer</span><span style="color:var(--astro-code-foreground)">>Anna, verifizierter Kauf, 12.09.2026&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">footer</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">blockquote</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/bewertungen"</span><span style="color:var(--astro-code-foreground)">>Alle Bewertungen ansehen, auch die kritischen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">section</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.nngroup.com/articles/social-proof-ux/" target="_blank" rel="noopener">Social Proof (NN/g, EN)</a><a href="https://www.gesetze-im-internet.de/uwg_2004/__5b.html" target="_blank" rel="noopener">§ 5b UWG, Abs. 3 zu Bewertungen (gesetze-im-internet.de)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Social Proof funktioniert wie eine Schlange vor einem Restaurant: Andere vertrauen dem Laden, also kann er nicht schlecht sein. Stellt der Wirt Pappaufsteller in die Schlange, ist das Betrug, und wer es merkt, kommt nie wieder.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Menschen orientieren sich an den Entscheidungen anderer, besonders bei Unsicherheit.</li><li>Echte Bewertungen mit Datum, Kontext und auch kritischen Stimmen wirken glaubwürdiger als ausschließlich Fünf-Sterne-Bewertungen.</li><li>Erfundene Besucherzähler, falsche Countdowns oder „nur noch 2 Stück“ ohne echten Bestand sind Irreführung im Sinne des Wettbewerbsrechts (UWG).</li><li>Shops müssen in Deutschland angeben, ob und wie sie prüfen, dass Bewertungen von echten Käufern stammen.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Als Entwickler einen Fake-Zähler einbauen, weil das Marketing es so will. Das ist der Moment, um nachzufragen. Technisch ist es eine Zeile, rechtlich und für die Marke kann es teuer werden.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Conversion von Besuchern, die den Bewertungsbereich gesehen haben, gegenüber denen, die ihn nicht gesehen haben. Dafür brauchst du ein Sichtbarkeits-Event, z.B. per Intersection Observer.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Ein Countdown zeigt „Angebot endet in 10 Minuten“ und startet bei jedem Neuladen neu. Ist das in Ordnung?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Nein. Das erzeugt falsche Dringlichkeit und ist eine Irreführung. Ein Countdown muss ein echtes Ende haben.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article>
+            </div>
+          </section><section id="formulare">
+            <h2>
+              Formulare und Checkout <span class="tag">forms</span>
+            </h2>
+            <p class="sub">Formulare sind die Stelle, an der Interesse in Conversions umschlägt oder verpufft.</p>
+            <div class="grid">
+              <article class="card" id="cro-formulare-1">
+  <div class="card-main">
+    <h3>Weniger Felder<a class="anchor" href="#cro-formulare-1" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Laut Baymard kommt ein guter Checkout mit 7 bis 8 Formularfeldern aus. Der Durchschnitt liegt bei fast 15.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"anrede"</span><span style="color:var(--astro-code-foreground)">>       &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"titel"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"vorname"</span><span style="color:var(--astro-code-foreground)">>      &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"nachname"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"firma"</span><span style="color:var(--astro-code-foreground)">>        &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"strasse"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hausnummer"</span><span style="color:var(--astro-code-foreground)">>   &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"adresszusatz"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"plz"</span><span style="color:var(--astro-code-foreground)">>          &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"ort"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"land"</span><span style="color:var(--astro-code-foreground)">>         &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"telefon"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-foreground)">>        &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email2"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"geburtsdatum"</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"name"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"name"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"street"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"street-address"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"postal-code"</span><span style="color:var(--astro-code-token-function)"> inputmode</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"numeric"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"city"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"address-level2"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">details</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">summary</span><span style="color:var(--astro-code-foreground)">>Firma oder Adresszusatz hinzufügen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">summary</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"company"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"organization"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"addressLine2"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"address-line2"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">details</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank" rel="noopener">Checkout-Felder (Baymard, EN)</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Attributes/autocomplete" target="_blank" rel="noopener">autocomplete (MDN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Jedes Formularfeld ist eine kleine Hürde auf einem Hindernislauf. Zehn Hürden schaffen die meisten noch, aber bei jeder fällt jemand. Die beste Hürde ist die, die gar nicht erst aufgestellt wird.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Für jedes Feld fragen: Brauchen wir es wirklich für diese Bestellung? Geburtsdatum, Anrede und Telefon oft nicht.</li><li>Doppelte Eingaben wie E-Mail-Wiederholung sind meist überflüssig. Ein sichtbarer Wert zum Prüfen reicht.</li><li>Ein Namensfeld statt Vor- und Nachname spart ein Feld, solange das Backend nicht zwingend getrennte Werte braucht.</li><li>Selten nötige Felder wie Firma oder Adresszusatz werden hinter einem Link oder <code>&lt;details&gt;</code> versteckt.</li><li>Die Land-Auswahl lässt sich oft aus der Sprache oder IP vorbelegen, die Stadt aus der Postleitzahl.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Felder nur im Frontend entfernen, aber im Backend weiterhin als Pflicht validieren. Dann scheitert die Bestellung an einem Feld, das niemand ausfüllen konnte. Frontend- und Backend-Validierung müssen zusammenpassen.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Abschlussrate des Formulars und Abbruch pro Feld. Viele Analytics-Tools können Formular-Analysen, oder du trackst <code>field_focus</code> und <code>field_error</code> selbst.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Warum ist ein Feld „E-Mail wiederholen“ meist überflüssig?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Weil die meisten die Adresse einfach kopieren oder vom Browser ausfüllen lassen. Fehler fängt eine klare Anzeige der Adresse vor dem Absenden besser ab.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-formulare-2">
+  <div class="card-main">
+    <h3>Fehlermeldungen am Feld<a class="anchor" href="#cro-formulare-2" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Fehler sofort und am richtigen Ort zeigen, mit einer Anleitung zur Lösung.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-token-function)"> onsubmit</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"</span><span style="color:var(--astro-code-token-keyword)">if</span><span style="color:var(--astro-code-token-string-expression)"> (</span><span style="color:var(--astro-code-token-keyword)">!</span><span style="color:var(--astro-code-token-function)">valid</span><span style="color:var(--astro-code-token-string-expression)">()) { </span><span style="color:var(--astro-code-token-function)">alert</span><span style="color:var(--astro-code-token-string-expression)">('Fehler im Formular!'); </span><span style="color:var(--astro-code-token-keyword)">return</span><span style="color:var(--astro-code-token-constant)"> false</span><span style="color:var(--astro-code-token-string-expression)">; }"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Weiter&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-token-function)"> for</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip"</span><span style="color:var(--astro-code-foreground)">>Postleitzahl&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip"</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip"</span><span style="color:var(--astro-code-token-function)"> inputmode</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"numeric"</span><span style="color:var(--astro-code-token-function)"> pattern</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"[0-9]{5}"</span><span style="color:var(--astro-code-token-function)"> required</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">       aria-describedby</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip-error"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"zip-error"</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"error"</span><span style="color:var(--astro-code-token-function)"> hidden</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  Bitte eine 5-stellige Postleitzahl eingeben, z.B. 10115.</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">  zip</span><span style="color:var(--astro-code-token-function)">.addEventListener</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"blur"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> () </span><span style="color:var(--astro-code-token-keyword)">=></span><span style="color:var(--astro-code-foreground)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    const</span><span style="color:var(--astro-code-token-constant)"> ok</span><span style="color:var(--astro-code-token-keyword)"> =</span><span style="color:var(--astro-code-token-constant)"> zip</span><span style="color:var(--astro-code-token-function)">.checkValidity</span><span style="color:var(--astro-code-foreground)">();</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    document</span><span style="color:var(--astro-code-token-function)">.getElementById</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"zip-error"</span><span style="color:var(--astro-code-foreground)">).hidden </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-foreground)"> ok;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    zip</span><span style="color:var(--astro-code-token-function)">.setAttribute</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"aria-invalid"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-function)"> String</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-keyword)">!</span><span style="color:var(--astro-code-foreground)">ok));</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  });</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://developer.mozilla.org/de/docs/Learn_web_development/Extensions/Forms/Form_validation" target="_blank" rel="noopener">Formularvalidierung (MDN)</a><a href="/cheatsheet-hub/html/#formulare">HTML-Spickzettel: Formulare</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Eine gute Fehlermeldung ist wie ein Navi, das sagt: „Hier links abbiegen.“ Eine schlechte ist ein Warnton ohne Erklärung, und man weiß nicht einmal, welche Abzweigung falsch war.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Fehler direkt am betroffenen Feld zeigen, nicht oben im Formular oder als <code>alert</code>.</li><li>Der Text sagt, was erwartet wird und gibt ein Beispiel, statt nur „ungültig“ zu melden.</li><li>Geprüft wird beim Verlassen des Feldes (<code>blur</code>), nicht bei jedem Tastendruck. Sonst erscheint der Fehler schon, während man noch tippt.</li><li><code>aria-describedby</code> verknüpft die Meldung mit dem Feld, sodass Screenreader sie vorlesen. <code>aria-invalid</code> markiert das Feld als fehlerhaft.</li><li>Bereits eingegebene Daten bleiben nach einem Fehler erhalten. Ein leeres Formular nach dem Absenden ist einer der häufigsten Abbruchgründe.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Fehler nur über Farbe anzeigen, z.B. einen roten Rahmen. Wer Farben schlecht unterscheiden kann oder einen Screenreader nutzt, sieht den Fehler nicht. Es braucht immer auch Text.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Anzahl der Fehler pro Feld als Event (<code>form_error</code> mit Feldname). Felder mit vielen Fehlern sind Kandidaten für bessere Hinweise, ein anderes Eingabeformat oder ganz zum Streichen.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Wann sollte die Fehlermeldung wieder verschwinden?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Sobald die Eingabe korrekt ist, also beim nächsten <code>input</code>- oder <code>blur</code>-Event mit gültigem Wert. Nicht erst beim erneuten Absenden.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-formulare-3">
+  <div class="card-main">
+    <h3>Gastbestellung erlauben<a class="anchor" href="#cro-formulare-3" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Eine Pflicht zur Kontoerstellung nennen in Baymards Befragung 18 % als Abbruchgrund. Das Konto kann nach der Bestellung angeboten werden.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Checkout-Schritt 1 --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">>Bitte melde dich an oder registriere dich&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-token-function)"> action</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/login"</span><span style="color:var(--astro-code-foreground)">>...&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-token-function)"> action</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/register"</span><span style="color:var(--astro-code-foreground)">>...&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Checkout-Schritt 1 --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">>Wie möchtest du bestellen?&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn btn-primary"</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/checkout/guest"</span><span style="color:var(--astro-code-foreground)">>Als Gast bestellen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn btn-ghost"</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/login?next=/checkout"</span><span style="color:var(--astro-code-foreground)">>Anmelden&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Bestätigungsseite: E-Mail und Adresse liegen schon vor --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-token-function)"> action</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/account/create"</span><span style="color:var(--astro-code-token-function)"> method</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"post"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">>Passwort für dein Kundenkonto (optional)</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"password"</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"password"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"new-password"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Konto anlegen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">form</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank" rel="noopener">Kaufabbrüche und Gründe (Baymard, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Eine Kontopflicht vor dem Kauf ist wie ein Laden, in dem man erst eine Kundenkarte beantragen muss, bevor man an die Kasse darf. Ein Konto nach dem Kauf ist die freundliche Frage an der Kasse: „Möchten Sie Punkte sammeln?“</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Gastbestellung als gleichwertige oder hervorgehobene Option anbieten.</li><li>Für Bestandskunden bleibt die Anmeldung einen Klick entfernt.</li><li>Nach der Bestellung liegen Name, E-Mail und Adresse bereits vor. Für ein Konto fehlt nur noch ein Passwort.</li><li>Im Backend muss eine Bestellung ohne <code>userId</code> möglich sein. Die E-Mail-Adresse wird dann zum Schlüssel, um eine spätere Kontoerstellung mit der Bestellung zu verknüpfen.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Die Gastoption verstecken, z.B. als kleinen grauen Link unter einem großen Registrierungsformular. Wer sie nicht findet, bricht genauso ab wie ohne Gastoption.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Abbruchrate auf dem ersten Checkout-Schritt und Anteil der Gastbestellungen. Zusätzlich: Wie viele Gäste legen nach der Bestellung ein Konto an?</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Welche Daten brauchst du, um eine Gastbestellung später einem neuen Konto zuzuordnen?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Die E-Mail-Adresse. Nach Bestätigung der Adresse kann das Backend frühere Gastbestellungen mit derselben E-Mail dem Konto zuordnen.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article>
+            </div>
+          </section><section id="performance">
+            <h2>
+              Ladezeit <span class="tag">speed</span>
+            </h2>
+            <p class="sub">Langsame Seiten verlieren Besucher, bevor sie überhaupt etwas sehen. Hier ist Entwicklerarbeit Conversion-Arbeit.</p>
+            <div class="grid">
+              <article class="card" id="cro-performance-1">
+  <div class="card-main">
+    <h3>Core Web Vitals echt messen<a class="anchor" href="#cro-performance-1" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Lighthouse auf dem eigenen Laptop ist ein Labortest. Entscheidend ist, wie schnell die Seite bei echten Besuchern ist.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-comment)">// Nur lokal: Lighthouse im schnellen Entwickler-Laptop</span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">// "Performance 98 – passt!"</span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:var(--astro-code-token-keyword)">import</span><span style="color:var(--astro-code-foreground)"> { onLCP</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> onINP</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-foreground)"> onCLS } </span><span style="color:var(--astro-code-token-keyword)">from</span><span style="color:var(--astro-code-token-string-expression)"> "web-vitals"</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">function</span><span style="color:var(--astro-code-token-function)"> send</span><span style="color:var(--astro-code-foreground)">(metric) {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">  navigator</span><span style="color:var(--astro-code-token-function)">.sendBeacon</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"/api/vitals"</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-constant)"> JSON</span><span style="color:var(--astro-code-token-function)">.stringify</span><span style="color:var(--astro-code-foreground)">({</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    name</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> metric</span><span style="color:var(--astro-code-foreground)">.name</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-comment)">          // "LCP" | "INP" | "CLS"</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    value</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> metric</span><span style="color:var(--astro-code-foreground)">.value</span><span style="color:var(--astro-code-token-punctuation)">,</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    rating</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> metric</span><span style="color:var(--astro-code-foreground)">.rating</span><span style="color:var(--astro-code-token-punctuation)">,</span><span style="color:var(--astro-code-token-comment)">      // "good" | "needs-improvement" | "poor"</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">    page</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> location</span><span style="color:var(--astro-code-foreground)">.pathname</span><span style="color:var(--astro-code-token-punctuation)">,</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  }));</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">onLCP</span><span style="color:var(--astro-code-foreground)">(send);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">onINP</span><span style="color:var(--astro-code-foreground)">(send);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">onCLS</span><span style="color:var(--astro-code-foreground)">(send);</span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://web.dev/articles/vitals" target="_blank" rel="noopener">Core Web Vitals (web.dev, EN)</a><a href="https://github.com/GoogleChrome/web-vitals" target="_blank" rel="noopener">web-vitals (GitHub, EN)</a><a href="https://developer.mozilla.org/de/docs/Web/API/Navigator/sendBeacon" target="_blank" rel="noopener">sendBeacon (MDN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Lighthouse ist ein Probelauf im Trainingsraum. Echte Besucher laufen draußen, bei Regen, mit altem Handy und schlechtem Netz. Erst die Messung im Feld zeigt, wie es ihnen wirklich geht.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Die drei Core Web Vitals: LCP (Ladezeit des größten Inhalts, gut bis 2,5 s), INP (Reaktionszeit auf Eingaben, gut bis 200 ms) und CLS (Layoutverschiebungen, gut bis 0,1).</li><li>Bewertet wird das 75. Perzentil aller Seitenaufrufe, getrennt nach Mobil und Desktop. Drei von vier Besuchern sollen also eine gute Erfahrung haben.</li><li>Die Bibliothek <code>web-vitals</code> misst die Werte im Browser echter Besucher (Real User Monitoring).</li><li><code>sendBeacon</code> schickt die Daten auch dann zuverlässig, wenn die Seite gerade verlassen wird.</li><li>Im Backend speicherst du die Werte und wertest das 75. Perzentil pro Seite aus.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Nur am eigenen Rechner mit Glasfaser testen. Für einen realistischen Labortest in den Chrome-Entwicklertools die Netzwerk- und CPU-Drosselung einschalten.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Pro Seitentyp (Startseite, Produktseite, Checkout) das 75. Perzentil von LCP, INP und CLS beobachten. Öffentliche Felddaten für größere Seiten liefert PageSpeed Insights aus dem Chrome UX Report.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Warum zählt das 75. Perzentil und nicht der Durchschnitt?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Weil ein Durchschnitt gute Werte vieler schneller Besuche mit sehr schlechten Werten weniger Besuche verrechnet. Das 75. Perzentil stellt sicher, dass die große Mehrheit eine gute Erfahrung hat.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-performance-2">
+  <div class="card-main">
+    <h3>Das Hauptbild schnell laden (LCP)<a class="anchor" href="#cro-performance-2" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Das größte Element im sichtbaren Bereich, meist ein Hero-Bild, bestimmt den LCP. Es braucht Vorrang statt Verzögerung.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">img</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hero-2400.jpg"</span><span style="color:var(--astro-code-token-function)"> alt</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"..."</span><span style="color:var(--astro-code-token-function)"> loading</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"lazy"</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">link</span><span style="color:var(--astro-code-token-function)"> rel</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"preload"</span><span style="color:var(--astro-code-token-function)"> as</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"image"</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hero-1200.avif"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">      imagesrcset</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hero-800.avif 800w, hero-1200.avif 1200w"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">      imagesizes</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"100vw"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">img</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hero-1200.avif"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">     srcset</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"hero-800.avif 800w, hero-1200.avif 1200w"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">     sizes</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"100vw"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">     width</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"1200"</span><span style="color:var(--astro-code-token-function)"> height</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"600"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">     fetchpriority</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"high"</span></span>
+<span class="line"><span style="color:var(--astro-code-token-function)">     alt</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"..."</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://web.dev/articles/optimize-lcp" target="_blank" rel="noopener">LCP optimieren (web.dev, EN)</a><a href="https://developer.mozilla.org/de/docs/Web/HTML/Element/img#fetchpriority" target="_blank" rel="noopener">fetchpriority (MDN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Der Browser lädt Dinge in einer Warteschlange. Das Hauptbild ist der wichtigste Gast, und <code>fetchpriority=&quot;high&quot;</code> ist der VIP-Eingang. <code>loading=&quot;lazy&quot;</code> schickt ihn dagegen ans Ende der Schlange.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li><code>loading=&quot;lazy&quot;</code> beim Hauptbild verzögert genau das Element, das den LCP bestimmt.</li><li><code>fetchpriority=&quot;high&quot;</code> sagt dem Browser, dass dieses Bild vor anderen Ressourcen geladen werden soll.</li><li><code>&lt;link rel=&quot;preload&quot;&gt;</code> im <code>&lt;head&gt;</code> startet den Download, bevor der Browser das <code>&lt;img&gt;</code> im HTML erreicht. Das hilft vor allem bei Bildern, die per CSS oder JavaScript eingebunden werden.</li><li>Moderne Formate wie AVIF oder WebP und eine passende Größe per <code>srcset</code> sparen oft mehr als die Hälfte der Datenmenge.</li><li><code>width</code> und <code>height</code> reservieren den Platz und verhindern einen Layout Shift.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das Hauptbild per JavaScript nachladen, z.B. in einem Slider, der erst nach dem Framework-Start initialisiert wird. Dann wartet der LCP auf das ganze JavaScript.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>LCP-Wert und LCP-Element im Performance-Panel der Chrome-Entwicklertools prüfen. Dort steht, welches Element als größtes gilt und wie lange es gedauert hat.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Ein Hero hat ein Hintergrundbild per CSS <code>background-image</code>. Wie beschleunigst du es?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Mit <code>&lt;link rel=&quot;preload&quot; as=&quot;image&quot; href=&quot;…&quot; fetchpriority=&quot;high&quot;&gt;</code> im <code>&lt;head&gt;</code>. Sonst entdeckt der Browser das Bild erst, nachdem er das CSS geladen und ausgewertet hat.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-performance-3">
+  <div class="card-main">
+    <h3>Springende Seiten vermeiden (CLS)<a class="anchor" href="#cro-performance-3" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Wenn Inhalte beim Laden verrutschen, klicken Besucher daneben. Platz für spät ladende Elemente wird vorher reserviert.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"banner"</span><span style="color:var(--astro-code-foreground)">>&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">>   </span><span style="color:var(--astro-code-token-comment)">&#x3C;!-- wird per JS mit 120px Inhalt gefüllt --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">img</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"produkt.jpg"</span><span style="color:var(--astro-code-token-function)"> alt</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"..."</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>In den Warenkorb&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"banner"</span><span style="color:var(--astro-code-token-function)"> style</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"min-height: 120px"</span><span style="color:var(--astro-code-foreground)">>&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">img</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"produkt.jpg"</span><span style="color:var(--astro-code-token-function)"> alt</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"..."</span><span style="color:var(--astro-code-token-function)"> width</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"800"</span><span style="color:var(--astro-code-token-function)"> height</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"800"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>In den Warenkorb&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">style</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  /* Webfont mit ähnlicher Ersatzschrift, damit Text nicht springt */</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  @font-face</span><span style="color:var(--astro-code-foreground)"> {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    font-family</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-string-expression)"> "Brand"</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    src</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-function)"> url</span><span style="color:var(--astro-code-token-constant)">(</span><span style="color:var(--astro-code-token-string-expression)">"brand.woff2"</span><span style="color:var(--astro-code-token-constant)">) </span><span style="color:var(--astro-code-token-function)">format</span><span style="color:var(--astro-code-token-constant)">(</span><span style="color:var(--astro-code-token-string-expression)">"woff2"</span><span style="color:var(--astro-code-token-constant)">)</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    font-display</span><span style="color:var(--astro-code-token-keyword)">:</span><span style="color:var(--astro-code-token-constant)"> swap</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  }</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">style</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://web.dev/articles/optimize-cls" target="_blank" rel="noopener">CLS optimieren (web.dev, EN)</a><a href="/cheatsheet-hub/css/#responsive">CSS-Spickzettel: aspect-ratio</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Ein Layout Shift ist wie ein Tisch, an den sich plötzlich jemand dazwischen setzt: Alle rutschen, und dein Teller landet beim Nachbarn. Wer vorher einen Stuhl freihält, verhindert das Rutschen.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>CLS misst, wie stark sichtbare Elemente sich unerwartet verschieben. Gut ist ein Wert bis 0,1.</li><li>Typische Ursachen: Bilder ohne Maße, nachgeladene Banner und Werbung, Webfonts mit anderer Breite, eingeblendete Hinweise oben auf der Seite.</li><li><code>width</code> und <code>height</code> an Bildern und <code>min-height</code> für nachgeladene Bereiche reservieren den Platz vorab.</li><li>Cookie-Banner und Hinweise als Overlay unten einblenden statt oben in den Inhalt einzuschieben.</li><li>Verschiebungen direkt nach einer Nutzeraktion, z.B. beim Aufklappen, zählen nicht als CLS.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Ein Banner „Kostenloser Versand ab 50 €“ nachträglich oben einfügen. Genau dann rutscht der „In den Warenkorb“-Button weg, während jemand darauf tippen will.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>CLS im Feld mit <code>web-vitals</code> messen. Im Chrome-Performance-Panel zeigt die Spur „Layout Shifts“, welches Element sich verschoben hat und warum.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Ein Bild hat <code>width=&quot;800&quot; height=&quot;800&quot;</code>, wird aber per CSS mit <code>width: 100%</code> angezeigt. Springt es trotzdem?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Nein, solange im CSS auch <code>height: auto</code> gilt. Der Browser berechnet aus den Attributen das Seitenverhältnis und reserviert den passenden Platz.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article>
+            </div>
+          </section><section id="recht">
+            <h2>
+              Rechtliches in Deutschland <span class="tag">recht</span>
+            </h2>
+            <p class="sub">Was Shops und Websites in Deutschland beachten müssen. Kein Rechtsrat, aber die Punkte, die du als Entwickler kennen solltest.</p>
+            <div class="grid">
+              <article class="card" id="cro-recht-1">
+  <div class="card-main">
+    <h3>Der Bestell-Button<a class="anchor" href="#cro-recht-1" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Nach § 312j Abs. 3 BGB muss der Bestell-Button eindeutig auf die Zahlungspflicht hinweisen. Sonst kommt kein wirksamer Vertrag zustande.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Bestellen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Weiter zur Zahlung&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Jetzt kostenlos testen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>   </span><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Abo wird danach kostenpflichtig --></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">section</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"summary"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">>Deine Bestellung&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  &#x3C;!-- Artikel, Gesamtpreis inkl. MwSt., Versand, Laufzeit bei Abos --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">section</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"submit"</span><span style="color:var(--astro-code-foreground)">>Zahlungspflichtig bestellen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.gesetze-im-internet.de/bgb/__312j.html" target="_blank" rel="noopener">§ 312j BGB (gesetze-im-internet.de)</a><a href="https://www.cr-online.de/blog/2025/02/14/die-button-loesung-im-online-handel-aktuelle-anforderungen-und-rechtliche-vorgaben/" target="_blank" rel="noopener">Button-Lösung: aktuelle Rechtsprechung (CR-online)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Der Bestell-Button ist die Unterschrift unter einem Vertrag. Das Gesetz verlangt, dass auf dem Stift steht, dass die Unterschrift Geld kostet.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Der Gesetzeswortlaut nennt „zahlungspflichtig bestellen“ oder eine entsprechend eindeutige Formulierung.</li><li>Gerichte haben u.a. „Bestellen“, „Bestellung abschicken“, „Abonnieren“, „Bezahlen“ und „Jetzt anmelden“ als nicht ausreichend bewertet.</li><li>Bei kostenlosen Testphasen, die in ein bezahltes Abo übergehen, muss die Zahlungspflicht ebenfalls auf dem Button erkennbar sein.</li><li>Direkt vor dem Button muss eine Zusammenfassung mit den wesentlichen Merkmalen, dem Gesamtpreis und bei Abos der Laufzeit stehen.</li><li>Bei einem Verstoß kommt laut Gesetz kein Vertrag zustande. Zusätzlich drohen Abmahnungen.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Button-Text im Rahmen eines A/B-Tests „optimieren“, z.B. zu „Jetzt loslegen“. Die gesetzliche Beschriftung ist nicht verhandelbar und gehört aus jedem Test heraus.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Hier wird nicht gemessen, sondern geprüft: Steht auf jedem Button, der einen kostenpflichtigen Vertrag auslöst, eine eindeutige Formulierung? Das gilt auch für Upgrades und In-App-Käufe.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Ist „Kostenpflichtig bestellen“ ebenfalls in Ordnung?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Ja, das gilt als entsprechend eindeutige Formulierung. Im Zweifel ist „zahlungspflichtig bestellen“ als Gesetzeswortlaut die sicherste Wahl.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-recht-2">
+  <div class="card-main">
+    <h3>Fairer Consent-Banner<a class="anchor" href="#cro-recht-2" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Nach § 25 TDDDG brauchen nicht notwendige Cookies und Tracking eine Einwilligung. Ablehnen muss so einfach sein wie Zustimmen.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cookie-banner"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"big-green"</span><span style="color:var(--astro-code-foreground)">>Alle akzeptieren&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"tiny-grey"</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/einstellungen"</span><span style="color:var(--astro-code-foreground)">>Einstellungen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Tracking läuft schon vor der Entscheidung --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"https://www.googletagmanager.com/gtag/js?id=G-XXXX"</span><span style="color:var(--astro-code-foreground)">>&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cookie-banner"</span><span style="color:var(--astro-code-token-function)"> role</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"dialog"</span><span style="color:var(--astro-code-token-function)"> aria-labelledby</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cb-title"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cb-title"</span><span style="color:var(--astro-code-foreground)">>Darf ich Statistiken erheben?&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">h2</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">>Hilft mir, die Seite zu verbessern. &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/datenschutz"</span><span style="color:var(--astro-code-foreground)">>Details&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">>&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> data-consent</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"reject"</span><span style="color:var(--astro-code-foreground)">>Ablehnen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> data-consent</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"accept"</span><span style="color:var(--astro-code-foreground)">>Akzeptieren&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">  // Tracking erst nach Zustimmung laden</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  function</span><span style="color:var(--astro-code-token-function)"> loadAnalytics</span><span style="color:var(--astro-code-foreground)">() {</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">    const</span><span style="color:var(--astro-code-token-constant)"> s</span><span style="color:var(--astro-code-token-keyword)"> =</span><span style="color:var(--astro-code-token-constant)"> document</span><span style="color:var(--astro-code-token-function)">.createElement</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"script"</span><span style="color:var(--astro-code-foreground)">);</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    s</span><span style="color:var(--astro-code-foreground)">.src </span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)"> "https://www.googletagmanager.com/gtag/js?id=G-XXXX"</span><span style="color:var(--astro-code-foreground)">;</span></span>
+<span class="line"><span style="color:var(--astro-code-token-constant)">    document</span><span style="color:var(--astro-code-token-function)">.</span><span style="color:var(--astro-code-token-constant)">head</span><span style="color:var(--astro-code-token-function)">.appendChild</span><span style="color:var(--astro-code-foreground)">(s);</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  }</span></span>
+<span class="line"><span style="color:var(--astro-code-token-keyword)">  if</span><span style="color:var(--astro-code-foreground)"> (</span><span style="color:var(--astro-code-token-constant)">localStorage</span><span style="color:var(--astro-code-token-function)">.getItem</span><span style="color:var(--astro-code-foreground)">(</span><span style="color:var(--astro-code-token-string-expression)">"consent"</span><span style="color:var(--astro-code-foreground)">) </span><span style="color:var(--astro-code-token-keyword)">===</span><span style="color:var(--astro-code-token-string-expression)"> "accept"</span><span style="color:var(--astro-code-foreground)">) </span><span style="color:var(--astro-code-token-function)">loadAnalytics</span><span style="color:var(--astro-code-foreground)">();</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">script</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.gesetze-im-internet.de/ttdsg/__25.html" target="_blank" rel="noopener">§ 25 TDDDG (gesetze-im-internet.de)</a><a href="https://www.e-recht24.de/datenschutz/12834-tdddg.html" target="_blank" rel="noopener">TDDDG-Überblick (eRecht24)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Ein Consent-Banner ist eine Tür mit zwei Klinken: „Ja“ und „Nein“. Sie müssen gleich groß sein und gleich leicht zu drücken. Ein „Nein“, das man erst hinter einer zweiten Tür findet, ist keine echte Wahl.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Seit Mai 2024 heißt das TTDSG Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz (TDDDG). § 25 verlangt eine Einwilligung, bevor Informationen auf dem Gerät gespeichert oder ausgelesen werden, außer sie sind unbedingt erforderlich.</li><li>Unbedingt erforderlich sind z.B. Warenkorb- oder Login-Cookies. Analyse- und Marketing-Tracking gehören nicht dazu.</li><li>Datenschutzbehörden verlangen, dass Ablehnen und Zustimmen gleichwertig angeboten werden, ohne Extra-Klicks und ohne optische Benachteiligung.</li><li>Technisch heißt das: Tracking-Skripte werden erst nach der Zustimmung geladen. Ein Skript, das schon im HTML steht, hat bereits Daten gesendet.</li><li>Die Entscheidung muss sich später ändern lassen, z.B. über einen Link im Footer.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Das Tracking-Skript direkt im <code>&lt;head&gt;</code> laden und den Banner nur zur Deko anzeigen. Im Netzwerk-Tab ist sofort zu sehen, dass Anfragen an das Tracking-Tool rausgehen, bevor jemand zugestimmt hat.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Im Netzwerk-Tab prüfen, dass vor der Zustimmung keine Anfragen an Tracking-Dienste gehen. Die Zustimmungsrate selbst kannst du zählen, ohne Personen zu tracken, z.B. als serverseitigen Zähler.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Brauchst du für ein Warenkorb-Cookie eine Einwilligung?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Nein. Ohne das Cookie funktioniert der vom Nutzer gewünschte Dienst nicht, es ist unbedingt erforderlich.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-recht-3">
+  <div class="card-main">
+    <h3>Barrierefreiheit ist seit 2025 Pflicht<a class="anchor" href="#cro-recht-3" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Seit dem 28. Juni 2025 müssen viele Onlineshops und digitale Dienste für Verbraucher nach dem BFSG barrierefrei sein.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn"</span><span style="color:var(--astro-code-token-function)"> onclick</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"</span><span style="color:var(--astro-code-token-function)">addToCart</span><span style="color:var(--astro-code-token-string-expression)">()"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">img</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cart.svg"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">div</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> placeholder</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"E-Mail"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">span</span><span style="color:var(--astro-code-token-function)"> style</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"color:#bbb"</span><span style="color:var(--astro-code-foreground)">>Nur noch heute!&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">span</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"button"</span><span style="color:var(--astro-code-token-function)"> onclick</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"</span><span style="color:var(--astro-code-token-function)">addToCart</span><span style="color:var(--astro-code-token-string-expression)">()"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">img</span><span style="color:var(--astro-code-token-function)"> src</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"cart.svg"</span><span style="color:var(--astro-code-token-function)"> alt</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">""</span><span style="color:var(--astro-code-foreground)">> In den Warenkorb</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-token-function)"> for</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-foreground)">>E-Mail&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> id</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-token-function)"> autocomplete</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"email"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"notice"</span><span style="color:var(--astro-code-foreground)">>Angebot gilt bis 31.10.2026&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">p</span><span style="color:var(--astro-code-foreground)">>   </span><span style="color:var(--astro-code-token-comment)">&#x3C;!-- ausreichender Kontrast --></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.ihk.de/stuttgart/fuer-unternehmen/recht-und-steuern/it-recht/barrierefreie-webseiten-6200594" target="_blank" rel="noopener">BFSG (IHK Stuttgart)</a><a href="/cheatsheet-hub/html/#a11y">HTML-Spickzettel: Barrierefreiheit</a><a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">WCAG 2.1 (W3C, EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Barrierefreiheit ist eine Rampe neben der Treppe. Gebaut wird sie für Rollstuhlfahrer, aber sie hilft auch allen mit Kinderwagen oder Koffer. Genauso helfen klare Labels und Tastaturbedienung allen Besuchern.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Das Barrierefreiheitsstärkungsgesetz (BFSG) gilt u.a. für Dienstleistungen im elektronischen Geschäftsverkehr mit Verbrauchern, also typische Onlineshops.</li><li>Ausgenommen sind Kleinstunternehmen, die Dienstleistungen erbringen: weniger als 10 Beschäftigte und höchstens 2 Mio. € Jahresumsatz.</li><li>Maßstab ist die Norm EN 301 549, die auf die WCAG 2.1 in Stufe AA verweist.</li><li>Verstöße können mit Bußgeldern bis 100.000 € geahndet werden.</li><li>Fast alles, was dafür nötig ist, steht im HTML-Spickzettel: echte Buttons, Labels, Alternativtexte, Tastaturbedienung, sichtbarer Fokus und ausreichender Kontrast.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Barrierefreiheit als nachträgliches Projekt behandeln oder mit einem Overlay-Plugin „nachrüsten“. Solche Overlays beheben die Ursachen nicht. Barrierefreiheit entsteht im HTML und CSS, beim Bauen.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Lighthouse und axe DevTools für automatische Prüfungen, dazu einmal die ganze Bestellung nur mit der Tastatur und einmal mit einem Screenreader durchspielen. Automatische Tests finden nur einen Teil der Probleme.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Ein Shop eines Ein-Personen-Unternehmens mit 300.000 € Umsatz: Gilt das BFSG?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Für die Dienstleistung Onlineshop greift die Ausnahme für Kleinstunternehmen. Barrierefreiheit lohnt sich trotzdem, weil sie für alle die Bedienung verbessert.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article><article class="card" id="cro-recht-4">
+  <div class="card-main">
+    <h3>Dark Patterns vermeiden<a class="anchor" href="#cro-recht-4" aria-label="Link zu dieser Karte">#</a></h3>
+    <p>Tricks, die Nutzer zu ungewollten Entscheidungen drängen, kosten Vertrauen und sind in vielen Fällen unzulässig.</p>
+    <div class="v short">
+          <span class="lbl">Vorher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"checkbox"</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"insurance"</span><span style="color:var(--astro-code-token-function)"> checked</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  Versicherung für 4,99 €/Monat</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Ja, ich will sparen!&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"tiny"</span><span style="color:var(--astro-code-foreground)">>Nein danke, ich zahle lieber den vollen Preis&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div><div class="v long">
+          <span class="lbl">Nachher</span>
+          <pre class="astro-code css-variables" style="background-color:var(--astro-code-background);color:var(--astro-code-foreground); overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  &#x3C;</span><span style="color:var(--astro-code-token-string-expression)">input</span><span style="color:var(--astro-code-token-function)"> type</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"checkbox"</span><span style="color:var(--astro-code-token-function)"> name</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"insurance"</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">  Versicherung für 4,99 €/Monat hinzufügen</span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">label</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">>Gutschein einlösen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-token-function)"> class</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"btn-ghost"</span><span style="color:var(--astro-code-foreground)">>Ohne Gutschein fortfahren&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">button</span><span style="color:var(--astro-code-foreground)">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:var(--astro-code-token-comment)">&#x3C;!-- Abos: Kündigen so leicht wie Abschließen --></span></span>
+<span class="line"><span style="color:var(--astro-code-foreground)">&#x3C;</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-token-function)"> href</span><span style="color:var(--astro-code-token-keyword)">=</span><span style="color:var(--astro-code-token-string-expression)">"/vertraege/kuendigen"</span><span style="color:var(--astro-code-foreground)">>Verträge hier kündigen&#x3C;/</span><span style="color:var(--astro-code-token-string-expression)">a</span><span style="color:var(--astro-code-foreground)">></span></span></code></pre>
+        </div>
+    
+    
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      <a href="https://www.gesetze-im-internet.de/bgb/__312k.html" target="_blank" rel="noopener">§ 312k BGB (gesetze-im-internet.de)</a><a href="https://www.deceptive.design/" target="_blank" rel="noopener">Deceptive Patterns (EN)</a>
+    </div>
+    
+  </div>
+  <details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p>Dark Patterns sind wie ein Verkäufer, der dir unauffällig etwas zusätzlich in die Tüte legt. Kurzfristig steigt der Umsatz, langfristig kommt niemand wieder.</p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol><li>Vorausgewählte kostenpflichtige Zusatzleistungen sind in der EU unzulässig. Ein Häkchen für einen Aufpreis muss der Kunde selbst setzen.</li><li>Confirmshaming macht die Ablehnung lächerlich („Nein, ich zahle lieber mehr“). Neutrale Texte für beide Optionen sind fair.</li><li>Seit Juli 2022 schreibt § 312k BGB für online abschließbare Abos einen Kündigungsbutton vor, z.B. beschriftet mit „Verträge hier kündigen“.</li><li>Weitere Muster: versteckte Kosten, erzwungene Konten, falsche Dringlichkeit und Abos, die sich nur per Brief kündigen lassen.</li><li>Der Digital Services Act der EU verbietet Online-Plattformen ausdrücklich, ihre Oberflächen so zu gestalten, dass Nutzer getäuscht oder manipuliert werden.</li></ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p>Den Erfolg eines Dark Patterns an der kurzfristigen Conversion messen. Mehr Zusatzverkäufe sehen gut aus, bis Rücksendungen, Rückbuchungen und Beschwerden dazukommen.</p></div>
+    <div class="ex-b"><h4>So misst du es</h4><p>Nicht nur Conversions messen, sondern auch Rückgaben, Kündigungen, Support-Anfragen und wiederkehrende Kunden. Faire Muster zeigen sich in diesen Zahlen langfristig besser.</p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p>Ist eine bereits angehakte Checkbox für den Newsletter erlaubt?</p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p>Nein. Eine Einwilligung muss aktiv erteilt werden, ein vorausgefülltes Häkchen reicht nach der DSGVO nicht.</p>
+      </details>
+    </div>
+  </div>
+</details>
+</article>
+            </div>
+          </section>
+
+      <aside class="infobox" id="mehr">
+            <h2>Mehr aus Marketing-Sicht</h2>
+            <p>Dieser Zettel schaut mit Entwickleraugen auf Conversion-Optimierung. Wer tiefer in Texte, Psychologie und Angebotsgestaltung einsteigen will, findet hier gute Startpunkte.</p>
+<ul>
+<li><strong>Wertversprechen zuerst.</strong> Besucher entscheiden in wenigen Sekunden, ob eine Seite für sie relevant ist. Die Überschrift sollte sagen, was man bekommt und für wen, nicht wie toll das Unternehmen ist.</li>
+<li><strong>Message Match.</strong> Die Landingpage sollte das Versprechen der Anzeige oder des Links aufgreifen, mit denselben Worten und demselben Angebot. Jeder Bruch kostet Vertrauen.</li>
+<li><strong>Einwände beantworten.</strong> Sammle die häufigsten Fragen aus Support, Vertrieb und Bewertungen und beantworte sie dort, wo sie entstehen, statt in einer versteckten FAQ.</li>
+</ul>
+<p><strong>Lesenswert:</strong></p>
+<ul>
+<li><a href="https://baymard.com/research">Baymard Institute</a>: große Studien zu E-Commerce- und Checkout-Usability (EN)</li>
+<li><a href="https://www.nngroup.com/articles/">Nielsen Norman Group</a>: fundierte UX-Artikel zu Formularen, Navigation und Inhalten (EN)</li>
+<li><a href="https://cxl.com/blog/">CXL Blog</a>: Conversion-Optimierung und Experimente aus Marketing-Sicht (EN)</li>
+<li><a href="https://goodui.org/">GoodUI</a>: Muster aus veröffentlichten A/B-Tests mit Ergebnissen (EN)</li>
+<li><a href="https://growth.design/case-studies">Growth.Design</a>: Fallstudien als Comics, kurzweilig zu Psychologie im Produktdesign (EN)</li>
+<li>Bücher: Steve Krug, „Don’t Make Me Think“ (Usability-Klassiker, auch auf Deutsch). Robert Cialdini, „Die Psychologie des Überzeugens“ (Grundlagen, mit kritischem Blick lesen). Ron Kohavi u.a., „Trustworthy Online Controlled Experiments“ (A/B-Tests richtig gemacht, EN).</li>
+</ul>
+
+          </aside>
+      <p class="empty" id="empty" hidden>Kein Konzept passt zu diesem Suchbegriff.</p>
+
+      <footer>
+        Übungsidee: Nimm ein Projekt aus deinem Kurs und schreibe einen Tracking-Plan mit fünf Events. Baue den <code>track()</code>-Wrapper mit Consent-Prüfung ein und miss die Core Web Vitals mit <code>web-vitals</code>. Formulare und Barrierefreiheit vertiefst du im HTML-Spickzettel, alle Zettel im <a href="/cheatsheet-hub/">Cheatsheet Hub</a>.
+        <br><br>
+        Weitere Zettel:
+        
+              
+              <a href="/cheatsheet-hub/html/">HTML</a>
+            
+               · 
+              <a href="/cheatsheet-hub/css/">CSS</a>
+            
+               · 
+              <a href="/cheatsheet-hub/js/">JavaScript</a>
+            
+               · 
+              <a href="/cheatsheet-hub/ts/">TypeScript</a>
+            
+               · 
+              <a href="/cheatsheet-hub/gsap/">GSAP</a>
+            
+               · 
+              <a href="/cheatsheet-hub/three/">Three.js</a>
+            
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
+  
+  </body>
+</html>
+
+<script type="module" src="/cheatsheet-hub/_astro/_sheet_.astro_astro_type_script_index_0_lang.Bpbz6JpZ.js"></script>
