@@ -17,6 +17,23 @@ code:
       font-size: 20px;
       padding: 10px 20px;
     }
+preview:
+  height: 130
+  html: |-
+    <div class="row">
+      <button class="button">Normal</button>
+      <button class="button large">Groß</button>
+    </div>
+    <p class="hint">Das Padding in em wächst mit der Schriftgröße mit.</p>
+  css: |-
+    .button {
+      font-size: 1rem;
+      padding: 0.5em 1em;
+    }
+    .button.large { font-size: 1.25rem; }
+
+    .button { background: var(--brand); color: var(--on-brand); border: 0; border-radius: 6px; }
+    .row { display: flex; gap: 12px; align-items: center; }
 explain:
   picture: "`px` ist ein Lineal mit festen Strichen. `rem` und `em` sind wie ein Gummiband, das sich mit der Schriftgröße mitdehnt."
   steps:

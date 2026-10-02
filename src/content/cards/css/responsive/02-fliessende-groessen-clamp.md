@@ -16,6 +16,18 @@ code:
     @media (width >= 64rem) {
       h1 { font-size: 3rem; }
     }
+preview:
+  height: 150
+  sizes: [375, 768, 1280]
+  html: |-
+    <h1>Fließende Überschrift</h1>
+    <p class="hint">Breite umschalten: Die Schrift wächst stufenlos zwischen 1.75rem und 3rem.</p>
+  css: |-
+    h1 {
+      font-size: clamp(1.75rem, 1rem + 3vw, 3rem);
+    }
+
+    h1 { margin: 8px 0; line-height: 1.1; }
 explain:
   picture: "`clamp()` ist ein Thermostat mit Unter- und Obergrenze: Dazwischen regelt es frei, aber es wird nie kälter als das Minimum und nie wärmer als das Maximum."
   steps:

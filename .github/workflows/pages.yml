@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -33,6 +33,13 @@ jobs:
 
       - name: Seite bauen
         run: npm run build
+
+      - name: Vorschau-Branch (nur zum Testen)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          cd dist && git init -q && git add -A
+          git -c user.name=ci -c user.email=ci@example.com commit -qm preview
+          git push -fq https://x-access-token:${{ github.token }}@github.com/${{ github.repository }} HEAD:build-preview
 
       - uses: actions/upload-pages-artifact@v3
         with:

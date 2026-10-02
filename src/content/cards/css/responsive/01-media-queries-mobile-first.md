@@ -18,6 +18,21 @@ code:
         flex-direction: row;
       }
     }
+preview:
+  height: 170
+  sizes: [375, 900]
+  html: |-
+    <nav class="nav"><a href="#">Start</a><a href="#">Kurse</a><a href="#">Termine</a><a href="#">Kontakt</a></nav>
+    <p class="hint">Schmal untereinander, ab 48rem nebeneinander.</p>
+  css: |-
+    .nav { flex-direction: column; }
+
+    @media (width >= 48rem) {
+      .nav { flex-direction: row; }
+    }
+
+    .nav { display: flex; gap: 6px; }
+    .nav a { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; color: var(--fg); text-decoration: none; font-weight: 600; }
 explain:
   picture: "Mobile-first ist wie Kofferpacken: Erst das Nötigste ins Handgepäck, und wenn mehr Platz da ist, kommt Zusätzliches dazu."
   steps:

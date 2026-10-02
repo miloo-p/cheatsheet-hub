@@ -23,6 +23,26 @@ code:
     .sidebar .card {
       flex-direction: column;
     }
+preview:
+  height: 260
+  sizes: [900, 600]
+  html: |-
+    <div class="page">
+      <section class="card-list"><div class="card"><div class="img"></div><p>Hauptspalte: breit genug, Bild neben Text</p></div></section>
+      <aside class="card-list"><div class="card"><div class="img"></div><p>Sidebar: schmal, Bild über Text</p></div></aside>
+    </div>
+    <p class="hint">Dieselbe Karte, zwei Container. Jede Karte richtet sich nach ihrem Platz.</p>
+  css: |-
+    .card-list { container-type: inline-size; }
+
+    @container (width >= 30rem) {
+      .card { flex-direction: row; }
+    }
+
+    .page { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }
+    .card { display: flex; flex-direction: column; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+    .img { flex: 0 0 auto; width: 100%; max-width: 160px; aspect-ratio: 4 / 3; border-radius: 6px; background: linear-gradient(135deg, var(--brand), #f0c35a); }
+    .card p { margin: 0; font-size: 13px; }
 explain:
   picture: "Eine Media Query fragt: Wie groß ist das Zimmer? Eine Container Query fragt: Wie groß ist der Tisch, auf dem ich stehe? Für eine Karte ist der Tisch die wichtigere Frage."
   steps:

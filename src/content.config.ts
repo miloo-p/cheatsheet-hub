@@ -94,6 +94,19 @@ const cards = defineCollection({
         js: z.string(),
       })
       .optional(),
+    /**
+     * Vorschau: html und css werden isoliert in einem eigenen Rahmen gezeigt.
+     * sizes schaltet die Breite um (in px, die erste ist der Start), replay zeigt "Neu starten".
+     */
+    preview: z
+      .object({
+        height: z.number().default(160),
+        sizes: z.array(z.number().int().positive()).min(2).optional(),
+        replay: z.boolean().default(false),
+        html: z.string(),
+        css: z.string(),
+      })
+      .optional(),
     explain: z.object({
       picture: z.string(),
       steps: z.array(z.string()).min(1),

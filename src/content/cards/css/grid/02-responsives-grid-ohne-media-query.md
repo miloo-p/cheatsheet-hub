@@ -23,6 +23,20 @@ code:
     @media (width >= 72rem) {
       .cards { grid-template-columns: repeat(4, 1fr); }
     }
+preview:
+  height: 200
+  sizes: [375, 800, 1200]
+  html: |-
+    <div class="cards"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div>
+    <p class="hint">Breite umschalten: Die Spaltenzahl passt sich ohne Media Query an.</p>
+  css: |-
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+      gap: 1rem;
+    }
+
+    .cards > div { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 8px; padding: 14px; font-weight: 600; }
 explain:
   picture: "Wie beim Fliesenlegen: Du sagst nur, wie groß eine Fliese mindestens sein soll, und der Fliesenleger rechnet selbst aus, wie viele in eine Reihe passen."
   steps:

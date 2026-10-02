@@ -1,0 +1,52 @@
+---
+/*
+ * Vorschau für CSS-Karten. Gestaltung und Markup laufen in einem eigenen Rahmen (iframe),
+ * damit Regeln wie h1 { … } oder * { … } nicht die Seite verändern und Media Queries
+ * auf die Breite der Vorschau reagieren. Basis-Variablen wie --brand stehen überall bereit.
+ */
+import { plain } from '../lib/inline';
+
+interface Props {
+  preview: { height: number; sizes?: number[]; replay: boolean; html: string; css: string };
+  title: string;
+}
+const { preview: p, title } = Astro.props;
+
+const BASE = `
+:root {
+  color-scheme: light dark;
+  --brand: #177258; --brand-dark: #0f5541; --on-brand: #fff; --accent2: #a8452a;
+  --bg: #f5f6f8; --surface: #fff; --fg: #1b2230; --muted: #5b6577; --line: #c9cfd9;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --brand: #6fd3ad; --brand-dark: #9be4c6; --on-brand: #10261f; --accent2: #f0a487;
+          --bg: #12161f; --surface: #1a202c; --fg: #e6e9ef; --muted: #9aa3b5; --line: #3a4354; }
+}
+html { background: var(--bg); color: var(--fg); font: 14px/1.5 system-ui, "Segoe UI", sans-serif; }
+body { margin: 0; padding: 12px; }
+button { font: inherit; cursor: pointer; }
+.hint { font: 11px/1.4 ui-monospace, Menlo, Consolas, monospace; color: var(--muted); }
+`;
+const doc = `<!doctype html><html lang="de"><head><meta charset="utf-8"><style>${BASE}\n${p.css}</style></head><body>${p.html}</body></html>`;
+---
+
+<div class="demo preview">
+  <div class="demo-bar">
+    <span class="lbl">Vorschau</span>
+    <div class="demo-tools">
+      {
+        p.sizes && (
+          <div class="seg" role="group" aria-label="Breite der Vorschau">
+            {p.sizes.map((w, i) => (
+              <button type="button" data-w={w} aria-pressed={String(i === 0)}>{w} px</button>
+            ))}
+          </div>
+        )
+      }
+      {p.replay && <button type="button" class="run replay">↻ Neu starten</button>}
+    </div>
+  </div>
+  <div class="stage" style={`--h:${p.height}px`}>
+    <iframe srcdoc={doc} title={`Vorschau: ${plain(title)}`} loading="lazy" sandbox=""></iframe>
+  </div>
+</div>

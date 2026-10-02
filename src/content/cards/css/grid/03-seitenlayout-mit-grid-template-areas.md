@@ -24,6 +24,30 @@ code:
     .page > aside  { grid-column: 1;     grid-row: 2; }
     .page > main   { grid-column: 2;     grid-row: 2; }
     .page > footer { grid-column: 1 / 3; grid-row: 3; }
+preview:
+  height: 210
+  sizes: [600, 900]
+  html: |-
+    <div class="page"><header>header</header><aside>sidebar</aside><main>main</main><footer>footer</footer></div>
+  css: |-
+    .page {
+      display: grid;
+      grid-template-columns: 16rem 1fr;
+      grid-template-areas:
+        "header  header"
+        "sidebar main"
+        "footer  footer";
+    }
+    .page > header { grid-area: header; }
+    .page > aside  { grid-area: sidebar; }
+    .page > main   { grid-area: main; }
+    .page > footer { grid-area: footer; }
+
+    .page { gap: 8px; grid-template-rows: auto 1fr auto; height: calc(100vh - 24px); }
+    .page > * { border-radius: 8px; padding: 10px; font: 600 12px ui-monospace, monospace; }
+    header, footer { background: var(--brand); color: var(--on-brand); }
+    aside { background: var(--surface); border: 1px solid var(--line); }
+    main { background: var(--surface); border: 2px dashed var(--brand); }
 explain:
   picture: "`grid-template-areas` ist ein Grundriss in ASCII-Art: Du zeichnest im CSS auf, welcher Raum wo liegt."
   steps:

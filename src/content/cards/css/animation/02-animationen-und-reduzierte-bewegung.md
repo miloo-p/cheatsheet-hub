@@ -30,6 +30,27 @@ code:
         animation: none;
       }
     }
+preview:
+  height: 170
+  replay: true
+  html: |-
+    <div class="toast">Gespeichert</div>
+    <div class="toast" style="animation-delay: .4s">Neue Nachricht</div>
+    <div class="toast" style="animation-delay: .8s">Upload fertig</div>
+    <p class="hint">Mit „Bewegung reduzieren“ im System erscheinen die Hinweise ohne Animation.</p>
+  css: |-
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(8px); }
+    }
+
+    .toast { animation: fade-in 300ms ease-out both; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .toast { animation: none; }
+    }
+
+    .toast { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--brand);
+             border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; max-width: 260px; box-shadow: 0 4px 12px rgb(0 0 0 / .1); }
 explain:
   picture: "`@keyframes` ist ein Daumenkino: Du zeichnest Anfangs- und Endbild, und der Browser malt die Bilder dazwischen."
   steps:

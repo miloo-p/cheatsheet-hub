@@ -16,6 +16,25 @@ code:
       padding-left: 1rem;
       padding-right: 1rem;
     }
+preview:
+  height: 170
+  sizes: [1440, 375]
+  html: |-
+    <div class="container">
+      <h2>Inhalt bleibt lesbar</h2>
+      <p>Höchstens 70rem breit und mittig. Auf schmalen Bildschirmen sorgt das Padding für Abstand zum Rand.</p>
+    </div>
+  css: |-
+    .container {
+      max-width: 70rem;
+      margin-inline: auto;
+      padding-inline: 1rem;
+    }
+
+    body { padding: 24px 0; background: repeating-linear-gradient(45deg, var(--bg) 0 10px, var(--surface) 10px 20px); }
+    .container { background: var(--surface); border-inline: 2px solid var(--brand); padding-block: 1px; }
+    h2 { margin: 12px 0 4px; font-size: 22px; }
+    p { margin: 0 0 12px; color: var(--muted); }
 explain:
   picture: "Zwei gleich starke Federn links und rechts drücken den Block in die Mitte. `auto` heißt: Nimm dir den restlichen Platz, und beide Seiten teilen ihn gerecht."
   steps:

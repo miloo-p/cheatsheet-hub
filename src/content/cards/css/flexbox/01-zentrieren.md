@@ -15,6 +15,20 @@ code:
       align-items: center;
       min-height: 60vh;
     }
+preview:
+  height: 160
+  html: |-
+    <section class="hero"><div class="box">Genau in der Mitte</div></section>
+  css: |-
+    .hero {
+      display: grid;
+      place-items: center;
+      min-height: 60vh;
+    }
+
+    body { min-height: 100vh; }
+    .hero { border: 1px dashed var(--line); border-radius: 8px; min-height: calc(100vh - 24px); }
+    .box { background: var(--brand); color: var(--on-brand); padding: 10px 16px; border-radius: 6px; font-weight: 600; }
 explain:
   picture: "Flexbox hat zwei Achsen wie ein Kreuz: Die Hauptachse läuft in Leserichtung, die Querachse quer dazu. Zentrieren heißt, auf beiden Achsen in die Mitte zu rücken."
   steps:

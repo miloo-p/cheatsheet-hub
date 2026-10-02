@@ -15,6 +15,18 @@ code:
       row-gap: 1.5rem;
       column-gap: 1.5rem;
     }
+preview:
+  height: 170
+  html: |-
+    <div class="grid"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div>
+  css: |-
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .grid > div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px; text-align: center; font-weight: 600; }
 explain:
   picture: "`fr` funktioniert wie Pizzastücke: `1fr 1fr 1fr` teilt die Pizza in drei gleiche Stücke, `2fr 1fr` gibt einer Spalte doppelt so viel."
   steps:

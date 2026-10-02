@@ -175,7 +175,7 @@
     if (!loading) loading = window.DEMO_LOADER().then(function (d) { window.DEMOS = d; return d; }, function (e) { loading = null; throw e; });
     return loading;
   }
-  document.querySelectorAll(".demo").forEach(function (box) {
+  document.querySelectorAll(".demo[data-demo]").forEach(function (box) {
     var id = box.dataset.demo, stage = box.querySelector(".stage"), btn = box.querySelector(".run");
     var tpl = box.querySelector("template");
     btn.addEventListener("click", function () {
@@ -208,5 +208,32 @@
         console.error(e);
       });
     });
+  });
+
+  /* Vorschau: Breite umschalten und auf die Bühne skalieren, Animationen neu starten */
+  document.querySelectorAll(".preview").forEach(function (box) {
+    var stage = box.querySelector(".stage"), frame = box.querySelector("iframe");
+    var sizes = Array.prototype.slice.call(box.querySelectorAll("[data-w]"));
+    var replay = box.querySelector(".replay"), width = 0;
+    function fit() {
+      if (!width) return;
+      var scale = Math.min(1, stage.clientWidth / width);
+      frame.style.width = width + "px";
+      frame.style.height = stage.clientHeight / scale + "px";
+      frame.style.transform = scale < 1 ? "scale(" + scale + ")" : "";
+    }
+    sizes.forEach(function (b) {
+      b.addEventListener("click", function () {
+        width = Number(b.dataset.w);
+        sizes.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        fit();
+      });
+    });
+    if (sizes.length) {
+      width = Number(sizes[0].dataset.w);
+      if ("ResizeObserver" in window) new ResizeObserver(fit).observe(stage);
+      fit();
+    }
+    if (replay) replay.addEventListener("click", function () { frame.srcdoc = frame.srcdoc; });
   });
 })();

@@ -19,6 +19,22 @@ code:
       margin-bottom: 24px;
       margin-left: auto;
     }
+preview:
+  height: 150
+  html: |-
+    <div class="frame">
+      <button class="button">Speichern</button>
+      <div class="next">nächstes Element, 24px darunter</div>
+    </div>
+  css: |-
+    .button {
+      padding: 8px 16px;
+      margin: 0 auto 24px;
+    }
+
+    .button { display: block; background: var(--brand); color: var(--on-brand); border: 0; border-radius: 6px; }
+    .frame { border: 1px dashed var(--line); border-radius: 6px; padding: 12px; }
+    .next { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px; text-align: center; color: var(--muted); }
 explain:
   picture: "Die Werte laufen im Uhrzeigersinn, wie ein Zeiger, der oben bei 12 Uhr startet: oben, rechts, unten, links. Merkhilfe: TRBL, ausgesprochen „Trouble“."
   steps:

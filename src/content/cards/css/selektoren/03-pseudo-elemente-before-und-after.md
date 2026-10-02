@@ -22,6 +22,20 @@ code:
 lang:
   short: "html"
   long: "html"
+preview:
+  height: 120
+  html: |-
+    <label class="required" for="mail">E-Mail</label>
+    <input id="mail" type="email" placeholder="du@beispiel.de">
+    <p class="hint">Das Sternchen steht nicht im HTML, ::after fügt es an.</p>
+  css: |-
+    .required::after {
+      content: " *";
+      color: crimson;
+    }
+
+    label { display: block; font-weight: 600; margin-bottom: 4px; }
+    input { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; width: 100%; max-width: 280px; background: var(--surface); color: var(--fg); }
 explain:
   picture: "Pseudo-Elemente sind unsichtbare Haken am Anfang und am Ende eines Elements. Mit `content` hängst du etwas daran auf."
   steps:

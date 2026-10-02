@@ -1,11 +1,12 @@
 ---
-/* Eine Karte: Titel, Beschreibung, eine oder zwei Code-Spalten, optional Live-Demo, Doku-Links und Erklärung */
+/* Eine Karte: Titel, Beschreibung, eine oder zwei Code-Spalten, optional Vorschau oder Live-Demo, Doku-Links und Erklärung */
 import { Code } from 'astro:components';
 import { render } from 'astro:content';
 import type { CardInfo, SheetInfo } from '../lib/content';
 import { inline, url } from '../lib/inline';
 import Demo from './Demo.astro';
 import Explain from './Explain.astro';
+import Preview from './Preview.astro';
 
 interface Props {
   card: CardInfo;
@@ -36,6 +37,7 @@ const Notes = hasNotes ? (await render(card.entry)).Content : null;
         </div>
       ))
     }
+    {d.preview && <Preview preview={d.preview} title={d.title} />}
     {d.demo && <Demo id={card.id} demo={d.demo} />}
     <div class="docs">
       <span class="docs-l">Doku</span>

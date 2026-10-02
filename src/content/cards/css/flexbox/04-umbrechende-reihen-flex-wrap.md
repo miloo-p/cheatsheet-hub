@@ -22,6 +22,20 @@ code:
       flex-shrink: 1;
       flex-basis: 16rem;
     }
+preview:
+  height: 200
+  sizes: [375, 800, 1200]
+  html: |-
+    <div class="cards"><div class="card">1</div><div class="card">2</div><div class="card">3</div><div class="card">4</div><div class="card">5</div></div>
+  css: |-
+    .cards {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 1rem;
+    }
+    .card { flex: 1 1 16rem; }
+
+    .card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--brand); border-radius: 8px; padding: 16px; font-weight: 600; }
 explain:
   picture: "Wie Bücher im Regal: Passt keins mehr in die Reihe, kommt das nächste aufs Brett darunter. `flex-grow` sorgt dafür, dass die Bücher einer Reihe die Lücke am Ende auffüllen."
   steps:
