@@ -38,7 +38,7 @@ const doc = `<!doctype html><html lang="de"><head><meta charset="utf-8"><style>$
         p.sizes && (
           <div class="seg" role="group" aria-label="Breite der Vorschau">
             {p.sizes.map((w, i) => (
-              <button type="button" data-w={w} aria-pressed={String(i === 0)}>{w} px</button>
+              <button type="button" data-w={w} aria-pressed={i === 0 ? 'true' : 'false'}>{w} px</button>
             ))}
           </div>
         )
