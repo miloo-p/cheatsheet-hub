@@ -1,0 +1,19 @@
+---
+/*
+ * Bühne für eine Live-Demo. Der Code der Demo steckt im Loader-Skript der Seite (siehe lib/demos.ts),
+ * die Bibliothek wird erst beim ersten Klick auf "Abspielen" geladen.
+ */
+interface Props {
+  id: string;
+  demo: { height: number; flush: boolean; html: string };
+}
+const { id, demo } = Astro.props;
+---
+
+<div class="demo" data-demo={id}>
+  <div class="demo-bar">
+    <span class="lbl">Live-Demo</span><button type="button" class="run">▶ Abspielen</button>
+  </div>
+  <template set:html={demo.html} />
+  <div class:list={['stage', { flush: demo.flush }]} style={`--h:${demo.height}px`} set:html={demo.html} />
+</div>

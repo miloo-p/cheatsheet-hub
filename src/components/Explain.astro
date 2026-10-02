@@ -1,0 +1,38 @@
+---
+/* Aufklappbare Erklärung einer Karte in fünf Teilen */
+import { inline } from '../lib/inline';
+
+interface Props {
+  explain: {
+    picture: string;
+    steps: string[];
+    mistake: string;
+    when: string;
+    question: string;
+    answer: string;
+  };
+  whenHeading: string;
+}
+const { explain: e, whenHeading } = Astro.props;
+---
+
+<details class="explain">
+  <summary>Erklärung</summary>
+  <div class="ex">
+    <div class="ex-b"><h4>Vorstellung</h4><p set:html={inline(e.picture)}></p></div>
+    <div class="ex-b">
+      <h4>Was passiert, Schritt für Schritt</h4>
+      <ol>{e.steps.map((s) => <li set:html={inline(s)}></li>)}</ol>
+    </div>
+    <div class="ex-b warn"><h4>Typischer Fehler</h4><p set:html={inline(e.mistake)}></p></div>
+    <div class="ex-b"><h4>{whenHeading}</h4><p set:html={inline(e.when)}></p></div>
+    <div class="ex-b quiz">
+      <h4>Selbsttest</h4>
+      <p set:html={inline(e.question)}></p>
+      <details class="answer">
+        <summary>Lösung zeigen</summary>
+        <p set:html={inline(e.answer)}></p>
+      </details>
+    </div>
+  </div>
+</details>

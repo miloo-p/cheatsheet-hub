@@ -1,0 +1,58 @@
+---
+/* Eine Karte: Titel, Beschreibung, eine oder zwei Code-Spalten, optional Live-Demo, Doku-Links und Erklärung */
+import { Code } from 'astro:components';
+import { render } from 'astro:content';
+import type { CardInfo, SheetInfo } from '../lib/content';
+import { inline, url } from '../lib/inline';
+import Demo from './Demo.astro';
+import Explain from './Explain.astro';
+
+interface Props {
+  card: CardInfo;
+  sheet: SheetInfo;
+}
+const { card, sheet } = Astro.props;
+const d = card.entry.data;
+const s = sheet.entry.data;
+const labels = d.labels ?? s.labels;
+const single = d.code.long === undefined;
+const columns = [
+  { cls: 'short', label: single ? s.singleLabel : labels[0], code: d.code.short, lang: d.lang?.short ?? s.lang },
+  ...(single ? [] : [{ cls: 'long', label: labels[1], code: d.code.long!, lang: d.lang?.long ?? s.lang }]),
+];
+const hasNotes = Boolean(card.entry.body?.trim());
+const Notes = hasNotes ? (await render(card.entry)).Content : null;
+---
+
+<article class="card" id={card.id}>
+  <div class="card-main">
+    <h3><Fragment set:html={inline(d.title)} /><a class="anchor" href={`#${card.id}`} aria-label="Link zu dieser Karte">#</a></h3>
+    <p set:html={inline(d.description)}></p>
+    {
+      columns.map((c) => (
+        <div class={`v ${c.cls}`}>
+          <span class="lbl">{c.label}</span>
+          <Code code={c.code} lang={c.lang as any} theme="css-variables" />
+        </div>
+      ))
+    }
+    {d.demo && <Demo id={card.id} demo={d.demo} />}
+    <div class="docs">
+      <span class="docs-l">Doku</span>
+      {
+        d.links.map((l) => {
+          const internal = l.url.startsWith('/');
+          return <a href={internal ? url(l.url) : l.url} target={internal ? undefined : '_blank'} rel={internal ? undefined : 'noopener'}>{l.text}</a>;
+        })
+      }
+    </div>
+    {
+      Notes && (
+        <div class="notes">
+          <Notes />
+        </div>
+      )
+    }
+  </div>
+  <Explain explain={d.explain} whenHeading={s.whenHeading} />
+</article>

@@ -1,0 +1,35 @@
+---
+/* Inhaltsverzeichnis eines Zettels: Abschnitte mit allen Karten. Erscheint als Seitenleiste und im Menü. */
+import type { SheetInfo } from '../lib/content';
+import { plain } from '../lib/inline';
+
+interface Props {
+  sheet: SheetInfo;
+}
+const { sheet } = Astro.props;
+const infobox = sheet.entry.data.infobox;
+---
+
+<ol class="toc-list">
+  {
+    sheet.sections.map((s) => (
+      <li class="toc-sec" data-sec={s.id}>
+        <a href={`#${s.id}`}>{s.title}</a>
+        <ol>
+          {s.cards.map((c) => (
+            <li data-for={c.id}>
+              <a href={`#${c.id}`}>{plain(c.entry.data.title)}</a>
+            </li>
+          ))}
+        </ol>
+      </li>
+    ))
+  }
+  {
+    infobox && (
+      <li class="toc-sec">
+        <a href="#mehr">{infobox}</a>
+      </li>
+    )
+  }
+</ol>
