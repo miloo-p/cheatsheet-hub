@@ -1,0 +1,139 @@
+---
+/* Eine Seite pro Spickzettel, z.B. /css/ */
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import Toc from '../components/Toc.astro';
+import { getSheets, type SheetInfo } from '../lib/content';
+import { demoLoader, threeImportMap } from '../lib/demos';
+import { inline, onlyLabel, plain, url } from '../lib/inline';
+
+export const getStaticPaths = (async () => {
+  const sheets = await getSheets();
+  return sheets.map((sheet) => ({ params: { sheet: sheet.key }, props: { sheet, all: sheets } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  sheet: SheetInfo;
+  all: SheetInfo[];
+}
+const { sheet, all } = Astro.props;
+const s = sheet.entry.data;
+const others = all.filter((o) => o.key !== sheet.key);
+
+const demos = sheet.sections.flatMap((sec) =>
+  sec.cards.flatMap((c) => (c.entry.data.demo ? [{ id: c.id, js: c.entry.data.demo.js }] : [])),
+);
+const loader = s.demos && demos.length ? demoLoader(s.demos, demos) : '';
+const Infobox = s.infobox ? (await render(sheet.entry)).Content : null;
+---
+
+<Base title={`${s.name} · Cheatsheet Hub`} description={plain(s.blurb)} colors={[sheet]} sheet={sheet.key}>
+  <Fragment slot="head">
+    {s.demos === 'three' && <script type="importmap" is:inline set:html={threeImportMap} />}
+  </Fragment>
+
+  <header class="topbar" id="topbar">
+    <div class="topbar-row">
+      <a class="tb-home" href={url('/')} aria-label="Zur Übersicht">←<span class="tb-label"> Übersicht</span></a>
+      <span class="tb-title">{s.name}</span>
+      <input id="filter" type="search" placeholder={s.placeholder} aria-label="Karten auf dieser Seite filtern" />
+      <details class="menu topics">
+        <summary><span class="sum-label">Inhalt</span><span aria-hidden="true">☰</span></summary>
+        <div class="menu-panel toc-panel"><nav aria-label="Inhalt"><Toc sheet={sheet} /></nav></div>
+      </details>
+      <details class="menu">
+        <summary aria-label="Ansicht"><span class="sum-label">Ansicht</span><span aria-hidden="true">⚙</span></summary>
+        <div class="menu-panel">
+          {
+            s.variantToggle && (
+              <>
+                <h4>Code-Varianten</h4>
+                <div class="seg" role="group" aria-label="Varianten anzeigen">
+                  <button type="button" id="show-both" aria-pressed="true">Beide</button>
+                  <button type="button" id="show-short" aria-pressed="false">{onlyLabel(s.labels[0])}</button>
+                  <button type="button" id="show-long" aria-pressed="false">{onlyLabel(s.labels[1])}</button>
+                </div>
+              </>
+            )
+          }
+          <h4>Erklärungen</h4>
+          <button type="button" class="ghost" id="toggle-all">Alle Erklärungen aufklappen</button>
+        </div>
+      </details>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  </header>
+
+  <div class="layout">
+    <aside class="toc" aria-label="Inhaltsverzeichnis">
+      <div class="toc-head">Inhalt</div>
+      <nav><Toc sheet={sheet} /></nav>
+    </aside>
+    <main class="wrap">
+      <header>
+        <div class="eyebrow">{s.eyebrow}</div>
+        <h1>{s.title}</h1>
+        <p class="lede" set:html={inline(s.lede.replace('{count}', String(sheet.count)))}></p>
+        {s.disclaimer && <p class="disclaimer" set:html={inline(s.disclaimer)}></p>}
+        <div class="legend">
+          {
+            s.legend.map((l, i) => (
+              <span>
+                <b class={`lbl t${Math.min(i, 1) + 1}`}>{l.label}</b> {l.text}
+              </span>
+            ))
+          }
+        </div>
+      </header>
+
+      {
+        sheet.sections.map((sec) => (
+          <section id={sec.id}>
+            <h2>
+              {sec.title} <span class="tag">{sec.tag}</span>
+            </h2>
+            <p class="sub" set:html={inline(sec.sub)} />
+            <div class="grid">
+              {sec.cards.map((card) => (
+                <Card card={card} sheet={sheet} />
+              ))}
+            </div>
+          </section>
+        ))
+      }
+
+      {
+        Infobox && (
+          <aside class="infobox" id="mehr">
+            <h2>{s.infobox}</h2>
+            <Infobox />
+          </aside>
+        )
+      }
+      <p class="empty" id="empty" hidden>Kein Konzept passt zu diesem Suchbegriff.</p>
+
+      <footer>
+        <Fragment set:html={inline(s.footer)} />
+        <br /><br />
+        Weitere Zettel:
+        {
+          others.map((o, i) => (
+            <>
+              {i > 0 && ' · '}
+              <a href={url(`/${o.key}/`)}>{o.entry.data.name}</a>
+            </>
+          ))
+        }
+      </footer>
+    </main>
+  </div>
+
+  <button type="button" class="totop" id="totop" hidden>↑ Nach oben</button>
+  {loader && <script is:inline set:html={loader} />}
+</Base>
+
+<script>
+  import '../scripts/sheet.js';
+</script>
